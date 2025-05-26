@@ -5,13 +5,14 @@ import { GiKangaroo } from 'react-icons/gi'
 
 import NbDesktopItems from './NbDesktopItems'
 import NbMobileItems from './NbMobileItems'
+import { ModeToggle } from './ui/toggle-theme'
 
 function Navbar() {
   return (
-    <div className='fixed top-0 left-0 right-0 z-50 h-[5.75rem] bg-white shadow-sm'>
+    <div className='fixed top-0 left-0 right-0 z-50 h-[5.75rem] bg-background shadow-sm'>
       <div className='flex items-center justify-between py-4 mx-auto cursor-pointer sm:max-w-6xl'>
         <Link href={'/'} >
-          <div className='flex items-center gap-2'>
+          <div className='flex items-center gap-0 sm:gap-2'>
             <GiKangaroo className='text-6xl' />
             <h1 className='text-3xl'>
               COVER
@@ -26,7 +27,7 @@ function Navbar() {
           <NbMobileItems />
         </div>
         <div className='flex items-center justify-between gap-2 sm:7'>
-          <IoSunny className='cursor-pointer' />
+          <ModeToggle />
         </div>
       </div>
     </div>

@@ -54,7 +54,10 @@ function Footer() {
             <Link href="#">
               Covertron. {" "}
             </Link>
-            Todos los derechos reservados.
+            Todos los derechos reservados. Desarrollado por {" "}
+            <Link href="https://leonardo-fuentes-claros.vercel.app" className='font-semibold hover:underline'>
+            Leonardo Fuentes Claros
+            </Link>
           </span>
 
         </span>

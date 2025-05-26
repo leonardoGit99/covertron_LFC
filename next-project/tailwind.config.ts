@@ -10,6 +10,7 @@ export default {
   theme: {
   	extend: {
   		colors: {
+				backgroundColor: '#F5F5FA',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
