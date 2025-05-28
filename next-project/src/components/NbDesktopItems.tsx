@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { GiKangaroo } from 'react-icons/gi'
-import { cn } from "@/lib/utils"
+import { cn } from "../lib/utils"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -12,7 +12,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
+} from "./ui/navigation-menu"
 
 
 

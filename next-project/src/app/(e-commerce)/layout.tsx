@@ -1,19 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Poppins } from "next/font/google";
-import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import { ThemeProvider } from "@/components/theme-provider"
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import "@/app/globals.css";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
+import { ThemeProvider } from "../../components/theme-provider"
+import Announcements from "../../components/Announcements";
 
 const getPoppins = Poppins({
   variable: "--font-poppins",
@@ -35,7 +26,7 @@ export default function RootLayout({
     <html lang="en" className="h-full" suppressHydrationWarning>
       <head />
       <body
-        className={`${getPoppins} antialiased flex flex-col min-h-screen bg-background`}
+        className={`${getPoppins.variable} antialiased flex flex-col min-h-screen bg-background`}
       >
         <ThemeProvider
           attribute="class"
@@ -43,9 +34,16 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <main className="flex-grow pt-[5.75rem] w-full max-w-6xl mx-auto">
-            <Navbar />
-            {children}
+          <main className="flex-grow pt-[5.75rem] w-full">
+            <div className="max-w-6xl mx-auto">
+              <Navbar />
+            </div>
+            <div className="max-w-8xl mx-auto">
+              <Announcements />
+            </div>
+            <div className="max-w-6xl mx-auto">
+              {children}
+            </div>
           </main>
         </ThemeProvider>
         <Footer />

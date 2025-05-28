@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
-import { Separator } from "@/components/ui/separator"
+import { Separator } from "./ui/separator"
 import { GiKangaroo } from 'react-icons/gi'
 
 function Footer() {
@@ -21,7 +21,7 @@ function Footer() {
   ]
   return (
     <footer className='mt-4'>
-      <div className='h-full  max-h-screen-xl mx-auto p-4 md:py-8'>
+      <div className='h-full  max-h-screen-xl mx-auto p-4 md:py-8 sm:max-w-6xl'>
         <div className='sm:flex sm:items-center sm:justify-between'>
           <div className='flex items-center gap-1'>
             <GiKangaroo className='text-2xl' />

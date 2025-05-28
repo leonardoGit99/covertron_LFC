@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardContent, CardFooter } from '@/components/ui/card'
+import { Card, CardContent, CardFooter } from './ui/card'
 import Image, { StaticImageData } from 'next/image'
 type ProductCardProps = {
   id: number;

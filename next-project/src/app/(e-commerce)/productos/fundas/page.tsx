@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
-import ProductCard from '@/components/ProductCard';
-import fundaImg from '@/assets/funda.webp';
+import ProductCard from '../../../../components/ProductCard';
+import fundaImg from '@/app/assets/funda.webp';
 import {
   Pagination,
   PaginationContent,
@@ -10,7 +10,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
+} from "../../../../components/ui/pagination";
 import Link from 'next/link';
 
 function Fundas() {
