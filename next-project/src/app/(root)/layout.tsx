@@ -3,7 +3,7 @@ import { Poppins } from "next/font/google";
 import "@/app/globals.css";
 import { ThemeProvider } from "../../components/theme-provider"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/AppSiderbar";
+import { AppSidebar } from "@/components/root/AppSiderbar";
 
 const getPoppins = Poppins({
   variable: "--font-poppins",

@@ -1,7 +1,7 @@
-import CategorieDialog from '@/components/CategorieDialog';
-import CategoriesTable from '@/components/CategoriesTable';
+import CategoriesTable from '@/components/root/CategoriesTable';
 import { getAllCategories } from '@/services/categories';
 import { FolderPlus } from 'lucide-react';
+import CategoryDialogButton from '@/components/root/CategoryDialogButton';
 
 export default async function Categories() {
   const categories = await getAllCategories();
@@ -12,14 +12,14 @@ export default async function Categories() {
         <FolderPlus className="w-8 h-8 text-primary" />
         Categorías
       </h1>
-      <p className="text-muted-foreground mt-2">
+      <p className="text-muted-foreground mt-2 mb-8">
         Organiza tus productos por tipo, marca o colección.
       </p>
 
-      {/* Crear Categoria */}
-      <CategorieDialog categories={categories} />
+      {/* Create || Update Category */}
+      <CategoryDialogButton btnLabel='Crear Categoría' />
 
-      {/* Tabla */}
+      {/* Table */}
       <CategoriesTable categories={categories} />
     </div>
   );

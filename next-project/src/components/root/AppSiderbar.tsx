@@ -35,14 +35,14 @@ const items = [
 export function AppSidebar() {
   return (
     <Sidebar>
-      <SidebarContent>
+      <SidebarContent className="bg-[#000319]">
         <SidebarGroup>
-          <SidebarGroupLabel>Covertron - Administrador</SidebarGroupLabel>
-          <SidebarGroupContent>
+          <SidebarGroupLabel className="text-gray-50">Covertron - Administrador</SidebarGroupLabel>
+          <SidebarGroupContent className="text-slate-400">
             <SidebarMenu>
               {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                <SidebarMenuItem key={item.title} >
+                  <SidebarMenuButton asChild className="hover:bg-[#1a1f33] hover:text-slate-400">
                     <a href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
