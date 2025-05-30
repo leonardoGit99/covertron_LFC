@@ -9,20 +9,14 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Pencil, Trash2 } from 'lucide-react';
-import { deleteCategorie } from '@/services/categories';
+import { HiOutlinePencilAlt } from "react-icons/hi";
+import { HiOutlineTrash } from "react-icons/hi2";
+import { deleteCategory } from '@/services/categories';
 import { useRouter } from 'next/navigation';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu';
 import CategoryDialog from './CategoryDialog';
+import { Categories } from '@/types';
 
-
-type Categorie = {
-  id: number,
-  name: string,
-  description: string
-}
-
-type Categories = Categorie[];
 
 
 function CategoriesTable({ categories }: { categories: Categories }) {
@@ -31,19 +25,19 @@ function CategoriesTable({ categories }: { categories: Categories }) {
 
   // const [categories, setCategories] = useState<()=>{}>;
   const handleDelete = (id: number) => {
-    deleteCategorie(id)
+    deleteCategory(id)
     alert("Categoria eliminada!");
     router.refresh();
   };
 
   return (
-    <div className="mt-10">
+    <div>
       {categories.length === 0 ? (
-        <p className="text-muted-foreground mt-8">📭 No hay categorías aún. ¡Crea la primera!</p>
+        <p className="text-muted-foreground">📭 No hay categorías aún. ¡Crea la primera!</p>
       ) : (
-        <div className="rounded-md border mt-4 overflow-hidden">
+        <div className="rounded-md border overflow-hidden">
           <Table>
-            <TableHeader className='bg-slate-200'>
+            <TableHeader className='bg-blue-50'>
               <TableRow>
                 <TableHead className="text-left">Nombre</TableHead>
                 <TableHead className="text-left">Descripción</TableHead>
@@ -51,11 +45,11 @@ function CategoriesTable({ categories }: { categories: Categories }) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {categories.map((cat) => (
-                <TableRow key={cat.id}>
-                  <TableCell className='text-start'>{cat.name}</TableCell>
-                  <TableCell className='text-start'>{cat.description}</TableCell>
-                  <TableCell>
+              {categories.length > 0 && categories.map(({ id, name, description }) => (
+                <TableRow key={id}>
+                  <TableCell className='text-start'>{name}</TableCell>
+                  <TableCell className='text-start'>{description}</TableCell>
+                  <TableCell className='text-right'>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button variant="ghost" >...</Button>
@@ -65,8 +59,8 @@ function CategoriesTable({ categories }: { categories: Categories }) {
                           <DropdownMenuItem
                             className='p-0'
                           >
-                            <Button variant={'ghost'} onClick={() => setEditingId(cat.id)}>
-                              <Pencil className='p-0'/>
+                            <Button variant={'ghost'} onClick={() => setEditingId(id)}>
+                              <HiOutlinePencilAlt className='p-0 text-blue-600' />
                             </Button>
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
@@ -74,10 +68,10 @@ function CategoriesTable({ categories }: { categories: Categories }) {
                             <Button
                               size="sm"
                               variant="ghost"
-                              onClick={() => handleDelete(cat.id)}
+                              onClick={() => handleDelete(id)}
                               className='w-full'
                             >
-                              <Trash2 className='p-0'/>
+                              <HiOutlineTrash className='p-0 text-destructive' />
                             </Button>
                           </DropdownMenuItem>
                         </DropdownMenuGroup>

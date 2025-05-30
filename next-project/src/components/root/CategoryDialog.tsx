@@ -9,9 +9,9 @@ import {
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { createCategorie, getOneCategorie, updateCategorie } from '@/services/categories';
+import { createCategory, getOneCategory, updateCategory } from '@/services/categories';
 import { useRouter } from 'next/navigation';
-import CategorieForm from './CategoryForm';
+import CategoryForm from './CategoryForm';
 import { Separator } from '../ui/separator';
 
 // Validations Form
@@ -37,12 +37,12 @@ type Category = {
 function CategoryDialog({ id, open, onOpenChange }: DialogProps) {
   const router = useRouter();
   // const [open, setOpen] = useState(false); // State for modal
-  const [categorie, setCategorie] = useState<Category>({
+  const [category, setCategory] = useState<Category>({
     name: '',
     description: '',
-  }); // State to store categorie data from back
+  }); // State to store category data from back
 
-  // Resolver and default values
+  // Resolve and default values
   const form = useForm<CategoryFormData>({
     resolver: zodResolver(categorySchema),
     defaultValues: {
@@ -51,16 +51,16 @@ function CategoryDialog({ id, open, onOpenChange }: DialogProps) {
     }
   });
 
-  // Getting categorie from backend only if there is an id
+  // Getting category from backend only if there is an id
   useEffect(() => {
-    const getCategorie = async () => {
+    const getCategory = async () => {
       if (id) {
-        const categorie = await getOneCategorie(id);
-        setCategorie(categorie);
-        form.reset(categorie);
+        const category = await getOneCategory(id);
+        setCategory(category);
+        form.reset(category);
       }
     }
-    getCategorie();
+    getCategory();
   }, [id, form]);
 
 
@@ -69,10 +69,10 @@ function CategoryDialog({ id, open, onOpenChange }: DialogProps) {
   const onSubmit = async (body: CategoryFormData) => {
     console.log(body);
     if (id) {
-      const response = await updateCategorie(body, id);
+      const response = await updateCategory(body, id);
       alert(response.message);
     } else {
-      const response = await createCategorie(body);
+      const response = await createCategory(body);
       alert(response.message);
     }
     onOpenChange(false);
@@ -100,11 +100,11 @@ function CategoryDialog({ id, open, onOpenChange }: DialogProps) {
           <Separator />
         </DialogHeader>
         {/* Create or Update */}
-        <CategorieForm
+        <CategoryForm
           form={form}
           onSubmit={onSubmit}
           id={id}
-          categorie={categorie}
+          category={category}
         />
       </DialogContent>
     </Dialog>

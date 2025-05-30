@@ -10,6 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Button } from '@/components/ui/button';
+import { IoIosSave } from "react-icons/io";
 import { CategoryFormData } from './CategoryDialog';
 import { UseFormReturn } from 'react-hook-form';
 
@@ -23,10 +24,11 @@ type Props = {
   form: UseFormReturn<CategoryFormData>;
   onSubmit: (body: CategoryFormData) => void;
   id?: number
-  categorie: Category
+  category: Category
 };
 
-function CategoryForm({ form, onSubmit, id, categorie }: Props) {
+function CategoryForm({ form, onSubmit, id, category }: Props) {
+  const values = form.watch();
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8" autoComplete='off'>
@@ -66,7 +68,15 @@ function CategoryForm({ form, onSubmit, id, categorie }: Props) {
           )}
         />
 
-        <Button type="submit" className="w-full">Guardar</Button>
+        <Button
+          type="submit"
+          className="w-full"
+          disabled={
+            category.name === values.name && category.description === values.description
+          }
+        >
+          <IoIosSave /> Guardar
+        </Button>
       </form>
     </Form>
   )

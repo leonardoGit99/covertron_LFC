@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "@/app/globals.css";
 import { ThemeProvider } from "../../components/theme-provider"
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/root/AppSiderbar";
+import Header from "@/components/root/Header";
 
 const getPoppins = Poppins({
   variable: "--font-poppins",
@@ -29,19 +30,21 @@ export default function AdminLayout({
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
+          defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
-          <main className="flex-grow pt-0 w-full">
+          <div className="flex-grow pt-0">
             <SidebarProvider>
               <AppSidebar />
-              <SidebarTrigger />
-              <main className="max-w-4xl mx-auto">
-                {children}
-              </main>
+              <div className="w-full">
+                <Header />
+                <main className="w-full max-w-5xl mx-auto pt-6 sm:px-1 px-2">
+                  {children}
+                </main>
+              </div>
             </SidebarProvider>
-          </main>
+          </div>
         </ThemeProvider>
       </body>
     </html >

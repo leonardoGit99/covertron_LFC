@@ -4,4 +4,5 @@ export type Category = {
   description: string
 }
 
+
 export type Categories = Category[]
