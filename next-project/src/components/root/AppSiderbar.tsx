@@ -1,7 +1,8 @@
 import { VscGraphLine } from "react-icons/vsc"
-import {MdLabelOutline} from "react-icons/md"
+import { MdLabelOutline } from "react-icons/md"
 import { IoCartOutline } from "react-icons/io5"
-
+import { HiOutlineFolder } from "react-icons/hi";
+import { HiOutlineCollection } from "react-icons/hi";
 import {
   Sidebar,
   SidebarContent,
@@ -23,7 +24,12 @@ const items = [
   {
     title: "Categorias",
     url: "/admin/categorias",
-    icon: MdLabelOutline,
+    icon: HiOutlineFolder,
+  },
+  {
+    title: "Sub-categorias",
+    url: "/admin/subcategorias",
+    icon: HiOutlineCollection,
   },
   {
     title: "Productos",

@@ -5,7 +5,7 @@ import { ThemeProvider } from "../../components/theme-provider"
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/root/AppSiderbar";
 import Header from "@/components/root/Header";
-
+import { Toaster } from "@/components/ui/sonner"
 const getPoppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],
@@ -30,7 +30,7 @@ export default function AdminLayout({
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >
@@ -42,6 +42,7 @@ export default function AdminLayout({
                 <main className="w-full max-w-5xl mx-auto pt-6 sm:px-1 px-2">
                   {children}
                 </main>
+                <Toaster />
               </div>
             </SidebarProvider>
           </div>

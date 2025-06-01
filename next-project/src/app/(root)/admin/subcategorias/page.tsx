@@ -1,32 +1,32 @@
 import CategoriesTable from '@/components/root/DataTable';
-import { getAllCategories } from '@/services/categories';
-import { FolderPlus } from 'lucide-react';
-import CategoryDialogButton from '@/components/root/CategoryDialogButton';
+import SectionHeader from '@/components/root/SectionHeader'
+import SubCategoryDialogButton from '@/components/root/SubCategoryDialogBtn';
 import { Card, CardContent } from '@/components/ui/card';
-import SectionHeader from '@/components/root/SectionHeader';
+import { getAllSubCategories } from '@/services/subCategories';
+import React from 'react'
+import { RiFolderOpenLine } from "react-icons/ri";
 
-export default async function Categories() {
-  const { data: categories } = await getAllCategories();
+
+async function SubCategories() {
+  const { data: subCategories } = await getAllSubCategories();
   return (
     <div>
       <Card className='w-full shadow-md p-6'>
         <CardContent className='flex flex-col gap-4 justify-between items-center sm:flex-row sm:gap-0'>
           <SectionHeader
-            title='Categorias'
-            description='Organiza tus productos por tipo, marca o colección'
-            icon={FolderPlus}
+            title='Sub-Categorías'
+            description='Dale profundidad a tus categorías con subgrupos únicos y personalizados'
+            icon={RiFolderOpenLine}
           />
 
           {/* Create || Update Category */}
-          <CategoryDialogButton
-            btnLabel='Crear Categoría'
+          <SubCategoryDialogButton
+            btnLabel='Crear Sub-categoría'
           />
-
         </CardContent>
       </Card>
 
-
-      {categories.length === 0
+      {subCategories.length === 0
         ? (
           <p className="text-muted-foreground mt-10 text-center">
             📭 No hay categorías aún. ¡Crea la primera!
@@ -37,13 +37,15 @@ export default async function Categories() {
             <CardContent>
               {/* Table */}
               <CategoriesTable
-                data={categories}
-                type='categories'
+                data={subCategories}
+                type='subcategories'
               />
             </CardContent>
           </Card>
         )
       }
     </div>
-  );
+  )
 }
+
+export default SubCategories

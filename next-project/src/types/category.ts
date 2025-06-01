@@ -4,5 +4,7 @@ export type Category = {
   description: string
 }
 
+export type NewCategory = Omit<Category, 'id'>
+
 
 export type Categories = Category[]

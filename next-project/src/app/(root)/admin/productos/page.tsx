@@ -4,7 +4,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Boxes  } from 'lucide-react'
 import CustomSheet from '@/components/root/CustomSheet'
 
-function Productos() {
+function Products() {
   return (
     <div>
       <Card className='w-full shadow-md p-6'>
@@ -30,4 +30,4 @@ function Productos() {
   )
 }
 
-export default Productos
+export default Products

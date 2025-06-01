@@ -13,6 +13,7 @@ import { createCategory, getOneCategory, updateCategory } from '@/services/categ
 import { useRouter } from 'next/navigation';
 import CategoryForm from './CategoryForm';
 import { Separator } from '../ui/separator';
+import { toast } from 'sonner';
 
 // Validations Form
 const categorySchema = z.object({
@@ -36,7 +37,6 @@ type Category = {
 
 function CategoryDialog({ id, open, onOpenChange }: DialogProps) {
   const router = useRouter();
-  // const [open, setOpen] = useState(false); // State for modal
   const [category, setCategory] = useState<Category>({
     name: '',
     description: '',
@@ -55,9 +55,9 @@ function CategoryDialog({ id, open, onOpenChange }: DialogProps) {
   useEffect(() => {
     const getCategory = async () => {
       if (id) {
-        const category = await getOneCategory(id);
-        setCategory(category);
-        form.reset(category);
+        const {data} = await getOneCategory(id);
+        setCategory(data);
+        form.reset(data);
       }
     }
     getCategory();
@@ -69,11 +69,13 @@ function CategoryDialog({ id, open, onOpenChange }: DialogProps) {
   const onSubmit = async (body: CategoryFormData) => {
     console.log(body);
     if (id) {
-      const response = await updateCategory(body, id);
-      alert(response.message);
+      const { message } = await updateCategory(body, id);
+      toast(message);
+      form.reset();
     } else {
-      const response = await createCategory(body);
-      alert(response.message);
+      const { message } = await createCategory(body);
+      toast(message);
+      form.reset();
     }
     onOpenChange(false);
     router.refresh();
@@ -99,7 +101,7 @@ function CategoryDialog({ id, open, onOpenChange }: DialogProps) {
           </DialogTitle>
           <Separator />
         </DialogHeader>
-        {/* Create or Update */}
+        {/* Create or Update Form*/}
         <CategoryForm
           form={form}
           onSubmit={onSubmit}

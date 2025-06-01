@@ -11,6 +11,10 @@ import { useRouter } from 'next/navigation'
 import { Separator } from '../ui/separator'
 import { Categories } from '@/types'
 import { getAllCategories } from '@/services/categories'
+import { SubCategories } from '@/types/subcategory'
+import { Switch } from '../ui/switch'
+import { Label } from '../ui/label'
+import { getAllSubCategories } from '@/services/subCategories'
 
 // Validations Form
 const productSchema = z.object({
@@ -18,6 +22,24 @@ const productSchema = z.object({
   description: z.string().min(10, "La descripción debe tener al menos 10 caracteres"),
   category: z.string({
     required_error: "Selecciona una categoria",
+  }),
+  subCategory: z.string({
+    required_error: "Selecciona una sub-categoria",
+  }),
+  prize: z.number({
+    message: "El precio debe ser un valor numérico",
+    required_error: "El precio es obligatorio"
+  }),
+  stock: z.number({
+    message: "El stock debe ser un valor numérico",
+    required_error: "El stock es obligatorio"
+  }),
+  brand: z.string({
+    message: "La marca es obligatoria",
+    required_error: "La marca es obligatoria"
+  }).min(2, "La marca debe contener más de 2 caracteres"),
+  discount: z.number({
+    message: "El descuento debe ser un valor numérico"
   })
 });
 
@@ -37,7 +59,12 @@ export type ProductFormData = z.infer<typeof productSchema>;
 type Product = {
   name: string,
   description: string
-  categories: Categories
+  categories: Categories,
+  subCategories: SubCategories,
+  prize: number,
+  stock: number,
+  brand: string
+  discount: number
 }
 
 
@@ -45,10 +72,16 @@ function CustomSheet({ triggerBtnLabel, sheetTitle, id }: SheetProps) {
   const router = useRouter();
   const [open, setOpen] = useState(false); // State for sheet
   const [categories, setCategories] = useState<Categories>([]);
+  const [subCategories, setSubCategories] = useState<SubCategories>([]);
   const [product, setProduct] = useState<Product>({
     name: '',
     description: '',
-    categories: []
+    categories: [],
+    subCategories: [],
+    prize: 0,
+    stock: 0,
+    brand: '',
+    discount: 0
   }); // State to store category data from back
   // Resolve and default values
   const form = useForm<ProductFormData>({
@@ -56,7 +89,12 @@ function CustomSheet({ triggerBtnLabel, sheetTitle, id }: SheetProps) {
     defaultValues: {
       name: '',
       description: '',
-      category: ''
+      category: '',
+      subCategory: '',
+      prize: 0,
+      stock: 0,
+      brand: '',
+      discount: 0
     }
   });
 
@@ -79,6 +117,14 @@ function CustomSheet({ triggerBtnLabel, sheetTitle, id }: SheetProps) {
       setCategories(data);
     }
     getCategories();
+  }, [])
+
+  useEffect(() => {
+    const getSubCategories = async () => {
+      const { data } = await getAllSubCategories();
+      setSubCategories(data);
+    }
+    getSubCategories();
   }, [])
 
 
@@ -115,12 +161,17 @@ function CustomSheet({ triggerBtnLabel, sheetTitle, id }: SheetProps) {
       <SheetContent side="right">
         <SheetHeader>
           <SheetTitle>{sheetTitle}</SheetTitle>
+          <div className='flex items-center space-x-2 '>
+            <Switch checked={true} /* onCheckedChange={} */ />
+            <Label className='text-green-600 font-normal'>Activo</Label>
+          </div>
         </SheetHeader>
         <Separator className='mt-2 mb-4' />
         <ProductForm
           form={form}
           product={product}
           categories={categories}
+          subCategories={subCategories}
           onSubmit={onSubmit}
         />
         {/* <SheetFooter>
