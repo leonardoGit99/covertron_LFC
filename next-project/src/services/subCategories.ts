@@ -4,6 +4,7 @@ import axios from "axios";
 import { ApiResponse } from "@/types/api";
 import { SubCategoryFormData } from "@/components/root/SubCategoryDialog";
 import { SubCategories, SubCategory, SubCategoryWithCategoryName, SubCategoryWithoutID } from "@/types/subcategory";
+import { Categories } from "@/types";
 
 
 // Endpoits
@@ -20,6 +21,11 @@ export const getAllSubCategories = async (): Promise<ApiResponse<SubCategories>>
 
 export const getOneSubCategory = async (id: number): Promise<ApiResponse<SubCategoryWithCategoryName>> => {
   const { data } = await axios.get<ApiResponse<SubCategoryWithCategoryName>>(`${api}/sub-categories/${id}`);
+  return data;
+}
+
+export const getSubCategoriesByCategory = async (id: number): Promise<ApiResponse<SubCategories>> => {
+  const { data } = await axios.get<ApiResponse<SubCategories>>(`${api}/sub-categories?categoryId=${id}`)
   return data;
 }
 

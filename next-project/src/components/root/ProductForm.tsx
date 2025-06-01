@@ -1,4 +1,5 @@
-import React from 'react'
+"use client"
+import React, { useEffect, useState } from 'react'
 import { Input } from '@/components/ui/input';
 import { Textarea } from '../ui/textarea';
 import {
@@ -26,19 +27,34 @@ import { Categories } from '@/types';
 import { Product } from '@/types/product';
 import { SubCategories } from '@/types/subcategory';
 import Upload from './Upload';
+import { getSubCategoriesByCategory } from '@/services/subCategories';
 
 // Types
 type Props = {
   id?: number
   product: Product
   categories: Categories
-  subCategories: SubCategories
   form: UseFormReturn<ProductFormData>;
   onSubmit: (body: ProductFormData) => void;
 };
 
-function ProductForm({ form, onSubmit, id, product, categories, subCategories }: Props) {
+
+
+function ProductForm({ form, onSubmit, id, product, categories }: Props) {
   const values = form.watch();
+  const [category, setCategory] = useState<number | null>(null);
+  const [subCategoriesByCategory, setSubCategoriesByCategory] = useState<SubCategories>([]);
+
+  useEffect(() => {
+    if (category) {
+      const fetchSubcategories = async () => {
+        const { data } = await getSubCategoriesByCategory(category);
+        console.log(data);
+        setSubCategoriesByCategory(data);
+      }
+      fetchSubcategories();
+    }
+  }, [category])
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8" autoComplete='off'>
@@ -92,7 +108,10 @@ function ProductForm({ form, onSubmit, id, product, categories, subCategories }:
                 <FormLabel>Categoría</FormLabel>
                 <FormControl>
                   <Select
-                    onValueChange={field.onChange}
+                    onValueChange={(value) => {
+                      field.onChange(value);
+                      setCategory(Number(value));
+                    }}
                     defaultValue={field.value}
                     disabled={categories.length === 0}
                   >
@@ -105,7 +124,7 @@ function ProductForm({ form, onSubmit, id, product, categories, subCategories }:
                         {
                           categories.length > 0 && categories.map(({ id, name }) => (
                             <SelectItem
-                              value={name}
+                              value={id.toString()}
                               key={id}
                             >
                               {name}
@@ -132,7 +151,7 @@ function ProductForm({ form, onSubmit, id, product, categories, subCategories }:
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
-                    disabled={subCategories.length === 0}
+                    disabled={subCategoriesByCategory.length === 0}
                   >
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Selecciona una sub-cat..." />
@@ -141,7 +160,7 @@ function ProductForm({ form, onSubmit, id, product, categories, subCategories }:
                       <SelectGroup>
                         <SelectLabel>Sub-categorías</SelectLabel>
                         {
-                          subCategories.length > 0 && subCategories.map(({ id, name }) => (
+                          subCategoriesByCategory.length > 0 && subCategoriesByCategory.map(({ id, name }) => (
                             <SelectItem
                               value={name}
                               key={id}

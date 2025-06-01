@@ -29,7 +29,7 @@ async function SubCategories() {
       {subCategories.length === 0
         ? (
           <p className="text-muted-foreground mt-10 text-center">
-            📭 No hay categorías aún. ¡Crea la primera!
+            📭 No hay sub-categorías aún. ¡Crea la primera!
           </p>
         )
         : (

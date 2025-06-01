@@ -14,7 +14,6 @@ import { getAllCategories } from '@/services/categories'
 import { SubCategories } from '@/types/subcategory'
 import { Switch } from '../ui/switch'
 import { Label } from '../ui/label'
-import { getAllSubCategories } from '@/services/subCategories'
 
 // Validations Form
 const productSchema = z.object({
@@ -119,13 +118,7 @@ function CustomSheet({ triggerBtnLabel, sheetTitle, id }: SheetProps) {
     getCategories();
   }, [])
 
-  useEffect(() => {
-    const getSubCategories = async () => {
-      const { data } = await getAllSubCategories();
-      setSubCategories(data);
-    }
-    getSubCategories();
-  }, [])
+
 
 
   // Function to submit body to backend depending whether there's an id or not
@@ -171,7 +164,6 @@ function CustomSheet({ triggerBtnLabel, sheetTitle, id }: SheetProps) {
           form={form}
           product={product}
           categories={categories}
-          subCategories={subCategories}
           onSubmit={onSubmit}
         />
         {/* <SheetFooter>

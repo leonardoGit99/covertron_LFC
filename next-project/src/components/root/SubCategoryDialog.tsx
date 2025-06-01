@@ -115,9 +115,11 @@ function SubCategoryDialog({ id, open, onOpenChange }: DialogProps) {
     if (id) {
       const response = await updateSubCategory(newBody, id);
       toast(response.message);
+      form.reset();
     } else {
       const response = await createSubCategory(newBody);
       toast(response.message);
+      form.reset();
     }
     onOpenChange(false);
     router.refresh();
