@@ -55,7 +55,7 @@ function CategoryDialog({ id, open, onOpenChange }: DialogProps) {
   useEffect(() => {
     const getCategory = async () => {
       if (id) {
-        const {data} = await getOneCategory(id);
+        const { data } = await getOneCategory(id);
         setCategory(data);
         form.reset(data);
       }
@@ -73,7 +73,7 @@ function CategoryDialog({ id, open, onOpenChange }: DialogProps) {
       toast(message);
       form.reset();
     } else {
-      const { message } = await createCategory(body);
+      const { message, data } = await createCategory(body);
       toast(message);
       form.reset();
     }

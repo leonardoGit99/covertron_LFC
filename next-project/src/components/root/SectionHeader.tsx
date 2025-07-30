@@ -1,4 +1,3 @@
-import { FolderPlus } from 'lucide-react'
 import React from 'react'
 
 // Types

@@ -13,21 +13,20 @@ import { Button } from '@/components/ui/button';
 import { IoIosSave } from "react-icons/io";
 import { UseFormReturn } from 'react-hook-form';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '../ui/select';
-import { SubCategoryFormData } from './SubCategoryDialog';
 import { SubCategory } from '@/types/subcategory';
 import { Categories } from '@/types';
 
 
 // Types
 type Props = {
-  id?: number | null;
-  form: UseFormReturn<SubCategoryFormData>;
-  onSubmit: (body: SubCategoryFormData) => void;
+  subCategoryId?: number | null;
+  form: UseFormReturn<SubCategory>;
+  onSubmit: (body: SubCategory) => void;
   categories: Categories,
   subCategory: SubCategory;
 };
 
-function SubCategoryForm({ id, form, onSubmit, categories, subCategory }: Props) {
+function SubCategoryForm({ subCategoryId, form, onSubmit, categories, subCategory }: Props) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8" autoComplete='off'>
@@ -70,14 +69,14 @@ function SubCategoryForm({ id, form, onSubmit, categories, subCategory }: Props)
         {/* Category Select */}
         <FormField
           control={form.control}
-          name="category"
+          name="categoryId"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Categoría</FormLabel>
               <FormControl>
                 <Select
                   onValueChange={field.onChange}
-                  value={field.value}
+                  value={field.value.toString()}
                   disabled={categories.length === 0}
                 >
                   <SelectTrigger className="w-full">
@@ -112,7 +111,7 @@ function SubCategoryForm({ id, form, onSubmit, categories, subCategory }: Props)
             subCategory &&
             subCategory.name === form.getValues("name") &&
             subCategory.description === form.getValues("description") &&
-            String(subCategory.category_id) === form.getValues("category")
+            subCategory.categoryId === form.getValues("categoryId")
           }
         >
           <IoIosSave /> Guardar

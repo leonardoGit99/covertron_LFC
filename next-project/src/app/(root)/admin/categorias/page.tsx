@@ -6,7 +6,9 @@ import { Card, CardContent } from '@/components/ui/card';
 import SectionHeader from '@/components/root/SectionHeader';
 
 export default async function Categories() {
-  const { data: categories } = await getAllCategories();
+  const { data, success } = await getAllCategories();
+  const categories = (success) ? data.categories : [];
+
   return (
     <div>
       <Card className='w-full shadow-md p-6'>

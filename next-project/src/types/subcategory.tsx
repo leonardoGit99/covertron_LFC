@@ -1,16 +1,25 @@
-import { Category } from "./category"
 
-export type SubCategory = {
-  id: number,
-  category_id: number
-  name: string
-  description: string,
-}
+import { subCategorySchema } from "@/schemas/subCategory.schema";
+import { z } from "zod";
+
+export type NewSubCategory = z.infer<typeof subCategorySchema>;
+
+export type SubCategory = NewSubCategory & {
+  subCategoryId: number;
+  categoryName: string;
+};
+
+
 
 export type SubCategoryWithoutID = Omit<SubCategory, 'id'>
 export type SubCategoryWithCategoryName = SubCategory & {
-  category_name: string;
+  categoryName: string;
 }
 
 
-export type SubCategories = SubCategory[]
+export type SubCategories = SubCategory[];
+
+export type SubCategoriesResponse = {
+  total: number;
+  subCategories: SubCategories;
+};

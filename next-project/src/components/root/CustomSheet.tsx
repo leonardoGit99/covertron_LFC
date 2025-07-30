@@ -113,7 +113,7 @@ function CustomSheet({ triggerBtnLabel, sheetTitle, id }: SheetProps) {
   useEffect(() => {
     const getCategories = async () => {
       const { data } = await getAllCategories();
-      setCategories(data);
+      setCategories(data.categories);
     }
     getCategories();
   }, [])

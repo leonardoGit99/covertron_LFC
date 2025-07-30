@@ -48,9 +48,10 @@ function ProductForm({ form, onSubmit, id, product, categories }: Props) {
   useEffect(() => {
     if (category) {
       const fetchSubcategories = async () => {
-        const { data } = await getSubCategoriesByCategory(category);
+        const { data, success } = await getSubCategoriesByCategory(category);
+        const subCategories = (success) ? data.subCategories : [];
         console.log(data);
-        setSubCategoriesByCategory(data);
+        setSubCategoriesByCategory(subCategories);
       }
       fetchSubcategories();
     }

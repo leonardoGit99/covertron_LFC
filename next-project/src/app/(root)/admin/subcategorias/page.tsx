@@ -1,4 +1,5 @@
-import CategoriesTable from '@/components/root/DataTable';
+
+import DataTable from '@/components/root/DataTable';
 import SectionHeader from '@/components/root/SectionHeader'
 import SubCategoryDialogButton from '@/components/root/SubCategoryDialogBtn';
 import { Card, CardContent } from '@/components/ui/card';
@@ -8,7 +9,10 @@ import { RiFolderOpenLine } from "react-icons/ri";
 
 
 async function SubCategories() {
-  const { data: subCategories } = await getAllSubCategories();
+  const { data, success } = await getAllSubCategories();
+  const subCategories = (success) ? data.subCategories : [];
+
+  console.log(subCategories)
   return (
     <div>
       <Card className='w-full shadow-md p-6'>
@@ -36,7 +40,7 @@ async function SubCategories() {
           <Card className='w-full shadow-md  mt-10'>
             <CardContent>
               {/* Table */}
-              <CategoriesTable
+              <DataTable
                 data={subCategories}
                 type='subcategories'
               />

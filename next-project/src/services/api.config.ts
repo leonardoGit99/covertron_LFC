@@ -1,6 +1,9 @@
-export const baseLocalUrl:string = 'http://localhost:4000/api';
+export const baseLocalURL = 'http://localhost:4000/api'
 
+export const jsonHeaders = {
+  "Content-Type": "application/json",
+}
 
-export const headers: Record<string, string>= {
-    "Content-Type": "application/json",
+export const multipartHeaders = {
+  "Content-Type": "multipart/form-data",
 }
