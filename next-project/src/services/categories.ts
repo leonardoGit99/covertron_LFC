@@ -11,8 +11,21 @@ export const createCategory = async (body: CategoryFormData): Promise<ApiRespons
 }
 
 export const getAllCategories = async (): Promise<ApiResponse<CategoriesResponse>> => {
-  const { data } = await api.get<ApiResponse<CategoriesResponse>>(`/categories`);
-  return data;
+  try {
+    const { data } = await api.get<ApiResponse<CategoriesResponse>>(`/categories`);
+    return data;
+  } catch (error: any) {
+    if (error.response?.data) return error.response.data;
+
+    return {
+      success: false,
+      message: 'Network error or server is unreachable',
+      data: {
+        total: 0,
+        categories: [],
+      },
+    };
+  }
 }
 
 export const getOneCategory = async (id: number): Promise<ApiResponse<Category>> => {

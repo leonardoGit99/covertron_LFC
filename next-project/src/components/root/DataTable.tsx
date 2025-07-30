@@ -26,28 +26,34 @@ import { toast } from 'sonner';
 function DataTable({ data, type }: { data: Categories | SubCategories, type: 'categories' | 'subcategories' }) {
   const router = useRouter();
   const [editingId, setEditingId] = useState<number | null>(null);
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: number, name: string) => {
     if (type === 'categories') {
-      const { message } = await deleteCategory(id)
-      toast(message, {
-        description: "Se ha eliminado la categoría",
+      toast(`¿Estás seguro de eliminar la Categoría '${name}'?`, {
         action: {
           label: "OK",
-          onClick: () => console.log("OK"),
+          onClick: async () => {
+            const { message } = await deleteCategory(id);
+            router.refresh();
+            toast(message, {
+              description: "Se ha eliminado la categoría",
+            });
+          },
         },
       });
     } else {
-      const { message } = await deleteSubCategory(id);
-      console.log(message)
-      toast(message, {
-        description: "Se ha eliminado la sub-categoría",
+      toast(`¿Estás seguro de eliminar la sub-categoría '${name}'?`, {
         action: {
           label: "OK",
-          onClick: () => console.log("OK"),
+          onClick: async () => {
+            const { message } = await deleteSubCategory(id);
+            router.refresh();
+            toast(message, {
+              description: "Se ha eliminado la sub-categoría",
+            });
+          },
         },
       });
     }
-    router.refresh();
   };
 
   return (
@@ -56,28 +62,31 @@ function DataTable({ data, type }: { data: Categories | SubCategories, type: 'ca
         <Table>
           <TableHeader className='bg-blue-50'>
             <TableRow>
+              {
+                type === 'subcategories' &&
+                <TableHead className="text-left">Categoría</TableHead>
+              }
               <TableHead className="text-left">Nombre</TableHead>
               <TableHead className="text-left">Descripción</TableHead>
               <TableHead className="text-right">Acciones</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data.length > 0 && data.map(({ id, name, description }) => (
-              <TableRow key={id}>
-                <TableCell className='text-start'>{name}</TableCell>
-                <TableCell className='text-start'>{description}</TableCell>
+            {data.length > 0 && type === 'subcategories' && (data as SubCategories).map((item) => (
+              <TableRow key={item.id}>
+                <TableCell className='text-start'>{item.categoryName}</TableCell>
+                <TableCell className='text-start'>{item.name}</TableCell>
+                <TableCell className='text-start'>{item.description}</TableCell>
                 <TableCell className='text-right'>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" >...</Button>
+                      <Button variant="ghost">...</Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className='min-w-0'>
-                      <DropdownMenuGroup >
-                        <DropdownMenuItem
-                          className='p-0'
-                        >
-                          <Button variant={'ghost'} onClick={() => setEditingId(id)}>
-                            <HiOutlinePencilAlt className='p-0 text-blue-600' />
+                      <DropdownMenuGroup>
+                        <DropdownMenuItem className='p-0'>
+                          <Button variant='ghost' onClick={() => setEditingId(item.id)}>
+                            <HiOutlinePencilAlt className='text-blue-600' />
                           </Button>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
@@ -85,10 +94,44 @@ function DataTable({ data, type }: { data: Categories | SubCategories, type: 'ca
                           <Button
                             size="sm"
                             variant="ghost"
-                            onClick={() => handleDelete(id)}
+                            onClick={() => handleDelete(item.id, item.name)}
                             className='w-full'
                           >
-                            <HiOutlineTrash className='p-0 text-destructive' />
+                            <HiOutlineTrash className='text-destructive' />
+                          </Button>
+                        </DropdownMenuItem>
+                      </DropdownMenuGroup>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </TableCell>
+              </TableRow>
+            ))}
+
+            {data.length > 0 && type === 'categories' && (data as Categories).map((item) => (
+              <TableRow key={item.id}>
+                <TableCell className='text-start'>{item.name}</TableCell>
+                <TableCell className='text-start'>{item.description}</TableCell>
+                <TableCell className='text-right'>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost">...</Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className='min-w-0'>
+                      <DropdownMenuGroup>
+                        <DropdownMenuItem className='p-0'>
+                          <Button variant='ghost' onClick={() => setEditingId(item.id)}>
+                            <HiOutlinePencilAlt className='text-blue-600' />
+                          </Button>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem className='p-0'>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => handleDelete(item.id, item.name)}
+                            className='w-full'
+                          >
+                            <HiOutlineTrash className='text-destructive' />
                           </Button>
                         </DropdownMenuItem>
                       </DropdownMenuGroup>
@@ -110,7 +153,7 @@ function DataTable({ data, type }: { data: Categories | SubCategories, type: 'ca
           }}
         />) : (
         <SubCategoryDialog
-          id={editingId}
+          subCategoryId={editingId}
           open={editingId !== null}
           onOpenChange={(isOpen) => {
             if (!isOpen) setEditingId(null);

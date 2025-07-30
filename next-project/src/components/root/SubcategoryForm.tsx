@@ -13,20 +13,34 @@ import { Button } from '@/components/ui/button';
 import { IoIosSave } from "react-icons/io";
 import { UseFormReturn } from 'react-hook-form';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '../ui/select';
-import { SubCategory } from '@/types/subcategory';
+import { NewSubCategory, SubCategory } from '@/types/subcategory';
 import { Categories } from '@/types';
 
 
 // Types
 type Props = {
-  subCategoryId?: number | null;
-  form: UseFormReturn<SubCategory>;
-  onSubmit: (body: SubCategory) => void;
+  form: UseFormReturn<NewSubCategory>;
+  onSubmit: (body: NewSubCategory) => void;
   categories: Categories,
   subCategory: SubCategory;
 };
 
-function SubCategoryForm({ subCategoryId, form, onSubmit, categories, subCategory }: Props) {
+function SubCategoryForm({ form, onSubmit, categories, subCategory }: Props) {
+  const isFormFilled =
+    form.getValues("name").trim() !== "" &&
+    form.getValues("description").trim() !== "" &&
+    form.getValues("categoryId") !== 0;
+
+  const isFormChanged = subCategory
+    ? (
+      form.getValues("name") !== subCategory.name ||
+      form.getValues("description") !== subCategory.description ||
+      form.getValues("categoryId") !== subCategory.categoryId
+    )
+    : true;
+
+  const isSubmitDisabled = !isFormFilled || (subCategory ? !isFormChanged : false);
+  
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8" autoComplete='off'>
@@ -75,8 +89,8 @@ function SubCategoryForm({ subCategoryId, form, onSubmit, categories, subCategor
               <FormLabel>Categoría</FormLabel>
               <FormControl>
                 <Select
-                  onValueChange={field.onChange}
-                  value={field.value.toString()}
+                  onValueChange={(value) => field.onChange(Number(value))}
+                  value={field.value?.toString()}
                   disabled={categories.length === 0}
                 >
                   <SelectTrigger className="w-full">
@@ -107,12 +121,7 @@ function SubCategoryForm({ subCategoryId, form, onSubmit, categories, subCategor
         <Button
           type="submit"
           className="w-full"
-          disabled={
-            subCategory &&
-            subCategory.name === form.getValues("name") &&
-            subCategory.description === form.getValues("description") &&
-            subCategory.categoryId === form.getValues("categoryId")
-          }
+          disabled={isSubmitDisabled}
         >
           <IoIosSave /> Guardar
         </Button>
