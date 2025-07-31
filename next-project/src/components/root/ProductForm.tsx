@@ -13,7 +13,6 @@ import {
 import { Button } from '@/components/ui/button';
 import { IoIosSave } from "react-icons/io";
 import { UseFormReturn } from 'react-hook-form';
-import { ProductFormData } from './CustomSheet';
 import {
   Select,
   SelectContent,
@@ -24,7 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Categories } from '@/types';
-import { Product } from '@/types/product';
+import { NewProduct, Product } from '@/types/product';
 import { SubCategories } from '@/types/subcategory';
 import Upload from './Upload';
 import { getSubCategoriesByCategory } from '@/services/subCategories';
@@ -32,15 +31,17 @@ import { getSubCategoriesByCategory } from '@/services/subCategories';
 // Types
 type Props = {
   id?: number
-  product: Product
+  // product: NewProduct
   categories: Categories
-  form: UseFormReturn<ProductFormData>;
-  onSubmit: (body: ProductFormData) => void;
+  form: UseFormReturn<NewProduct>;
+  onSubmit: (body: NewProduct) => void;
+  images: File[],
+  setImages: React.Dispatch<React.SetStateAction<File[]>>;
 };
 
 
 
-function ProductForm({ form, onSubmit, id, product, categories }: Props) {
+function ProductForm({ form, onSubmit, id, /* product, */ categories, images, setImages }: Props) {
   const values = form.watch();
   const [category, setCategory] = useState<number | null>(null);
   const [subCategoriesByCategory, setSubCategoriesByCategory] = useState<SubCategories>([]);
@@ -56,6 +57,7 @@ function ProductForm({ form, onSubmit, id, product, categories }: Props) {
       fetchSubcategories();
     }
   }, [category])
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8" autoComplete='off'>
@@ -103,7 +105,7 @@ function ProductForm({ form, onSubmit, id, product, categories }: Props) {
           {/* Category Select */}
           <FormField
             control={form.control}
-            name="category"
+            name="categoryId"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Categoría</FormLabel>
@@ -113,7 +115,7 @@ function ProductForm({ form, onSubmit, id, product, categories }: Props) {
                       field.onChange(value);
                       setCategory(Number(value));
                     }}
-                    defaultValue={field.value}
+                    value={field.value ? String(field.value) : ""}
                     disabled={categories.length === 0}
                   >
                     <SelectTrigger className="w-full">
@@ -144,14 +146,14 @@ function ProductForm({ form, onSubmit, id, product, categories }: Props) {
           {/* Sub-category Select */}
           <FormField
             control={form.control}
-            name="subCategory"
+            name="subCategoryId"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Sub-categoría</FormLabel>
                 <FormControl>
                   <Select
                     onValueChange={field.onChange}
-                    defaultValue={field.value}
+                    value={field.value ? String(field.value) : ""}
                     disabled={subCategoriesByCategory.length === 0}
                   >
                     <SelectTrigger className="w-full">
@@ -163,7 +165,7 @@ function ProductForm({ form, onSubmit, id, product, categories }: Props) {
                         {
                           subCategoriesByCategory.length > 0 && subCategoriesByCategory.map(({ id, name }) => (
                             <SelectItem
-                              value={name}
+                              value={id.toString()}
                               key={id}
                             >
                               {name}
@@ -178,16 +180,16 @@ function ProductForm({ form, onSubmit, id, product, categories }: Props) {
               </FormItem>
             )}
           />
-          {/* Prize Input */}
+          {/* Price Input */}
           <FormField
             control={form.control}
-            name="prize"
+            name="price"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Precio (Bs.)</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="30"
+                    placeholder="Ej. 120"
                     {...field}
                   />
                 </FormControl>
@@ -196,41 +198,6 @@ function ProductForm({ form, onSubmit, id, product, categories }: Props) {
             )}
           />
 
-          {/* Stock Input */}
-          <FormField
-            control={form.control}
-            name="stock"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Stock (Unidades)</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="100"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          {/* Brand Input */}
-          <FormField
-            control={form.control}
-            name="brand"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Marca</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Covertron"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
 
           {/* Discount Input */}
           <FormField
@@ -241,7 +208,7 @@ function ProductForm({ form, onSubmit, id, product, categories }: Props) {
                 <FormLabel>Descuento (%)</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="30"
+                    placeholder="Ej. 15"
                     {...field}
                   />
                 </FormControl>
@@ -250,13 +217,34 @@ function ProductForm({ form, onSubmit, id, product, categories }: Props) {
             )}
           />
         </div>
-        <Upload />
+
+        {/* Brand Input */}
+        <FormField
+          control={form.control}
+          name="brand"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Marca</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Ej. Covertron"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Upload
+          images={images}
+          setImages={setImages}
+        />
         <Button
           type="submit"
           className="w-full"
-          disabled={
-            product.name === values.name && product.description === values.description
-          }
+        // disabled={
+        //   product.name === values.name && product.description === values.description
+        // }
         >
           <IoIosSave /> Guardar
         </Button>

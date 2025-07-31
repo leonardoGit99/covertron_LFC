@@ -4,22 +4,26 @@ import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { IoIosClose } from "react-icons/io";
 
-export default function Upload() {
-  const [files, setFiles] = useState<File[]>([]);
+type Props = {
+  images: File[],
+  setImages: React.Dispatch<React.SetStateAction<File[]>>;
+}
+
+export default function Upload({ images, setImages }: Props) {
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     // Añadimos las nuevas imágenes al estado
-    setFiles((curr) => [...curr, ...acceptedFiles]);
+    setImages((curr) => [...curr, ...acceptedFiles]);
   }, []);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone({
     onDrop,
-    accept: { "image/*": [] },
+    // accept: { "image/*": [] },
   });
 
   // Función para borrar una imagen seleccionada
   const removeFile = (file: File) => {
-    setFiles((curr) => curr.filter((f) => f !== file));
+    setImages((curr) => curr.filter((f) => f !== file));
   };
 
   return (
@@ -39,7 +43,7 @@ export default function Upload() {
 
       {/* Images Preview  */}
       <div className="flex flex-wrap gap-3">
-        {files.map((file, idx) => {
+        {images.map((file, idx) => {
           const preview = URL.createObjectURL(file);
           return (
             <div

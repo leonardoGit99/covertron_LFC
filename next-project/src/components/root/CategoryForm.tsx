@@ -16,17 +16,17 @@ import { NewCategory } from '@/types';
 
 
 type Props = {
-  form: UseFormReturn<NewCategory>;
-  onSubmit: (body: NewCategory) => void;
-  id?: number
+  form: UseFormReturn<NewCategory>,
+  onSubmit: (body: NewCategory) => void,
   category: NewCategory
 };
 
-function CategoryForm({ form, onSubmit, id, category }: Props) {
-  const isFormFilled =
-    form.getValues("name").trim() !== "" &&
-    form.getValues("description").trim() !== ""
+function CategoryForm({ form, onSubmit, category }: Props) {
+  // Constraints for create category form
+  const isFormFilled = form.getValues("name").trim() !== "" && form.getValues("description").trim() !== ""
 
+
+  // Constraints for edit category form
   const isFormChanged = category
     ? (
       form.getValues("name") !== category.name ||
@@ -34,10 +34,13 @@ function CategoryForm({ form, onSubmit, id, category }: Props) {
     )
     : true;
 
+  // SaveBtn disabled constraints 
   const isSubmitDisabled = !isFormFilled || (category ? !isFormChanged : false);
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8" autoComplete='off'>
+        {/* Name input */}
         <FormField
           control={form.control}
           name="name"
@@ -55,6 +58,7 @@ function CategoryForm({ form, onSubmit, id, category }: Props) {
           )}
         />
 
+        {/* Description text area */}
         <FormField
           control={form.control}
           name="description"
@@ -74,6 +78,8 @@ function CategoryForm({ form, onSubmit, id, category }: Props) {
           )}
         />
 
+
+        {/* Save button */}
         <Button
           type="submit"
           className="w-full"

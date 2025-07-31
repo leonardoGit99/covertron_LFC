@@ -53,7 +53,6 @@ function CategoryDialog({ id, open, onOpenChange }: Props) {
   }, [id, form]);
 
 
-
   // Function to submit body to backend depending whether there's an id or not
   const onSubmit = async (body: NewCategory) => {
     console.log(body);
@@ -71,7 +70,6 @@ function CategoryDialog({ id, open, onOpenChange }: Props) {
   };
 
 
-
   // Function to observe the modal behavior
   const handleOpenChange = (isOpen: boolean) => {
     onOpenChange(isOpen);
@@ -86,7 +84,7 @@ function CategoryDialog({ id, open, onOpenChange }: Props) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle className='text-center mb-3'>
-            {!id ? "Nueva Categoría" : "Actualizar Categoría"}
+            {id ? "Actualizar Categoría" : "Nueva Categoría"}
           </DialogTitle>
           <Separator />
         </DialogHeader>
@@ -94,7 +92,6 @@ function CategoryDialog({ id, open, onOpenChange }: Props) {
         <CategoryForm
           form={form}
           onSubmit={onSubmit}
-          id={id}
           category={category}
         />
       </DialogContent>

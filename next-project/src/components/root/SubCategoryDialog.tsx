@@ -116,7 +116,7 @@ function SubCategoryDialog({ subCategoryId, open, onOpenChange }: DialogProps) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle className='text-center mb-3'>
-            {!subCategoryId ? "Nueva Sub-Categoría" : "Actualizar Sub-Categoría"}
+            {subCategoryId ? "Actualizar Sub-Categoría" : "Nueva Sub-Categoría"}
           </DialogTitle>
           <Separator />
         </DialogHeader>

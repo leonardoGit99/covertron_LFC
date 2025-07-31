@@ -9,7 +9,6 @@ const api = axios.create({
 
 
 api.interceptors.request.use(config => {
-  config.headers.set('Content-Type', 'application/json');
   return config;
 });
 

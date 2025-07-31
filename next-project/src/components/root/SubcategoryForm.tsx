@@ -90,7 +90,7 @@ function SubCategoryForm({ form, onSubmit, categories, subCategory }: Props) {
               <FormControl>
                 <Select
                   onValueChange={(value) => field.onChange(Number(value))}
-                  value={field.value?.toString()}
+                  value={field.value ? String(field.value) : ""}
                   disabled={categories.length === 0}
                 >
                   <SelectTrigger className="w-full">
