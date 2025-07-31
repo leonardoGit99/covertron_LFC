@@ -1,10 +1,12 @@
-export type Category = {
+import { categorySchema } from "@/schemas/category.schema";
+import { z } from "zod";
+
+export type NewCategory = z.infer<typeof categorySchema>;
+
+export type Category = NewCategory & {
   id: number,
-  name: string
-  description: string
 }
 
-export type NewCategory = Omit<Category, 'id'>
 
 
 export type Categories = Category[]

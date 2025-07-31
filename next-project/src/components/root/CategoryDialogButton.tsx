@@ -6,17 +6,15 @@ import CategoryDialog from "./CategoryDialog";
 // Types
 type Props = {
   btnLabel: string
-  id?: number
 }
 
-function CategoryDialogButton({ btnLabel, id }: Props) {
+function CategoryDialogButton({ btnLabel }: Props) {
   const [open, setOpen] = useState(false); // State for modal
 
   return (
     <>
       <Button onClick={() => setOpen(true)}>{btnLabel}</Button>
       <CategoryDialog
-        id={id}
         open={open}
         onOpenChange={setOpen}
       />

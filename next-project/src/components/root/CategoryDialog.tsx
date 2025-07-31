@@ -14,36 +14,25 @@ import { useRouter } from 'next/navigation';
 import CategoryForm from './CategoryForm';
 import { Separator } from '../ui/separator';
 import { toast } from 'sonner';
+import { categorySchema } from '@/schemas/category.schema';
+import { NewCategory } from '@/types';
 
-// Validations Form
-const categorySchema = z.object({
-  name: z.string().min(1, "El nombre es obligatorio"),
-  description: z.string().min(10, "La descripción debe tener al menos 10 caracteres"),
-});
 
-// Types
-export type CategoryFormData = z.infer<typeof categorySchema>;
-
-type DialogProps = {
+type Props = {
   id?: number
   open: boolean,
   onOpenChange: (open: boolean) => void
 }
 
-type Category = {
-  name: string,
-  description: string
-}
-
-function CategoryDialog({ id, open, onOpenChange }: DialogProps) {
+function CategoryDialog({ id, open, onOpenChange }: Props) {
   const router = useRouter();
-  const [category, setCategory] = useState<Category>({
+  const [category, setCategory] = useState<NewCategory>({
     name: '',
     description: '',
   }); // State to store category data from back
 
   // Resolve and default values
-  const form = useForm<CategoryFormData>({
+  const form = useForm<NewCategory>({
     resolver: zodResolver(categorySchema),
     defaultValues: {
       name: '',
@@ -66,7 +55,7 @@ function CategoryDialog({ id, open, onOpenChange }: DialogProps) {
 
 
   // Function to submit body to backend depending whether there's an id or not
-  const onSubmit = async (body: CategoryFormData) => {
+  const onSubmit = async (body: NewCategory) => {
     console.log(body);
     if (id) {
       const { message } = await updateCategory(body, id);

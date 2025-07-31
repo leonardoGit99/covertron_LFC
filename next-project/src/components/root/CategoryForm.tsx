@@ -11,24 +11,30 @@ import {
 } from "@/components/ui/form"
 import { Button } from '@/components/ui/button';
 import { IoIosSave } from "react-icons/io";
-import { CategoryFormData } from './CategoryDialog';
 import { UseFormReturn } from 'react-hook-form';
+import { NewCategory } from '@/types';
 
-// Types
-type Category = {
-  name: string,
-  description: string
-}
 
 type Props = {
-  form: UseFormReturn<CategoryFormData>;
-  onSubmit: (body: CategoryFormData) => void;
+  form: UseFormReturn<NewCategory>;
+  onSubmit: (body: NewCategory) => void;
   id?: number
-  category: Category
+  category: NewCategory
 };
 
 function CategoryForm({ form, onSubmit, id, category }: Props) {
-  const values = form.watch();
+  const isFormFilled =
+    form.getValues("name").trim() !== "" &&
+    form.getValues("description").trim() !== ""
+
+  const isFormChanged = category
+    ? (
+      form.getValues("name") !== category.name ||
+      form.getValues("description") !== category.description
+    )
+    : true;
+
+  const isSubmitDisabled = !isFormFilled || (category ? !isFormChanged : false);
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8" autoComplete='off'>
@@ -71,9 +77,7 @@ function CategoryForm({ form, onSubmit, id, category }: Props) {
         <Button
           type="submit"
           className="w-full"
-          disabled={
-            category.name === values.name && category.description === values.description
-          }
+          disabled={isSubmitDisabled}
         >
           <IoIosSave /> Guardar
         </Button>
