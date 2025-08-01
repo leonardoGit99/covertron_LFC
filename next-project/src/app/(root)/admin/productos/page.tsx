@@ -1,10 +1,15 @@
 import React from 'react'
 import SectionHeader from '@/components/root/SectionHeader'
 import { Card, CardContent } from '@/components/ui/card'
-import { Boxes  } from 'lucide-react'
+import { Boxes } from 'lucide-react'
 import CustomSheet from '@/components/root/CustomSheet'
+import { getAllProducts } from '@/services/product'
+import ProductsTable from '@/components/root/ProductsTable'
 
-function Products() {
+async function Products() {
+  const { data, success } = await getAllProducts();
+  const products = (success) ? data.products : [];
+  console.log(products)
   return (
     <div>
       <Card className='w-full shadow-md p-6'>
@@ -19,13 +24,31 @@ function Products() {
           {/* <ProductDrawerButton
             btnLabel='Crear Producto'
           /> */}
-          <CustomSheet 
+          <CustomSheet
             triggerBtnLabel="Crear Producto"
-            sheetTitle='Nuevo Producto' 
+            sheetTitle='Nuevo Producto'
           />
 
         </CardContent>
       </Card>
+
+      {products.length === 0
+        ? (
+          <p className="text-muted-foreground mt-10 text-center">
+            📭 No hay productos aún. ¡Crea el primero!
+          </p>
+        )
+        : (
+          <Card className='w-full shadow-md  mt-10 mb-6'>
+            <CardContent>
+              {/* Table */}
+              <ProductsTable
+                data={products}
+              />
+            </CardContent>
+          </Card>
+        )
+      }
     </div>
   )
 }
