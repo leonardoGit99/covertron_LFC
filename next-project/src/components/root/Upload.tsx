@@ -7,9 +7,13 @@ import { IoIosClose } from "react-icons/io";
 type Props = {
   images: File[],
   setImages: React.Dispatch<React.SetStateAction<File[]>>;
+  imageUrls: string[],
+  id?: number | null,
+  setImageUrls: React.Dispatch<React.SetStateAction<string[]>>
 }
 
-export default function Upload({ images, setImages }: Props) {
+export default function Upload({ images, setImages, imageUrls, id, setImageUrls }: Props) {
+  const visibleImages = [...imageUrls, ...images]; // Concat both arrays to show
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     // Añadimos las nuevas imágenes al estado
@@ -22,7 +26,10 @@ export default function Upload({ images, setImages }: Props) {
   });
 
   // Función para borrar una imagen seleccionada
-  const removeFile = (file: File) => {
+  const removeFile = (file: File | string) => {
+    if (id) {
+      setImageUrls((curr) => curr.filter((f) => f !== file))
+    }
     setImages((curr) => curr.filter((f) => f !== file));
   };
 
@@ -43,24 +50,28 @@ export default function Upload({ images, setImages }: Props) {
 
       {/* Images Preview  */}
       <div className="flex flex-wrap gap-3">
-        {images.map((file, idx) => {
-          const preview = URL.createObjectURL(file);
+        {visibleImages.map((img, idx) => {
+          const isFile = img instanceof File;
+          const preview = isFile ? URL.createObjectURL(img) : img;
+
           return (
             <div
-              key={file.name + idx}
+              key={isFile ? img.name + idx : img + idx}
               className="relative w-24 h-24 rounded overflow-hidden border"
             >
               <img
                 src={preview}
-                alt={file.name}
+                alt={`Image ${idx}`}
                 className="w-full h-full object-cover"
-                onLoad={() => URL.revokeObjectURL(preview)} // Clean memory
+                onLoad={() => {
+                  if (isFile) URL.revokeObjectURL(preview);
+                }}
               />
               <button
                 type="button"
-                onClick={() => removeFile(file)}
+                onClick={() => removeFile(img)}
                 className="absolute top-1 right-1 bg-red-600 text-white rounded-full w-3 h-3 flex items-center justify-center text-xs hover:bg-red-500 active:bg-red-400"
-                aria-label={`Remove ${file.name}`}
+                aria-label={`Remove image`}
               >
                 <IoIosClose />
               </button>

@@ -30,33 +30,57 @@ import { getSubCategoriesByCategory } from '@/services/subCategories';
 
 // Types
 type Props = {
-  id?: number
-  // product: NewProduct
+  id?: number | null
+  product: Product
   categories: Categories
   form: UseFormReturn<NewProduct>;
   onSubmit: (body: NewProduct) => void;
   images: File[],
-  setImages: React.Dispatch<React.SetStateAction<File[]>>;
+  setImages: React.Dispatch<React.SetStateAction<File[]>>,
+  imageUrls: string[],
+  setImageUrls: React.Dispatch<React.SetStateAction<string[]>>
 };
 
 
 
-function ProductForm({ form, onSubmit, id, /* product, */ categories, images, setImages }: Props) {
-  const values = form.watch();
-  const [category, setCategory] = useState<number | null>(null);
-  const [subCategoriesByCategory, setSubCategoriesByCategory] = useState<SubCategories>([]);
+function ProductForm({ form, onSubmit, id, product, categories, images, setImages, imageUrls, setImageUrls }: Props) {
+  const [subCategoriesByCategory, setSubCategoriesByCategory] = useState<SubCategories>([])
+  const categoryId = form.watch("categoryId");
 
   useEffect(() => {
-    if (category) {
-      const fetchSubcategories = async () => {
-        const { data, success } = await getSubCategoriesByCategory(category);
-        const subCategories = (success) ? data.subCategories : [];
-        console.log(data);
-        setSubCategoriesByCategory(subCategories);
-      }
-      fetchSubcategories();
+    if (id && product) {
+      form.reset({
+        name: product.name,
+        description: product.description,
+        categoryId: product.categoryId,
+        subCategoryId: product.subCategoryId,
+        price: product.price,
+        discount: product.discount,
+        brand: product.brand
+      })
     }
-  }, [category])
+  }, [id, product])
+
+
+  useEffect(() => {
+    if (categoryId) {
+      // Reset subCategoryId to prevent mismatch when selected category differs from the original product's category (to prevent blank subcategory select when user changes to another category that is not the current category in db)
+      if (categoryId === product.categoryId) {
+        form.resetField("subCategoryId", { defaultValue: product.subCategoryId });
+      } else {
+        form.resetField("subCategoryId", { defaultValue: null });
+      }
+
+      const fetchSubCategoriesByCategory = async () => {
+        const { data, success } = await getSubCategoriesByCategory(Number(categoryId));
+        if (success) {
+          setSubCategoriesByCategory(data.subCategories);
+        }
+      };
+      fetchSubCategoriesByCategory();
+    }
+  }, [categoryId]);
+
 
   return (
     <Form {...form}>
@@ -113,7 +137,6 @@ function ProductForm({ form, onSubmit, id, /* product, */ categories, images, se
                   <Select
                     onValueChange={(value) => {
                       field.onChange(value);
-                      setCategory(Number(value));
                     }}
                     value={field.value ? String(field.value) : ""}
                     disabled={categories.length === 0}
@@ -152,7 +175,9 @@ function ProductForm({ form, onSubmit, id, /* product, */ categories, images, se
                 <FormLabel>Sub-categoría</FormLabel>
                 <FormControl>
                   <Select
-                    onValueChange={field.onChange}
+                    onValueChange={(value) => {
+                      field.onChange(value);
+                    }}
                     value={field.value ? String(field.value) : ""}
                     disabled={subCategoriesByCategory.length === 0}
                   >
@@ -191,6 +216,7 @@ function ProductForm({ form, onSubmit, id, /* product, */ categories, images, se
                   <Input
                     placeholder="Ej. 120"
                     {...field}
+                    value={field.value ?? ''}
                   />
                 </FormControl>
                 <FormMessage />
@@ -210,6 +236,7 @@ function ProductForm({ form, onSubmit, id, /* product, */ categories, images, se
                   <Input
                     placeholder="Ej. 15"
                     {...field}
+                    value={field.value ?? ''}
                   />
                 </FormControl>
                 <FormMessage />
@@ -238,6 +265,9 @@ function ProductForm({ form, onSubmit, id, /* product, */ categories, images, se
         <Upload
           images={images}
           setImages={setImages}
+          imageUrls={imageUrls}
+          id={id}
+          setImageUrls={setImageUrls}
         />
         <Button
           type="submit"

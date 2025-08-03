@@ -110,7 +110,6 @@ function SubCategoryDialog({ subCategoryId, open, onOpenChange }: DialogProps) {
     router.refresh();
   };
 
-  console.log(subCategory)
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent>

@@ -55,7 +55,7 @@ function CategoryDialog({ id, open, onOpenChange }: Props) {
 
   // Function to submit body to backend depending whether there's an id or not
   const onSubmit = async (body: NewCategory) => {
-    console.log(body);
+
     if (id) {
       const { message } = await updateCategory(body, id);
       toast(message);

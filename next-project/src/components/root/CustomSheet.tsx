@@ -1,7 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import { Button } from '../ui/button'
-import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '../ui/sheet'
+import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle } from '../ui/sheet'
 import ProductForm from './ProductForm'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -9,65 +8,74 @@ import { useRouter } from 'next/navigation'
 import { Separator } from '../ui/separator'
 import { Categories } from '@/types'
 import { getAllCategories } from '@/services/categories'
-import { SubCategories } from '@/types/subcategory'
 import { Switch } from '../ui/switch'
 import { Label } from '../ui/label'
-import { NewProduct } from '@/types/product'
+import { NewProduct, Product } from '@/types/product'
 import { productSchema } from '@/schemas/product.schema'
-import { createProduct } from '@/services/product'
+import { createProduct, getOneProduct } from '@/services/product'
 import { toast } from 'sonner'
+import { Button } from '../ui/button'
 
 
 
 type Props = {
-  triggerBtnLabel: string
-  sheetTitle: string
-  id?: number
-  // open: boolean,
-  // onOpenChange: (open: boolean) => void
+  triggerBtnLabel?: string
+  sheetTitle?: string
+  id?: number | null
+  open: boolean,
+  onOpenChange: (open: boolean) => void
 }
 
-function CustomSheet({ triggerBtnLabel, sheetTitle, id }: Props) {
+function CustomSheet({ sheetTitle, id, open, onOpenChange }: Props) {
   const router = useRouter();
-  const [open, setOpen] = useState(false); // State for sheet
   const [categories, setCategories] = useState<Categories>([]);
   const [images, setImages] = useState<File[]>([]);
-  const [subCategories, setSubCategories] = useState<SubCategories>([]);
-  // const [product, setProduct] = useState<NewProduct>({
-  //   name: '',
-  //   description: '',
-  //   categories: [],
-  //   subCategories: [],
-  //   prize: 0,
-  //   stock: 0,
-  //   brand: '',
-  //   discount: 0
-  // }); // State to store category data from back
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
+  const [productState, setProductState] = useState<string>("available");
+  // State to store product data from back
+  const [product, setProduct] = useState<Product>({
+    id: 0,
+    name: '',
+    description: '',
+    categoryId: 0,
+    subCategoryId: 0,
+    price: 0,
+    brand: '',
+    discount: 0,
+    state: '',
+    images: []
+  });
+
   // Resolve and default values
   const form = useForm<NewProduct>({
     resolver: zodResolver(productSchema),
     defaultValues: {
       name: '',
       description: '',
-      categoryId: undefined,
-      subCategoryId: undefined,
-      price: undefined,
+      categoryId: null,
+      subCategoryId: null,
+      price: null,
       brand: '',
-      discount: undefined
+      discount: null
     }
   });
 
+
   // Getting product from backend only if there is an id
-  // useEffect(() => {
-  //   const getProduct = async () => {
-  //     if (id) {
-  //       // const product = await getOneProduct(id);
-  //       setProduct(product);
-  //       form.reset(product);
-  //     }
-  //   }
-  //   getProduct();
-  // }, [id, form]);
+  useEffect(() => {
+    const getProduct = async () => {
+      if (id) {
+        const { data: product, success } = await getOneProduct(id);
+        if (success) {
+          setProduct(product);
+          setImageUrls(product.images);
+          setProductState(product.state);
+          // form.reset(product);
+        }
+      }
+    }
+    getProduct();
+  }, [id, form]);
 
 
   useEffect(() => {
@@ -76,16 +84,53 @@ function CustomSheet({ triggerBtnLabel, sheetTitle, id }: Props) {
       setCategories(data.categories);
     }
     getCategories();
-  }, [])
+  }, []);
 
 
-
+  // Function to observe the sheet behavior
+  const handleOpenChange = (isOpen: boolean) => {
+    onOpenChange(isOpen);
+    if (isOpen || !isOpen) {
+      form.reset(); // Clean inputs when sheet is opened or closed
+      setImages([]);
+      setImageUrls([]);
+    }
+  };
 
   // Function to submit body to backend depending whether there's an id or not
   const onSubmit = async (body: NewProduct) => {
     const { categoryId, ...newBody } = body;
+    const formData = new FormData();
     if (id) {
-      // const response = await updateCategorie(body, id);
+      const isDifferentBody = product.name !== newBody.name || product.description !== newBody.description || product.subCategoryId != newBody.subCategoryId || product.price !== newBody.price || product.discount !== newBody.discount || product.brand !== newBody.brand
+
+
+
+      // If we have diferent state
+      if (product.state !== productState) {
+        console.log("Llamar endpoint para actualizar estado del producto");
+      }
+
+      // If we have images to delete
+      if (product.images.length !== imageUrls.length) {
+        console.log(console.log("Llamar endpoint para eliminar imagenes en la bd y cloudinary"))
+      }
+
+      // If we have different body that getOneProduct, so we call to endpoint to update product
+      if(isDifferentBody){
+        Object.entries(newBody).forEach(([key, value]) => {
+          formData.append(key, String(value));
+        });
+      }
+
+      //------------Ver de crear un endpoint para llamar a /productos/:id/imagenes, ver si habra problemas con la transaccion --------------------
+
+      // If there's new images, we upload it
+      images?.forEach((image) => {
+        formData.append("imgs", image);
+      });
+
+      // const response = await updateCategorie(formData, id);
       // alert(response.message);
       console.log("Actualizando Producto")
     } else {
@@ -107,9 +152,10 @@ function CustomSheet({ triggerBtnLabel, sheetTitle, id }: Props) {
         formData.append(key, String(value)); // Si el valor es un número (como price o discount), lo convertimos a string
       });
 
-      images.forEach((image) => {
+      images?.forEach((image) => {
         formData.append("imgs", image);
       });
+
 
       /* formData.append('name', body.name);
       formData.append('description', body.description);
@@ -124,7 +170,7 @@ function CustomSheet({ triggerBtnLabel, sheetTitle, id }: Props) {
 
       const { message, success } = await createProduct(formData);
       if (success) {
-        setOpen(false);
+        onOpenChange(false);
         setImages([]);
         toast(message);
       }
@@ -135,43 +181,41 @@ function CustomSheet({ triggerBtnLabel, sheetTitle, id }: Props) {
   };
 
 
-
-  // Function to observe the sheet behavior
-  const handleOpenChange = (isOpen: boolean) => {
-    setOpen(isOpen);
-    if (isOpen || !isOpen) {
-      form.reset(); // Clean inputs when sheet is opened or closed
-      setImages([]);
-    }
-  };
-
-
-  console.log(images)
+  console.log(imageUrls);
+  console.log(images);
   return (
     <Sheet open={open} onOpenChange={handleOpenChange}>
-      <SheetTrigger asChild>
-        <Button>{triggerBtnLabel}</Button>
-      </SheetTrigger>
       <SheetContent side="right">
         <SheetHeader>
           <SheetTitle>{sheetTitle}</SheetTitle>
-          <div className='flex items-center space-x-2 '>
-            <Switch checked={true} /* onCheckedChange={} */ />
-            <Label className='text-green-600 font-normal'>Disponible</Label>
-          </div>
+          {
+            id && (
+              <div className='flex items-center space-x-2 '>
+                <Switch
+                  checked={productState === 'available'}
+                  onCheckedChange={(checked) => {
+                    setProductState(checked ? 'available' : 'sold out');
+                  }}
+                />
+                <Label className={`${productState === 'available' ? 'text-green-600' : 'text-red-600'} font-normal`}>
+                  {productState === 'available' ? 'Disponible' : 'Agotado'}
+                </Label>
+              </div>
+            )
+          }
         </SheetHeader>
         <Separator className='mt-2 mb-4' />
         <ProductForm
+          id={id}
           form={form}
-          // product={product}
+          product={product}
           categories={categories}
           onSubmit={onSubmit}
           images={images}
           setImages={setImages}
+          imageUrls={imageUrls}
+          setImageUrls={setImageUrls}
         />
-        {/* <SheetFooter>
-          <Button>Cerrar</Button>
-        </SheetFooter> */}
       </SheetContent>
     </Sheet>
   )

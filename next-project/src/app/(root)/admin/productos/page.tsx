@@ -5,11 +5,12 @@ import { Boxes } from 'lucide-react'
 import CustomSheet from '@/components/root/CustomSheet'
 import { getAllProducts } from '@/services/product'
 import ProductsTable from '@/components/root/ProductsTable'
+import ProductSheetButton from '@/components/root/ProductSheetBtn'
 
 async function Products() {
   const { data, success } = await getAllProducts();
   const products = (success) ? data.products : [];
-  console.log(products)
+
   return (
     <div>
       <Card className='w-full shadow-md p-6'>
@@ -24,9 +25,9 @@ async function Products() {
           {/* <ProductDrawerButton
             btnLabel='Crear Producto'
           /> */}
-          <CustomSheet
-            triggerBtnLabel="Crear Producto"
-            sheetTitle='Nuevo Producto'
+          <ProductSheetButton
+            btnLabel='Crear Producto'
+            sheetLabel='Nuevo Producto'
           />
 
         </CardContent>

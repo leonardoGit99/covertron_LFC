@@ -1,4 +1,5 @@
-import React from 'react'
+"use client"
+import React, { useState } from 'react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu'
 import { Button } from '../ui/button'
@@ -6,12 +7,14 @@ import { HiOutlinePencilAlt, HiOutlineTrash } from 'react-icons/hi'
 import { Products } from '@/types/product'
 import Image from 'next/image'
 import { Badge } from "@/components/ui/badge"
+import CustomSheet from './CustomSheet'
 
 type Props = {
   data: Products
 }
 
 function ProductsTable({ data }: Props) {
+  const [editingId, setEditingId] = useState<number | null>(null);
   return (
     <div>
       <div className="rounded-md border overflow-hidden">
@@ -59,7 +62,7 @@ function ProductsTable({ data }: Props) {
                   {item.state === 'available'
                     ?
                     <Badge variant="outline" className='bg-green-100 px-1'>
-                      <span className='text-xs '>Disponible</span>
+                      <span className='text-xs text-green-600'>Disponible</span>
                     </Badge>
                     :
                     item.state === 'sold out' &&
@@ -76,7 +79,7 @@ function ProductsTable({ data }: Props) {
                     <DropdownMenuContent className='min-w-0'>
                       <DropdownMenuGroup>
                         <DropdownMenuItem className='p-0'>
-                          <Button variant='ghost' /* onClick={() => setEditingId(item.id)} */>
+                          <Button variant='ghost' onClick={() => setEditingId(item.id)}>
                             <HiOutlinePencilAlt className='text-blue-600' />
                           </Button>
                         </DropdownMenuItem>
@@ -101,23 +104,16 @@ function ProductsTable({ data }: Props) {
         </Table>
       </div>
 
-      {/* {editingId !== null && type == 'categories' ? (
-        <CategoryDialog
+      {editingId !== null && (
+        <CustomSheet
           id={editingId}
-          open={editingId !== null}
-          onOpenChange={(isOpen) => {
-            if (!isOpen) setEditingId(null);
-          }}
-        />) : (
-        <SubCategoryDialog
-          subCategoryId={editingId}
           open={editingId !== null}
           onOpenChange={(isOpen) => {
             if (!isOpen) setEditingId(null);
           }}
         />
       )
-      } */}
+      }
     </div >
   )
 }

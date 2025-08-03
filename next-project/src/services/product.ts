@@ -19,3 +19,12 @@ export const getAllProducts = async (): Promise<ApiResponse<ProductsResponse>> =
     return error.response.data;
   }
 }
+
+export const getOneProduct = async (productId: number): Promise<ApiResponse<Product>> => {
+  try {
+    const { data } = await api.get<ApiResponse<Product>>(`/products/${productId}`);
+    return data;
+  } catch (error: any) {
+    return error.response.data;
+  }
+} 

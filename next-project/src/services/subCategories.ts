@@ -5,7 +5,7 @@ import api from "./axios";
 
 // Endpoits
 export const createSubCategory = async (body: NewSubCategory, categoryId: number): Promise<ApiResponse<SubCategory>> => {
-  const { data } = await api.post<ApiResponse<SubCategory>>(`/categories/${categoryId}/sub-categories`, JSON.stringify(body));
+  const { data } = await api.post<ApiResponse<SubCategory>>(`/categories/${categoryId}/sub-categories`, body);
   return data;
 }
 

@@ -12,7 +12,7 @@ async function SubCategories() {
   const { data, success } = await getAllSubCategories();
   const subCategories = (success) ? data.subCategories : [];
 
-  console.log(subCategories)
+
   return (
     <div>
       <Card className='w-full shadow-md p-6'>
