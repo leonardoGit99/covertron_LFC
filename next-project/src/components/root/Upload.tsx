@@ -10,9 +10,10 @@ type Props = {
   imageUrls: string[],
   id?: number | null,
   setImageUrls: React.Dispatch<React.SetStateAction<string[]>>
+  setDeletedImages: React.Dispatch<React.SetStateAction<string[]>>
 }
 
-export default function Upload({ images, setImages, imageUrls, id, setImageUrls }: Props) {
+export default function Upload({ images, setImages, imageUrls, id, setImageUrls, setDeletedImages }: Props) {
   const visibleImages = [...imageUrls, ...images]; // Concat both arrays to show
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -27,10 +28,16 @@ export default function Upload({ images, setImages, imageUrls, id, setImageUrls 
 
   // Función para borrar una imagen seleccionada
   const removeFile = (file: File | string) => {
-    if (id) {
-      setImageUrls((curr) => curr.filter((f) => f !== file))
+    // Si es una imagen que ya estaba en el servidor (string)
+    if (typeof file === "string") {
+      setImageUrls((curr) => curr.filter((f) => f !== file));
+      setDeletedImages((curr) => [...curr, file]); 
     }
-    setImages((curr) => curr.filter((f) => f !== file));
+
+    // Si es una imagen nueva (File)
+    if (file instanceof File) {
+      setImages((curr) => curr.filter((f) => f !== file));
+    }
   };
 
   return (

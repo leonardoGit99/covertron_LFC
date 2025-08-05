@@ -27,4 +27,14 @@ export const getOneProduct = async (productId: number): Promise<ApiResponse<Prod
   } catch (error: any) {
     return error.response.data;
   }
-} 
+}
+
+export const updateProduct = async (productId: number, formData: FormData): Promise<ApiResponse<Product>> => {
+  try {
+    const { data } = await api.patch<ApiResponse<Product>>(`/products/${productId}`, formData);
+    console.log(data.message)
+    return data;
+  } catch (error: any) {
+    return error.response.data;
+  }
+}

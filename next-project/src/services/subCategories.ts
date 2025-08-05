@@ -38,7 +38,7 @@ export const getSubCategoriesByCategory = async (id: number): Promise<ApiRespons
 }
 
 export const updateSubCategory = async (body: NewSubCategory, subCategoryId: number, categoryId: number): Promise<ApiResponse<SubCategory>> => {
-  const { data } = await api.put<ApiResponse<SubCategory>>(`/categories/${categoryId}/sub-categories/${subCategoryId}`, JSON.stringify(body));
+  const { data } = await api.put<ApiResponse<SubCategory>>(`/categories/${categoryId}/sub-categories/${subCategoryId}`, body);
   return data;
 }
 

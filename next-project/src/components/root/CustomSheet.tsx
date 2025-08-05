@@ -12,7 +12,7 @@ import { Switch } from '../ui/switch'
 import { Label } from '../ui/label'
 import { NewProduct, Product } from '@/types/product'
 import { productSchema } from '@/schemas/product.schema'
-import { createProduct, getOneProduct } from '@/services/product'
+import { createProduct, getOneProduct, updateProduct } from '@/services/product'
 import { toast } from 'sonner'
 import { Button } from '../ui/button'
 
@@ -31,6 +31,7 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange }: Props) {
   const [categories, setCategories] = useState<Categories>([]);
   const [images, setImages] = useState<File[]>([]);
   const [imageUrls, setImageUrls] = useState<string[]>([]);
+  const [deletedImages, setDeletedImages] = useState<string[]>([]);
   const [productState, setProductState] = useState<string>("available");
   // State to store product data from back
   const [product, setProduct] = useState<Product>({
@@ -54,9 +55,9 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange }: Props) {
       description: '',
       categoryId: null,
       subCategoryId: null,
-      price: null,
+      price: undefined,
       brand: '',
-      discount: null
+      discount: undefined
     }
   });
 
@@ -98,41 +99,39 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange }: Props) {
   };
 
   // Function to submit body to backend depending whether there's an id or not
-  const onSubmit = async (body: NewProduct) => {
+  const onSubmit = async (body: NewProduct | Product) => {
     const { categoryId, ...newBody } = body;
     const formData = new FormData();
     if (id) {
-      const isDifferentBody = product.name !== newBody.name || product.description !== newBody.description || product.subCategoryId != newBody.subCategoryId || product.price !== newBody.price || product.discount !== newBody.discount || product.brand !== newBody.brand
+      /* const isDifferentBody = product.name !== newBody.name || product.description !== newBody.description || product.subCategoryId != newBody.subCategoryId || product.price !== newBody.price || product.discount !== newBody.discount || product.brand !== newBody.brand */
 
-
-
-      // If we have diferent state
-      if (product.state !== productState) {
-        console.log("Llamar endpoint para actualizar estado del producto");
-      }
-
-      // If we have images to delete
-      if (product.images.length !== imageUrls.length) {
-        console.log(console.log("Llamar endpoint para eliminar imagenes en la bd y cloudinary"))
-      }
-
-      // If we have different body that getOneProduct, so we call to endpoint to update product
-      if(isDifferentBody){
-        Object.entries(newBody).forEach(([key, value]) => {
+      Object.entries(newBody).forEach(([key, value]) => {
+        if (key === 'price') {
+          const numberValue = typeof value === 'number' ? value : parseFloat(String(value));
+          formData.append(key, numberValue.toFixed(2)); // Fuerza "120.00"
+        } else {
           formData.append(key, String(value));
-        });
-      }
+        }
+      });
 
-      //------------Ver de crear un endpoint para llamar a /productos/:id/imagenes, ver si habra problemas con la transaccion --------------------
+      deletedImages.forEach((url) => {
+        formData.append("deletedImages", url);
+      });
+
+      formData.append("state", productState);
 
       // If there's new images, we upload it
       images?.forEach((image) => {
         formData.append("imgs", image);
       });
 
-      // const response = await updateCategorie(formData, id);
-      // alert(response.message);
-      console.log("Actualizando Producto")
+      const { success, message } = await updateProduct(id, formData);
+      if (success) {
+        onOpenChange(false);
+        setImages([]);
+        toast(message);
+      }
+      router.refresh();
     } else {
       const formData = new FormData();
       Object.entries(newBody).forEach(([key, value]) => { // .entries Convierte un objeto en un array de pares clave-valor, pasamos como parametro una asignacion dinamica: Ej.
@@ -149,7 +148,12 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange }: Props) {
         //   ["discount", 10]
         // ]
 
-        formData.append(key, String(value)); // Si el valor es un número (como price o discount), lo convertimos a string
+        if (key === 'price') {
+          const numberValue = typeof value === 'number' ? value : parseFloat(String(value));
+          formData.append(key, numberValue.toFixed(2)); // Fuerza "120.00"
+        } else {
+          formData.append(key, String(value));
+        } // Si el valor es un número (como price), lo convertimos a string
       });
 
       images?.forEach((image) => {
@@ -214,6 +218,7 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange }: Props) {
           images={images}
           setImages={setImages}
           imageUrls={imageUrls}
+          setDeletedImages={setDeletedImages}
           setImageUrls={setImageUrls}
         />
       </SheetContent>

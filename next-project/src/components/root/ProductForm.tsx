@@ -39,11 +39,12 @@ type Props = {
   setImages: React.Dispatch<React.SetStateAction<File[]>>,
   imageUrls: string[],
   setImageUrls: React.Dispatch<React.SetStateAction<string[]>>
+  setDeletedImages: React.Dispatch<React.SetStateAction<string[]>>
 };
 
 
 
-function ProductForm({ form, onSubmit, id, product, categories, images, setImages, imageUrls, setImageUrls }: Props) {
+function ProductForm({ form, onSubmit, id, product, categories, images, setImages, imageUrls, setImageUrls, setDeletedImages }: Props) {
   const [subCategoriesByCategory, setSubCategoriesByCategory] = useState<SubCategories>([])
   const categoryId = form.watch("categoryId");
 
@@ -214,9 +215,20 @@ function ProductForm({ form, onSubmit, id, product, categories, images, setImage
                 <FormLabel>Precio (Bs.)</FormLabel>
                 <FormControl>
                   <Input
+                    type='number'
+                    step='0.01'
                     placeholder="Ej. 120"
                     {...field}
                     value={field.value ?? ''}
+                    onBlur={(e) => {
+                      // Convierte a número y luego a string con dos decimales
+                      const value = parseFloat(e.target.value);
+                      if (!isNaN(value)) {
+                        field.onChange(value.toFixed(2)); // convierte a string tipo "120.00"
+                      } else {
+                        field.onChange(''); // opcional: limpiar si no es válido
+                      }
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -268,6 +280,7 @@ function ProductForm({ form, onSubmit, id, product, categories, images, setImage
           imageUrls={imageUrls}
           id={id}
           setImageUrls={setImageUrls}
+          setDeletedImages={setDeletedImages}
         />
         <Button
           type="submit"
