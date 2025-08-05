@@ -34,7 +34,7 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange }: Props) {
   const [deletedImages, setDeletedImages] = useState<string[]>([]);
   const [productState, setProductState] = useState<string>("available");
   // State to store product data from back
-  const [product, setProduct] = useState<Product>({
+  const [product, setProduct] = useState<Omit<Product, 'categoryName' | 'subCategoryName'>>({
     id: 0,
     name: '',
     description: '',
@@ -201,7 +201,7 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange }: Props) {
                     setProductState(checked ? 'available' : 'sold out');
                   }}
                 />
-                <Label className={`${productState === 'available' ? 'text-green-600' : 'text-red-600'} font-normal`}>
+                <Label className={`${productState === 'available' ? 'text-green-600' : 'text-red-600'} font-normal transition-colors duration-200`}>
                   {productState === 'available' ? 'Disponible' : 'Agotado'}
                 </Label>
               </div>

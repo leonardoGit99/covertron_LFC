@@ -31,7 +31,7 @@ import { getSubCategoriesByCategory } from '@/services/subCategories';
 // Types
 type Props = {
   id?: number | null
-  product: Product
+  product: Omit<Product, 'categoryName' | 'subCategoryName'>
   categories: Categories
   form: UseFormReturn<NewProduct>;
   onSubmit: (body: NewProduct) => void;
