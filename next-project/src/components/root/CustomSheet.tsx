@@ -67,7 +67,7 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange }: Props) {
     const getProduct = async () => {
       if (id) {
         const { data: product, success } = await getOneProduct(id);
-        if (success) {
+        if (success && product) {
           setProduct(product);
           setImageUrls(product.images);
           setProductState(product.state);
@@ -81,8 +81,10 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange }: Props) {
 
   useEffect(() => {
     const getCategories = async () => {
-      const { data } = await getAllCategories();
-      setCategories(data.categories);
+      const { data, success } = await getAllCategories();
+      if (success && data) {
+        setCategories(data.categories);
+      }
     }
     getCategories();
   }, []);
@@ -131,6 +133,7 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange }: Props) {
         setImages([]);
         toast(message);
       }
+      form.reset();
       router.refresh();
     } else {
       const formData = new FormData();
@@ -181,12 +184,10 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange }: Props) {
       console.log("Creando Producto")
     }
     // onOpenChange(false);
+    form.reset();
     router.refresh();
   };
 
-
-  console.log(imageUrls);
-  console.log(images);
   return (
     <Sheet open={open} onOpenChange={handleOpenChange}>
       <SheetContent side="right">

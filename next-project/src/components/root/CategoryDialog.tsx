@@ -6,7 +6,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createCategory, getOneCategory, updateCategory } from '@/services/categories';
@@ -44,8 +43,10 @@ function CategoryDialog({ id, open, onOpenChange }: Props) {
   useEffect(() => {
     const getCategory = async () => {
       if (id) {
-        const { data } = await getOneCategory(id);
-        setCategory(data);
+        const { success, data } = await getOneCategory(id);
+        if (success && data) {
+          setCategory(data);
+        }
         form.reset(data);
       }
     }

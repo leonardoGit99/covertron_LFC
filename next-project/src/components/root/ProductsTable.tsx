@@ -8,13 +8,33 @@ import { Products } from '@/types/product'
 import Image from 'next/image'
 import { Badge } from "@/components/ui/badge"
 import CustomSheet from './CustomSheet'
+import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
+import { deleteProduct } from '@/services/product'
 
 type Props = {
   data: Products
 }
 
 function ProductsTable({ data }: Props) {
+  const router = useRouter();
   const [editingId, setEditingId] = useState<number | null>(null);
+  const handleDelete = async (productId: number, productName: string) => {
+    toast(`¿Estás seguro de eliminar el Producto '${productName}'?`, {
+      action: {
+        label: "OK",
+        onClick: async () => {
+          const { success, message } = await deleteProduct(productId);
+          if (success) {
+            router.refresh();
+            toast(message, {
+              description: `Se ha eliminado el producto '${productName}'`,
+            });
+          }
+        },
+      },
+    });
+  }
   return (
     <div>
       <div className="rounded-md border overflow-hidden">
@@ -88,7 +108,7 @@ function ProductsTable({ data }: Props) {
                           <Button
                             size="sm"
                             variant="ghost"
-                            // onClick={() => handleDelete(item.id, item.name)}
+                            onClick={() => handleDelete(item.id, item.name)}
                             className='w-full'
                           >
                             <HiOutlineTrash className='text-destructive' />

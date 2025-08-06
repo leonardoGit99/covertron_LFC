@@ -28,8 +28,12 @@ export const getAllCategories = async (): Promise<ApiResponse<CategoriesResponse
 }
 
 export const getOneCategory = async (id: number): Promise<ApiResponse<Category>> => {
-  const { data } = await api.get<ApiResponse<Category>>(`/categories/${id}`);
-  return data;
+  try {
+    const { data } = await api.get<ApiResponse<Category>>(`/categories/${id}`);
+    return data;
+  } catch (error: any) {
+    return error.response?.data
+  }
 }
 
 export const updateCategory = async (body: NewCategory, id: number): Promise<ApiResponse<SubCategory>> => {

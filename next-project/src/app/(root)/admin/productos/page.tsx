@@ -9,7 +9,7 @@ import ProductSheetButton from '@/components/root/ProductSheetBtn'
 
 async function Products() {
   const { data, success } = await getAllProducts();
-  const products = (success) ? data.products : [];
+  const products = (success && data) ? data.products : [];
 
   return (
     <div>

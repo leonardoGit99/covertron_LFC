@@ -50,8 +50,10 @@ function SubCategoryDialog({ subCategoryId, open, onOpenChange }: DialogProps) {
   useEffect(() => {
     const fetchSubCategory = async () => {
       if (subCategoryId) {
-        const { data } = await getOneSubCategory(subCategoryId)
-        setSubCategory(data);
+        const { data, success } = await getOneSubCategory(subCategoryId)
+        if (success && data) {
+          setSubCategory(data);
+        }
       }
     }
     fetchSubCategory();
@@ -62,7 +64,7 @@ function SubCategoryDialog({ subCategoryId, open, onOpenChange }: DialogProps) {
     if (subCategory) {
       const fetchCategories = async () => {
         const { data, success } = await getAllCategories();
-        const categories = (success) ? data.categories : [];
+        const categories = (success && data) ? data.categories : [];
         setCategories(categories);
         form.reset({
           name: subCategory.name,

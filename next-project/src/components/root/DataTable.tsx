@@ -35,7 +35,7 @@ function DataTable({ data, type }: { data: Categories | SubCategories, type: 'ca
             const { message } = await deleteCategory(id);
             router.refresh();
             toast(message, {
-              description: "Se ha eliminado la categoría",
+              description: `Se ha eliminado la categoría ${name}`,
             });
           },
         },
@@ -48,7 +48,7 @@ function DataTable({ data, type }: { data: Categories | SubCategories, type: 'ca
             const { message } = await deleteSubCategory(id);
             router.refresh();
             toast(message, {
-              description: "Se ha eliminado la sub-categoría",
+              description: `Se ha eliminado la sub-categoría ${name}`,
             });
           },
         },

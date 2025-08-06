@@ -74,7 +74,7 @@ function ProductForm({ form, onSubmit, id, product, categories, images, setImage
 
       const fetchSubCategoriesByCategory = async () => {
         const { data, success } = await getSubCategoriesByCategory(Number(categoryId));
-        if (success) {
+        if (success && data) {
           setSubCategoriesByCategory(data.subCategories);
         }
       };

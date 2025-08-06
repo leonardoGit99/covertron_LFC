@@ -7,7 +7,7 @@ import SectionHeader from '@/components/root/SectionHeader';
 
 export default async function Categories() {
   const { data, success } = await getAllCategories();
-  const categories = (success) ? data.categories : [];
+  const categories = (success && data) ? data.categories : [];
 
   return (
     <div>

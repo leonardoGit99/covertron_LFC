@@ -7,7 +7,7 @@ export const createProduct = async (body: FormData): Promise<ApiResponse<Product
     const { data } = await api.post<ApiResponse<Product>>(`/products`, body);
     return data;
   } catch (error: any) {
-    return error.response.data;
+    return error.response?.data;
   }
 }
 
@@ -16,7 +16,7 @@ export const getAllProducts = async (): Promise<ApiResponse<ProductsResponse>> =
     const { data } = await api.get<ApiResponse<ProductsResponse>>(`/products`);
     return data;
   } catch (error: any) {
-    return error.response.data;
+    return error.response?.data;
   }
 }
 
@@ -25,7 +25,7 @@ export const getOneProduct = async (productId: number): Promise<ApiResponse<Prod
     const { data } = await api.get<ApiResponse<Product>>(`/products/${productId}`);
     return data;
   } catch (error: any) {
-    return error.response.data;
+    return error.response?.data;
   }
 }
 
@@ -35,6 +35,15 @@ export const updateProduct = async (productId: number, formData: FormData): Prom
     console.log(data.message)
     return data;
   } catch (error: any) {
-    return error.response.data;
+    return error.response?.data;
+  }
+}
+
+export const deleteProduct = async (productId: number): Promise<ApiResponse> => {
+  try {
+    const { data } = await api.delete<ApiResponse>(`/products/${productId}`);
+    return data;
+  } catch (error: any) {
+    return error.response?.data
   }
 }

@@ -10,7 +10,7 @@ import { RiFolderOpenLine } from "react-icons/ri";
 
 async function SubCategories() {
   const { data, success } = await getAllSubCategories();
-  const subCategories = (success) ? data.subCategories : [];
+  const subCategories = (success && data) ? data.subCategories : [];
 
 
   return (
