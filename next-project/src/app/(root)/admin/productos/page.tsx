@@ -2,10 +2,10 @@ import React from 'react'
 import SectionHeader from '@/components/root/SectionHeader'
 import { Card, CardContent } from '@/components/ui/card'
 import { Boxes } from 'lucide-react'
-import CustomSheet from '@/components/root/CustomSheet'
 import { getAllProducts } from '@/services/product'
 import ProductsTable from '@/components/root/ProductsTable'
 import ProductSheetButton from '@/components/root/ProductSheetBtn'
+import SearchInput from '@/components/root/SearchInput'
 
 async function Products() {
   const { data, success } = await getAllProducts();
@@ -40,14 +40,9 @@ async function Products() {
           </p>
         )
         : (
-          <Card className='w-full shadow-md  mt-10 mb-6'>
-            <CardContent>
-              {/* Table */}
-              <ProductsTable
-                data={products}
-              />
-            </CardContent>
-          </Card>
+          <ProductsTable
+            data={products}
+          />
         )
       }
     </div>

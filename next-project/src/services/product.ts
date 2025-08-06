@@ -1,6 +1,7 @@
 import { ApiResponse } from "@/types/api";
 import { NewProduct, Product, ProductsResponse } from "@/types/product";
 import api from "./axios";
+import { ChangeEvent } from "react";
 
 export const createProduct = async (body: FormData): Promise<ApiResponse<Product>> => {
   try {
@@ -14,6 +15,15 @@ export const createProduct = async (body: FormData): Promise<ApiResponse<Product
 export const getAllProducts = async (): Promise<ApiResponse<ProductsResponse>> => {
   try {
     const { data } = await api.get<ApiResponse<ProductsResponse>>(`/products`);
+    return data;
+  } catch (error: any) {
+    return error.response?.data;
+  }
+}
+
+export const getFilteredProducts = async (search: string): Promise<ApiResponse<ProductsResponse>> => {
+  try {
+    const { data } = await api.get<ApiResponse<ProductsResponse>>(`/products?search=${search}`);
     return data;
   } catch (error: any) {
     return error.response?.data;
