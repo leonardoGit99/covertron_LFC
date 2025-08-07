@@ -1,11 +1,11 @@
 import React from 'react'
-import { Card, CardContent, CardFooter } from './ui/card'
+import { Card, CardContent, CardFooter } from '../ui/card'
 import Image, { StaticImageData } from 'next/image'
 type ProductCardProps = {
   id: number;
   img: StaticImageData | string;
-  sizeAvailable: string;
-  prize: string;
+  name: string;
+  price: number;
 }
 
 type ColorKey = 'beige' | 'blue' | 'brown';
@@ -18,7 +18,7 @@ const colorClasses: Record<ColorKey, string> = {
 
 const availableColors: ColorKey[] = ['beige', 'blue', 'brown'];
 
-function ProductCard({ id, img, sizeAvailable, prize }: ProductCardProps) {
+function ProductCard({ id, img, name, price }: ProductCardProps) {
   return (
     <Card className='group w-[90vw] sm:w-[350px] overflow-hidden hover:shadow-md hover:bg-slate-50 hover:shadow-gray-400 transition-shadow duration-300 hover:cursor-pointer'>
       <CardContent>
@@ -35,10 +35,10 @@ function ProductCard({ id, img, sizeAvailable, prize }: ProductCardProps) {
       <CardFooter className='text-slate-700  p-4 gap-3'>
         <div>
           <p className='font-semibold'>
-            {sizeAvailable}
+            {name}
           </p>
           <p>
-            {prize} Bs.
+            {price} Bs.
           </p>
         </div>
         <div className="flex gap-2">

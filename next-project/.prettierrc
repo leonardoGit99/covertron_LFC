@@ -1,0 +1,8 @@
+{
+  "singleQuote": true,
+  "tsxSingleQuote": true,
+  "trailingComma": "es5",
+  "tabWith": 2,
+  "semi": true,
+  "singleAttributePerLine": true
+}

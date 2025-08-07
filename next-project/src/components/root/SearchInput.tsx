@@ -1,26 +1,25 @@
-"use client"
-import React, { ChangeEvent } from 'react'
-import { Input } from '../ui/input'
-import { Card } from '../ui/card'
-
+'use client';
+import React, { ChangeEvent } from 'react';
+import { Input } from '../ui/input';
+import { Card } from '../ui/card';
+import { CgSearch } from 'react-icons/cg';
 type Props = {
-  handleChange: (search: ChangeEvent<HTMLInputElement>) => void
-}
+  handleChange: (search: ChangeEvent<HTMLInputElement>) => void;
+};
 
 function SearchInput({ handleChange }: Props) {
-
   return (
-    <div className='flex justify-end mt-10 w-full'>
-      <Card
-        className='w-full max-w-md shadow-sm'
-      >
+    <Card className="w-full max-w-md shadow-sm">
+      <div className="relative">
+        <CgSearch className="absolute left-3 top-5 -translate-y-1/2 text-gray-400 text-sm" />
         <Input
-          placeholder='Buscar productos...'
-          onChange={(event) => handleChange(event)}
+          placeholder="¿Qué estás buscando?"
+          onChange={handleChange}
+          className="pl-9"
         />
-      </Card>
-    </div>
-  )
+      </div>
+    </Card>
+  );
 }
 
-export default React.memo(SearchInput)
+export default React.memo(SearchInput);

@@ -131,10 +131,10 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange }: Props) {
       if (success) {
         onOpenChange(false);
         setImages([]);
+        router.refresh();
         toast(message);
       }
       form.reset();
-      router.refresh();
     } else {
       const formData = new FormData();
       Object.entries(newBody).forEach(([key, value]) => { // .entries Convierte un objeto en un array de pares clave-valor, pasamos como parametro una asignacion dinamica: Ej.
@@ -179,13 +179,13 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange }: Props) {
       if (success) {
         onOpenChange(false);
         setImages([]);
+        router.refresh();
         toast(message);
       }
       console.log("Creando Producto")
     }
     // onOpenChange(false);
     form.reset();
-    router.refresh();
   };
 
   return (
