@@ -1,7 +1,12 @@
 import React, { useCallback, useEffect, useState, ChangeEvent } from 'react';
 import ProductCard from './ProductCard';
 import Link from 'next/link';
-import { getAllProducts, getFilteredProducts } from '@/services/product';
+import {
+  getAllAvailableProducts,
+  getAllProducts,
+  getFilteredAvailableProducts,
+  getFilteredProducts,
+} from '@/services/product';
 import { Products } from '@/types/product';
 import CustomPagination from '../shared/CustomPagination';
 import { debounce } from 'lodash';
@@ -20,7 +25,7 @@ function ProductsList() {
   // Get all products
   const fetchProducts = async () => {
     setIsLoading(true);
-    const { success, data } = await getAllProducts(currentPage, limit);
+    const { success, data } = await getAllAvailableProducts(currentPage, limit);
     if (success && data) {
       setProducts(data.products);
       setTotalProducts(data.total);
@@ -36,7 +41,7 @@ function ProductsList() {
   const debouncedSearch = useCallback(
     debounce(async (value: string) => {
       setIsLoading(true);
-      const { data, success } = await getFilteredProducts(
+      const { data, success } = await getFilteredAvailableProducts(
         value,
         limit,
         currentPage

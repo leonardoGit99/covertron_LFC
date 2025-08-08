@@ -13,6 +13,15 @@ export const createProduct = async (body: FormData): Promise<ApiResponse<Product
 
 export const getAllProducts = async (currentPage: number, limit: number): Promise<ApiResponse<ProductsResponse>> => {
   try {
+    const { data } = await api.get<ApiResponse<ProductsResponse>>(`/admin/products?page=${currentPage}&limit=${limit}`);
+    return data;
+  } catch (error: any) {
+    return error.response?.data;
+  }
+}
+
+export const getAllAvailableProducts = async (currentPage: number, limit: number): Promise<ApiResponse<ProductsResponse>> => {
+  try {
     const { data } = await api.get<ApiResponse<ProductsResponse>>(`/products?page=${currentPage}&limit=${limit}`);
     return data;
   } catch (error: any) {
@@ -20,7 +29,17 @@ export const getAllProducts = async (currentPage: number, limit: number): Promis
   }
 }
 
+
 export const getFilteredProducts = async (search: string, limit: number, currentPage: number): Promise<ApiResponse<ProductsResponse>> => {
+  try {
+    const { data } = await api.get<ApiResponse<ProductsResponse>>(`/admin/products?search=${search}&page=${currentPage}&limit${limit}`);
+    return data;
+  } catch (error: any) {
+    return error.response?.data;
+  }
+}
+
+export const getFilteredAvailableProducts = async (search: string, limit: number, currentPage: number): Promise<ApiResponse<ProductsResponse>> => {
   try {
     const { data } = await api.get<ApiResponse<ProductsResponse>>(`/products?search=${search}&page=${currentPage}&limit${limit}`);
     return data;
@@ -28,6 +47,7 @@ export const getFilteredProducts = async (search: string, limit: number, current
     return error.response?.data;
   }
 }
+
 
 export const getOneProduct = async (productId: number): Promise<ApiResponse<Product>> => {
   try {
