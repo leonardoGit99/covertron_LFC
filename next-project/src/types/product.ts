@@ -9,7 +9,9 @@ export type Product = NewProduct & {
   state: string,
   categoryName: string,
   subCategoryName: string,
-  images: string[]
+  images: string[],
+  createdAt: string,
+  discountedPrice: string
 };
 
 export type Products = Product[];

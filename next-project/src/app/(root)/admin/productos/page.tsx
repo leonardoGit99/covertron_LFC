@@ -2,10 +2,8 @@ import React from 'react';
 import SectionHeader from '@/components/root/SectionHeader';
 import { Card, CardContent } from '@/components/ui/card';
 import { Boxes } from 'lucide-react';
-import { getAllProducts } from '@/services/product';
 import ProductsTable from '@/components/root/ProductsTable';
 import ProductSheetButton from '@/components/root/ProductSheetBtn';
-import SearchInput from '@/components/root/SearchInput';
 
 async function Products() {
   return (

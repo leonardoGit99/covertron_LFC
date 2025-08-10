@@ -34,13 +34,13 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange }: Props) {
   const [deletedImages, setDeletedImages] = useState<string[]>([]);
   const [productState, setProductState] = useState<string>("available");
   // State to store product data from back
-  const [product, setProduct] = useState<Omit<Product, 'categoryName' | 'subCategoryName'>>({
+  const [product, setProduct] = useState<Omit<Product, 'categoryName' | 'subCategoryName' | 'discountedPrice' | 'createdAt'>>({
     id: 0,
     name: '',
     description: '',
     categoryId: 0,
     subCategoryId: 0,
-    price: 0,
+    originalPrice: 0,
     brand: '',
     discount: 0,
     state: '',
@@ -55,7 +55,7 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange }: Props) {
       description: '',
       categoryId: null,
       subCategoryId: null,
-      price: undefined,
+      originalPrice: undefined,
       brand: '',
       discount: undefined
     }

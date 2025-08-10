@@ -10,7 +10,7 @@ import {
 import { Products } from '@/types/product';
 import CustomPagination from '../shared/CustomPagination';
 import { debounce } from 'lodash';
-import SearchInput from '../root/SearchInput';
+import SearchInput from '../shared/SearchInput';
 
 function ProductsList() {
   const [loading, setIsLoading] = useState(false);
@@ -85,14 +85,15 @@ function ProductsList() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 xxl:grid-cols-4  gap-12">
             {products.map((item) => (
               <Link
-                href={`/productos/fundas/${item.id}`}
+                href={`/productos/${item.id}`}
                 key={item.id}
               >
                 <ProductCard
-                  id={item.id}
                   img={item.images[0]}
                   name={item.name}
-                  price={item.price}
+                  originalPrice={item.originalPrice}
+                  discountedPrice= {item.discountedPrice}
+                  discount= {item.discount}
                 />
               </Link>
             ))}

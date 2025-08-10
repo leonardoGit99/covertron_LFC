@@ -13,10 +13,6 @@ function Footer() {
       id: 2,
       title: 'Nuestro catálogo',
       link: '/productos'
-    }, {
-      id: 3,
-      title: 'Contacto',
-      link: '/contacto'
     }
   ]
   return (

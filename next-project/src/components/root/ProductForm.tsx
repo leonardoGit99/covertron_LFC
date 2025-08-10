@@ -31,7 +31,7 @@ import { getSubCategoriesByCategory } from '@/services/subCategories';
 // Types
 type Props = {
   id?: number | null
-  product: Omit<Product, 'categoryName' | 'subCategoryName'>
+  product: Omit<Product, 'categoryName' | 'subCategoryName' | 'discountedPrice' | 'createdAt'>
   categories: Categories
   form: UseFormReturn<NewProduct>;
   onSubmit: (body: NewProduct) => void;
@@ -55,7 +55,7 @@ function ProductForm({ form, onSubmit, id, product, categories, images, setImage
         description: product.description,
         categoryId: product.categoryId,
         subCategoryId: product.subCategoryId,
-        price: product.price,
+        originalPrice: product.originalPrice,
         discount: product.discount,
         brand: product.brand
       })
@@ -209,7 +209,7 @@ function ProductForm({ form, onSubmit, id, product, categories, images, setImage
           {/* Price Input */}
           <FormField
             control={form.control}
-            name="price"
+            name="originalPrice"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Precio (Bs.)</FormLabel>

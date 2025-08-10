@@ -30,7 +30,7 @@ import {
   getFilteredProducts,
 } from '@/services/product';
 import { Card, CardContent } from '../ui/card';
-import SearchInput from './SearchInput';
+import SearchInput from '../shared/SearchInput';
 import { debounce } from 'lodash';
 import CustomPagination from '../shared/CustomPagination';
 
@@ -143,8 +143,13 @@ function ProductsTable(/* { data }: Props */) {
                       <TableHead className="text-left">Sub Categoría</TableHead>
                       <TableHead className="text-left">Marca</TableHead>
                       <TableHead className="text-left">Nombre</TableHead>
-                      <TableHead className="text-left">Descripción</TableHead>
-                      <TableHead className="text-left">Precio</TableHead>
+                      <TableHead className="text-left">
+                        Precio Original
+                      </TableHead>
+                      <TableHead className="text-left">Descuento</TableHead>
+                      <TableHead className="text-left">
+                        Precio con Descuento
+                      </TableHead>
                       <TableHead className="text-center">Imagen</TableHead>
                       <TableHead className="text-left">Estado</TableHead>
                       <TableHead className="text-right">Acciones</TableHead>
@@ -167,10 +172,13 @@ function ProductsTable(/* { data }: Props */) {
                             {item.name}
                           </TableCell>
                           <TableCell className="text-start">
-                            {item.description}
+                            {item.originalPrice}
                           </TableCell>
                           <TableCell className="text-start">
-                            {item.price}
+                            {item.discount} %
+                          </TableCell>
+                          <TableCell className="text-start">
+                            {item.discountedPrice}
                           </TableCell>
                           <TableCell className="text-start">
                             <div className="relative w-full aspect-[4/3] overflow-hidden rounded-sm">
