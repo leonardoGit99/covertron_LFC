@@ -1,10 +1,12 @@
 
-import { subCategorySchema } from "@/schemas/subCategory.schema";
+import { createSubCategorySchema, updateSubCategorySchema } from "@/schemas/subCategory.schema";
 import { z } from "zod";
 
-export type NewSubCategory = z.infer<typeof subCategorySchema>;
+export type CreateSubCategory = z.infer<typeof createSubCategorySchema>;
 
-export type SubCategory = NewSubCategory & {
+export type UpdateSubCategory = z.infer<typeof updateSubCategorySchema>;
+
+export type SubCategory = CreateSubCategory & {
   id: number;
   categoryName: string;
 };
@@ -13,9 +15,6 @@ export type SubCategory = NewSubCategory & {
 
 export type SubCategoryWithoutID = Omit<SubCategory, 'id'>
 
-export type SubCategoryWithCategoryName = SubCategory & {
-  categoryName: string;
-}
 
 
 export type SubCategories = SubCategory[];

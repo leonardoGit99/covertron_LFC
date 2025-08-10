@@ -1,5 +1,5 @@
-"use client"
-import React, { useEffect, useState } from 'react'
+'use client';
+import React, { useEffect, useState } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -10,52 +10,59 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { Separator } from '../ui/separator';
-import { NewSubCategory, SubCategoryWithCategoryName } from '@/types/subcategory';
+import {
+  CreateSubCategory,
+  SubCategory,
+  UpdateSubCategory,
+} from '@/types/subcategory';
 import SubCategoryForm from './SubcategoryForm';
-import { createSubCategory, getOneSubCategory, updateSubCategory } from '@/services/subCategories';
+import {
+  createSubCategory,
+  getOneSubCategory,
+  updateSubCategory,
+} from '@/services/subCategories';
 import { Categories } from '@/types';
 import { getAllCategories } from '@/services/categories';
-import { toast } from "sonner"
-import { subCategorySchema } from '@/schemas/subCategory.schema';
-
+import { toast } from 'sonner';
+import { createSubCategorySchema } from '@/schemas/subCategory.schema';
 
 type DialogProps = {
-  subCategoryId?: number | null
-  open: boolean,
-  onOpenChange: (open: boolean) => void
-}
+  subCategoryId?: number | null;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+};
 
 function SubCategoryDialog({ subCategoryId, open, onOpenChange }: DialogProps) {
   const router = useRouter();
-  const [subCategory, setSubCategory] = useState<SubCategoryWithCategoryName>({
+  const [subCategory, setSubCategory] = useState<SubCategory>({
     id: 0,
     name: '',
     description: '',
     categoryId: 0,
-    categoryName: ''
+    categoryName: '',
   }); // State to store sub category data from back
   const [categories, setCategories] = useState<Categories>([]); // State to store categories data from back
 
   // Resolve and default values
-  const form = useForm<NewSubCategory>({
-    resolver: zodResolver(subCategorySchema),
+  const form = useForm<CreateSubCategory>({
+    resolver: zodResolver(createSubCategorySchema),
     defaultValues: {
       name: '',
       description: '',
-      categoryId: 0
-    }
+      categoryId: 0,
+    },
   });
 
   // Getting category from backend only if there is an id
   useEffect(() => {
     const fetchSubCategory = async () => {
       if (subCategoryId) {
-        const { data, success } = await getOneSubCategory(subCategoryId)
+        const { data, success } = await getOneSubCategory(subCategoryId);
         if (success && data) {
           setSubCategory(data);
         }
       }
-    }
+    };
     fetchSubCategory();
   }, [subCategoryId]);
 
@@ -64,18 +71,17 @@ function SubCategoryDialog({ subCategoryId, open, onOpenChange }: DialogProps) {
     if (subCategory) {
       const fetchCategories = async () => {
         const { data, success } = await getAllCategories();
-        const categories = (success && data) ? data.categories : [];
+        const categories = success && data ? data.categories : [];
         setCategories(categories);
         form.reset({
           name: subCategory.name,
           description: subCategory.description,
-          categoryId: subCategory.categoryId
+          categoryId: subCategory.categoryId,
         });
-      }
+      };
       fetchCategories();
     }
   }, [subCategory]);
-
 
   // Function to observe the modal behavior
   const handleOpenChange = (isOpen: boolean) => {
@@ -87,25 +93,29 @@ function SubCategoryDialog({ subCategoryId, open, onOpenChange }: DialogProps) {
         name: '',
         description: '',
         categoryId: 0,
-        categoryName: ''
+        categoryName: '',
       });
     }
   };
 
   // Function to submit body to backend depending whether there's an id or not
-  const onSubmit = async (body: NewSubCategory) => {
-    const { categoryId, ...rest } = body;
-    const newBody: NewSubCategory = {
-      ...rest,
-      categoryId,
-    };
+  const onSubmit = async (body: CreateSubCategory | UpdateSubCategory) => {
     if (subCategoryId) {
-      const response = await updateSubCategory(newBody, subCategoryId, categoryId);
-      toast(response.message);
+      const { categoryId } = body as UpdateSubCategory;
+      const { message } = await updateSubCategory(
+        body,
+        subCategoryId,
+        categoryId as number
+      );
+      toast(message);
       form.reset();
     } else {
-      const response = await createSubCategory(newBody, categoryId);
-      toast(response.message);
+      const { categoryId } = body as CreateSubCategory;
+      const { message } = await createSubCategory(
+        body as CreateSubCategory,
+        categoryId
+      );
+      toast(message);
       form.reset();
     }
     onOpenChange(false);
@@ -113,11 +123,14 @@ function SubCategoryDialog({ subCategoryId, open, onOpenChange }: DialogProps) {
   };
 
   return (
-    <Dialog open={open} onOpenChange={handleOpenChange}>
+    <Dialog
+      open={open}
+      onOpenChange={handleOpenChange}
+    >
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className='text-center mb-3'>
-            {subCategoryId ? "Actualizar Sub-Categoría" : "Nueva Sub-Categoría"}
+          <DialogTitle className="text-center mb-3">
+            {subCategoryId ? 'Actualizar Sub-Categoría' : 'Nueva Sub-Categoría'}
           </DialogTitle>
           <Separator />
         </DialogHeader>
@@ -130,7 +143,7 @@ function SubCategoryDialog({ subCategoryId, open, onOpenChange }: DialogProps) {
         />
       </DialogContent>
     </Dialog>
-  )
+  );
 }
 
-export default SubCategoryDialog
+export default SubCategoryDialog;
