@@ -1,10 +1,10 @@
 import { ApiResponse } from "@/types/api";
-import { CategoriesResponse, Category, NewCategory } from "@/types";
+import { CategoriesResponse, Category, CreateCategoryDTO, UpdateCategoryDTO } from "@/types";
 import { SubCategory } from "@/types/subcategory";
 import api from "./axios";
 
 // Endpoits
-export const createCategory = async (body: NewCategory): Promise<ApiResponse<Category>> => {
+export const createCategory = async (body: CreateCategoryDTO): Promise<ApiResponse<Category>> => {
   const { data } = await api.post<ApiResponse<Category>>(`/categories`, body);
   return data;
 }
@@ -36,8 +36,8 @@ export const getOneCategory = async (id: number): Promise<ApiResponse<Category>>
   }
 }
 
-export const updateCategory = async (body: NewCategory, id: number): Promise<ApiResponse<SubCategory>> => {
-  const { data } = await api.put<ApiResponse<SubCategory>>(`/categories/${id}`, JSON.stringify(body));
+export const updateCategory = async (body: UpdateCategoryDTO, id: number): Promise<ApiResponse<Category>> => {
+  const { data } = await api.patch<ApiResponse<Category>>(`/categories/${id}`, body);
   return data;
 }
 

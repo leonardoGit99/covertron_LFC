@@ -1,5 +1,5 @@
-"use client"
-import React, { useEffect, useState } from 'react'
+'use client';
+import React, { useEffect, useState } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -8,35 +8,39 @@ import {
 } from '@/components/ui/dialog';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { createCategory, getOneCategory, updateCategory } from '@/services/categories';
+import {
+  createCategory,
+  getOneCategory,
+  updateCategory,
+} from '@/services/categories';
 import { useRouter } from 'next/navigation';
 import CategoryForm from './CategoryForm';
 import { Separator } from '../ui/separator';
 import { toast } from 'sonner';
-import { categorySchema } from '@/schemas/category.schema';
-import { NewCategory } from '@/types';
-
+import { CreateCategoryDTO, UpdateCategoryDTO } from '@/types';
+import { createCategorySchema } from '@/schemas/category.schema';
+import { type } from 'node:os';
 
 type Props = {
-  id?: number
-  open: boolean,
-  onOpenChange: (open: boolean) => void
-}
+  id?: number;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+};
 
 function CategoryDialog({ id, open, onOpenChange }: Props) {
   const router = useRouter();
-  const [category, setCategory] = useState<NewCategory>({
+  const [category, setCategory] = useState<CreateCategoryDTO>({
     name: '',
     description: '',
   }); // State to store category data from back
 
   // Resolve and default values
-  const form = useForm<NewCategory>({
-    resolver: zodResolver(categorySchema),
+  const form = useForm<CreateCategoryDTO>({
+    resolver: zodResolver(createCategorySchema),
     defaultValues: {
       name: '',
-      description: ''
-    }
+      description: '',
+    },
   });
 
   // Getting category from backend only if there is an id
@@ -49,27 +53,24 @@ function CategoryDialog({ id, open, onOpenChange }: Props) {
         }
         form.reset(data);
       }
-    }
+    };
     getCategory();
   }, [id, form]);
 
-
   // Function to submit body to backend depending whether there's an id or not
-  const onSubmit = async (body: NewCategory) => {
-
+  const onSubmit = async (body: CreateCategoryDTO | UpdateCategoryDTO) => {
     if (id) {
-      const { message } = await updateCategory(body, id);
+      const { message } = await updateCategory(body as UpdateCategoryDTO, id);
       toast(message);
       form.reset();
     } else {
-      const { message, data } = await createCategory(body);
+      const { message } = await createCategory(body as CreateCategoryDTO);
       toast(message);
       form.reset();
     }
     onOpenChange(false);
     router.refresh();
   };
-
 
   // Function to observe the modal behavior
   const handleOpenChange = (isOpen: boolean) => {
@@ -79,13 +80,15 @@ function CategoryDialog({ id, open, onOpenChange }: Props) {
     }
   };
 
-
   return (
-    <Dialog open={open} onOpenChange={handleOpenChange}>
+    <Dialog
+      open={open}
+      onOpenChange={handleOpenChange}
+    >
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className='text-center mb-3'>
-            {id ? "Actualizar Categoría" : "Nueva Categoría"}
+          <DialogTitle className="text-center mb-3">
+            {id ? 'Actualizar Categoría' : 'Nueva Categoría'}
           </DialogTitle>
           <Separator />
         </DialogHeader>
@@ -97,7 +100,7 @@ function CategoryDialog({ id, open, onOpenChange }: Props) {
         />
       </DialogContent>
     </Dialog>
-  )
+  );
 }
 
-export default CategoryDialog
+export default CategoryDialog;
