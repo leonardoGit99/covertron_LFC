@@ -1,20 +1,18 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle } from '../ui/sheet'
+import { Sheet, SheetContent,  SheetHeader, SheetTitle } from '../ui/sheet'
 import ProductForm from './ProductForm'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useRouter } from 'next/navigation'
 import { Separator } from '../ui/separator'
 import { Categories } from '@/types'
 import { getAllCategories } from '@/services/categories'
 import { Switch } from '../ui/switch'
 import { Label } from '../ui/label'
-import {  CreateProductDTO, Product, ProductDetailAdminDTO } from '@/types/product'
+import {  CreateProductDTO, ProductDetailAdminDTO } from '@/types/product'
 import { productSchema } from '@/schemas/product.schema'
 import { createProduct, getOneProductAdmin, updateProduct } from '@/services/product'
 import { toast } from 'sonner'
-import { Button } from '../ui/button'
 
 
 
@@ -24,10 +22,11 @@ type Props = {
   id?: number | null
   open: boolean,
   onOpenChange: (open: boolean) => void
+  isRefresh: boolean
+  setRefresh: (isRefresh: boolean) => void
 }
 
-function CustomSheet({ sheetTitle, id, open, onOpenChange }: Props) {
-  const router = useRouter();
+function CustomSheet({ sheetTitle, id, open, onOpenChange, setRefresh }: Props) {
   const [categories, setCategories] = useState<Categories>([]);
   const [images, setImages] = useState<File[]>([]);
   const [imageUrls, setImageUrls] = useState<string[]>([]);
@@ -131,7 +130,7 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange }: Props) {
       if (success) {
         onOpenChange(false);
         setImages([]);
-        router.refresh();
+        setRefresh(true); // Refresh padre component state
         toast(message);
       }
       form.reset();
@@ -179,7 +178,7 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange }: Props) {
       if (success) {
         onOpenChange(false);
         setImages([]);
-        router.refresh();
+        setRefresh(true); // Refresh padre component state
         toast(message);
       }
       console.log("Creando Producto")

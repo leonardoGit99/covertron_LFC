@@ -22,7 +22,6 @@ import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import CustomSheet from './CustomSheet';
 import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
 import {
   deleteProduct,
   getAllProductsAdmin,
@@ -34,16 +33,15 @@ import { debounce } from 'lodash';
 import CustomPagination from '../shared/CustomPagination';
 import { Product } from '@/types/product';
 
-/* type Props = {
-  data: Products;
-}; */
+type Props = {
+  isRefresh: boolean;
+  setRefresh: (isRefresh: boolean) => void;
+};
 
-function ProductsTable(/* { data }: Props */) {
-  const router = useRouter();
+function ProductsTable({ isRefresh, setRefresh }: Props) {
   const [products, setProducts] = useState<Product[]>([]); // Get all and get filtered products state
   const [editingId, setEditingId] = useState<number | null>(null);
   const [searchTerm, setSearchTerm] = useState(''); // Search bar state
-  const [isLoading, setIsLoading] = useState(false);
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -53,23 +51,21 @@ function ProductsTable(/* { data }: Props */) {
 
   // Get all products
   const fetchProducts = async () => {
-    setIsLoading(true);
-    const { success, data } = await getAllProductsAdmin(currentPage, limit);
-    if (success && data) {
-      setProducts(data.products);
-      setTotalProducts(data.total);
-    }
-    setIsLoading(false);
+      const { success, data } = await getAllProductsAdmin(currentPage, limit);
+      if (success && data) {
+        setProducts(data.products);
+        setTotalProducts(data.total);
+      }
+      setRefresh(false);
   };
 
   useEffect(() => {
     fetchProducts();
-  }, [currentPage, limit]);
+  }, [currentPage, limit, isRefresh]); // Refeching when isRefresh change, and it changes before creating or updating product (Custom Sheet)
 
   // get all filtered products with debounce
   const debouncedSearch = useCallback(
     debounce(async (value: string) => {
-      setIsLoading(true);
       const { data, success } = await getFilteredProducts(
         value,
         limit,
@@ -79,7 +75,7 @@ function ProductsTable(/* { data }: Props */) {
         setProducts(data.products);
         setTotalProducts(data.total);
       }
-      setIsLoading(false);
+      setRefresh(false);
     }, 500),
     []
   );
@@ -105,7 +101,7 @@ function ProductsTable(/* { data }: Props */) {
         onClick: async () => {
           const { success, message } = await deleteProduct(productId);
           if (success) {
-            router.refresh();
+            setRefresh(true);
             toast(message, {
               description: `Se ha eliminado el producto '${productName}'`,
             });
@@ -121,7 +117,7 @@ function ProductsTable(/* { data }: Props */) {
         <SearchInput handleChange={handleChange} />
       </div>
 
-      {isLoading ? (
+      {isRefresh ? (
         <p className="text-center my-4 text-sm text-gray-500">
           Buscando productos...
         </p>
@@ -290,6 +286,8 @@ function ProductsTable(/* { data }: Props */) {
           onOpenChange={(isOpen) => {
             if (!isOpen) setEditingId(null);
           }}
+          isRefresh={isRefresh}
+          setRefresh={setRefresh}
         />
       )}
     </>

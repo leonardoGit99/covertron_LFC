@@ -1,11 +1,13 @@
-import React from 'react';
+'use client';
+import React, { useState } from 'react';
 import SectionHeader from '@/components/root/SectionHeader';
 import { Card, CardContent } from '@/components/ui/card';
 import { Boxes } from 'lucide-react';
 import ProductsTable from '@/components/root/ProductsTable';
 import ProductSheetButton from '@/components/root/ProductSheetBtn';
 
-async function Products() {
+function Products() {
+  const [isRefresh, setIsRefresh] = useState<boolean>(true);
   return (
     <div>
       <Card className="w-full shadow-md p-6">
@@ -21,12 +23,17 @@ async function Products() {
             btnLabel='Crear Producto'
           /> */}
           <ProductSheetButton
+            isRefresh={isRefresh}
+            setRefresh={setIsRefresh}
             btnLabel="Crear Producto"
             sheetLabel="Nuevo Producto"
           />
         </CardContent>
       </Card>
-      <ProductsTable /* data={products} */ />
+      <ProductsTable
+        isRefresh={isRefresh}
+        setRefresh={setIsRefresh}
+      />
     </div>
   );
 }
