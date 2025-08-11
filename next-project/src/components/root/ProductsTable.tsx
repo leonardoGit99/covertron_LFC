@@ -18,7 +18,6 @@ import {
 } from '../ui/dropdown-menu';
 import { Button } from '../ui/button';
 import { HiOutlinePencilAlt, HiOutlineTrash } from 'react-icons/hi';
-import { Products } from '@/types/product';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import CustomSheet from './CustomSheet';
@@ -26,13 +25,14 @@ import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import {
   deleteProduct,
-  getAllProducts,
+  getAllProductsAdmin,
   getFilteredProducts,
 } from '@/services/product';
 import { Card, CardContent } from '../ui/card';
 import SearchInput from '../shared/SearchInput';
 import { debounce } from 'lodash';
 import CustomPagination from '../shared/CustomPagination';
+import { Product } from '@/types/product';
 
 /* type Props = {
   data: Products;
@@ -40,7 +40,7 @@ import CustomPagination from '../shared/CustomPagination';
 
 function ProductsTable(/* { data }: Props */) {
   const router = useRouter();
-  const [products, setProducts] = useState<Products>([]); // Get all and get filtered products state
+  const [products, setProducts] = useState<Product[]>([]); // Get all and get filtered products state
   const [editingId, setEditingId] = useState<number | null>(null);
   const [searchTerm, setSearchTerm] = useState(''); // Search bar state
   const [isLoading, setIsLoading] = useState(false);
@@ -54,7 +54,7 @@ function ProductsTable(/* { data }: Props */) {
   // Get all products
   const fetchProducts = async () => {
     setIsLoading(true);
-    const { success, data } = await getAllProducts(currentPage, limit);
+    const { success, data } = await getAllProductsAdmin(currentPage, limit);
     if (success && data) {
       setProducts(data.products);
       setTotalProducts(data.total);
@@ -144,20 +144,23 @@ function ProductsTable(/* { data }: Props */) {
                       <TableHead className="text-left">Marca</TableHead>
                       <TableHead className="text-left">Nombre</TableHead>
                       <TableHead className="text-left">
-                        Precio Original
+                        Precio Original (Bs.)
                       </TableHead>
                       <TableHead className="text-left">Descuento</TableHead>
                       <TableHead className="text-left">
-                        Precio con Descuento
+                        Precio con Descuento (Bs.)
                       </TableHead>
                       <TableHead className="text-center">Imagen</TableHead>
                       <TableHead className="text-left">Estado</TableHead>
+                      <TableHead className="text-left">
+                        Ultima fecha de actualización
+                      </TableHead>
                       <TableHead className="text-right">Acciones</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {products.length > 0 &&
-                      (products as Products).map((item) => (
+                      (products as Product[]).map((item) => (
                         <TableRow key={item.id}>
                           <TableCell className="text-start">
                             {item.categoryName}
@@ -221,6 +224,9 @@ function ProductsTable(/* { data }: Props */) {
                                 </Badge>
                               )
                             )}
+                          </TableCell>
+                          <TableCell className="text-start">
+                            {item.updatedAt}
                           </TableCell>
                           <TableCell className="text-right">
                             <DropdownMenu>

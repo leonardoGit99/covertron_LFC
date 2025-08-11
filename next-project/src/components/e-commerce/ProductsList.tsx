@@ -3,18 +3,16 @@ import ProductCard from './ProductCard';
 import Link from 'next/link';
 import {
   getAllAvailableProducts,
-  getAllProducts,
   getFilteredAvailableProducts,
-  getFilteredProducts,
 } from '@/services/product';
-import { Products } from '@/types/product';
+import { ProductSummary } from '@/types/product';
 import CustomPagination from '../shared/CustomPagination';
 import { debounce } from 'lodash';
 import SearchInput from '../shared/SearchInput';
 
 function ProductsList() {
   const [loading, setIsLoading] = useState(false);
-  const [products, setProducts] = useState<Products>([]);
+  const [products, setProducts] = useState<ProductSummary[]>([]);
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -23,9 +21,10 @@ function ProductsList() {
   const totalPages = Math.ceil(totalProducts / limit);
 
   // Get all products
-  const fetchProducts = async () => {
+  const fetchAvailableProducts = async () => {
     setIsLoading(true);
     const { success, data } = await getAllAvailableProducts(currentPage, limit);
+    console.log(data);
     if (success && data) {
       setProducts(data.products);
       setTotalProducts(data.total);
@@ -34,7 +33,7 @@ function ProductsList() {
   };
 
   useEffect(() => {
-    fetchProducts();
+    fetchAvailableProducts();
   }, [currentPage, limit]);
 
   // get all filtered products with debounce
@@ -61,7 +60,7 @@ function ProductsList() {
     setCurrentPage(1);
     if (value.trim() === '') {
       // Si se borra la búsqueda, volver al listado completo
-      fetchProducts();
+      fetchAvailableProducts();
     } else {
       debouncedSearch(value);
     }
@@ -89,7 +88,7 @@ function ProductsList() {
                 key={item.id}
               >
                 <ProductCard
-                  img={item.images[0]}
+                  img={item.image}
                   name={item.name}
                   originalPrice={item.originalPrice}
                   discountedPrice= {item.discountedPrice}

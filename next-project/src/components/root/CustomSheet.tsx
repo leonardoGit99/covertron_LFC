@@ -10,9 +10,9 @@ import { Categories } from '@/types'
 import { getAllCategories } from '@/services/categories'
 import { Switch } from '../ui/switch'
 import { Label } from '../ui/label'
-import { NewProduct, Product } from '@/types/product'
+import {  CreateProductDTO, Product, ProductDetailAdminDTO } from '@/types/product'
 import { productSchema } from '@/schemas/product.schema'
-import { createProduct, getOneProduct, updateProduct } from '@/services/product'
+import { createProduct, getOneProductAdmin, updateProduct } from '@/services/product'
 import { toast } from 'sonner'
 import { Button } from '../ui/button'
 
@@ -34,7 +34,7 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange }: Props) {
   const [deletedImages, setDeletedImages] = useState<string[]>([]);
   const [productState, setProductState] = useState<string>("available");
   // State to store product data from back
-  const [product, setProduct] = useState<Omit<Product, 'categoryName' | 'subCategoryName' | 'discountedPrice' | 'createdAt'>>({
+  const [product, setProduct] = useState<ProductDetailAdminDTO>({
     id: 0,
     name: '',
     description: '',
@@ -48,7 +48,7 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange }: Props) {
   });
 
   // Resolve and default values
-  const form = useForm<NewProduct>({
+  const form = useForm<CreateProductDTO>({
     resolver: zodResolver(productSchema),
     defaultValues: {
       name: '',
@@ -66,7 +66,7 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange }: Props) {
   useEffect(() => {
     const getProduct = async () => {
       if (id) {
-        const { data: product, success } = await getOneProduct(id);
+        const { data: product, success } = await getOneProductAdmin(id);
         if (success && product) {
           setProduct(product);
           setImageUrls(product.images);
@@ -101,14 +101,14 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange }: Props) {
   };
 
   // Function to submit body to backend depending whether there's an id or not
-  const onSubmit = async (body: NewProduct | Product) => {
+  const onSubmit = async (body: CreateProductDTO | ProductDetailAdminDTO) => {
     const { categoryId, ...newBody } = body;
     const formData = new FormData();
     if (id) {
       /* const isDifferentBody = product.name !== newBody.name || product.description !== newBody.description || product.subCategoryId != newBody.subCategoryId || product.price !== newBody.price || product.discount !== newBody.discount || product.brand !== newBody.brand */
 
       Object.entries(newBody).forEach(([key, value]) => {
-        if (key === 'price') {
+        if (key === 'originalPrice') {
           const numberValue = typeof value === 'number' ? value : parseFloat(String(value));
           formData.append(key, numberValue.toFixed(2)); // Fuerza "120.00"
         } else {

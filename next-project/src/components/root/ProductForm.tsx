@@ -23,7 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Categories } from '@/types';
-import { NewProduct, Product } from '@/types/product';
+import { CreateProductDTO, Product } from '@/types/product';
 import { SubCategories } from '@/types/subcategory';
 import Upload from './Upload';
 import { getSubCategoriesByCategory } from '@/services/subCategories';
@@ -31,10 +31,10 @@ import { getSubCategoriesByCategory } from '@/services/subCategories';
 // Types
 type Props = {
   id?: number | null
-  product: Omit<Product, 'categoryName' | 'subCategoryName' | 'discountedPrice' | 'createdAt'>
+  product: Omit<Product, 'categoryName' | 'subCategoryName' | 'discountedPrice' | 'createdAt' | 'updatedAt'>
   categories: Categories
-  form: UseFormReturn<NewProduct>;
-  onSubmit: (body: NewProduct) => void;
+  form: UseFormReturn<CreateProductDTO>;
+  onSubmit: (body: CreateProductDTO) => void;
   images: File[],
   setImages: React.Dispatch<React.SetStateAction<File[]>>,
   imageUrls: string[],
