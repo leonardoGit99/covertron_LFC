@@ -14,7 +14,7 @@ import Spinner from '../shared/Spinnet';
 function ProductsList() {
   const [loading, setIsLoading] = useState(true);
   const [products, setProducts] = useState<ProductSummary[]>([]);
-
+  const [searchTerm, setSearchTerm] = useState(''); // Search bar state
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [totalProducts, setTotalProducts] = useState(0);
@@ -55,6 +55,7 @@ function ProductsList() {
   // Onchange for search bar
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
+    setSearchTerm(value);
     setCurrentPage(1);
     if (value.trim() === '') {
       debouncedSearch.cancel(); // Cancel  any todo execution
@@ -66,10 +67,6 @@ function ProductsList() {
   };
   return (
     <>
-      <div className="flex justify-start mt-10 w-full">
-        <SearchInput handleChange={handleChange} />
-      </div>
-
       {loading ? (
         <Spinner
           size={50}
@@ -78,10 +75,16 @@ function ProductsList() {
         />
       ) : products.length === 0 ? (
         <p className="text-muted-foreground mt-10 text-center">
-          🔍 No se encontraron productos que coincidan con la búsqueda
+          {searchTerm
+            ? '🔍 No se encontraron productos que coincidan con la búsqueda.'
+            : '📭 No hay productos disponibles aún. ¡Pronto tendremos las últimas novedades para ti!'}
         </p>
       ) : (
         <>
+          <div className="flex justify-start mt-10 w-full">
+            <SearchInput handleChange={handleChange} />
+          </div>
+          
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 xxl:grid-cols-4  gap-12">
             {products.map((item) => (
               <Link

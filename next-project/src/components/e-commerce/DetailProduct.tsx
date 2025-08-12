@@ -21,7 +21,9 @@ function DetailProduct({ product }: Props) {
             <div className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
               NUEVO
             </div>
-            <span className="text-xs text-gray-600">{product.createdAt}</span>
+            <span className="text-xs text-gray-600">
+              {product.createdAt}
+            </span>
           </div>
         </div>
 
