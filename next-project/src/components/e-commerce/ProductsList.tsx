@@ -9,9 +9,10 @@ import { ProductSummary } from '@/types/product';
 import CustomPagination from '../shared/CustomPagination';
 import { debounce } from 'lodash';
 import SearchInput from '../shared/SearchInput';
+import Spinner from '../shared/Spinnet';
 
 function ProductsList() {
-  const [loading, setIsLoading] = useState(false);
+  const [loading, setIsLoading] = useState(true);
   const [products, setProducts] = useState<ProductSummary[]>([]);
 
   // Pagination
@@ -22,9 +23,7 @@ function ProductsList() {
 
   // Get all products
   const fetchAvailableProducts = async () => {
-    setIsLoading(true);
     const { success, data } = await getAllAvailableProducts(currentPage, limit);
-    console.log(data);
     if (success && data) {
       setProducts(data.products);
       setTotalProducts(data.total);
@@ -39,7 +38,6 @@ function ProductsList() {
   // get all filtered products with debounce
   const debouncedSearch = useCallback(
     debounce(async (value: string) => {
-      setIsLoading(true);
       const { data, success } = await getFilteredAvailableProducts(
         value,
         limit,
@@ -59,6 +57,7 @@ function ProductsList() {
     const { value } = event.target;
     setCurrentPage(1);
     if (value.trim() === '') {
+      debouncedSearch.cancel(); // Cancel  any todo execution
       // Si se borra la búsqueda, volver al listado completo
       fetchAvailableProducts();
     } else {
@@ -72,9 +71,11 @@ function ProductsList() {
       </div>
 
       {loading ? (
-        <p className="text-center my-4 text-sm text-gray-500">
-          Buscando productos...
-        </p>
+        <Spinner
+          size={50}
+          text="Cargando productos, espere un momento por favor..."
+          centered
+        />
       ) : products.length === 0 ? (
         <p className="text-muted-foreground mt-10 text-center">
           🔍 No se encontraron productos que coincidan con la búsqueda
@@ -91,8 +92,8 @@ function ProductsList() {
                   img={item.image}
                   name={item.name}
                   originalPrice={item.originalPrice}
-                  discountedPrice= {item.discountedPrice}
-                  discount= {item.discount}
+                  discountedPrice={item.discountedPrice}
+                  discount={item.discount}
                 />
               </Link>
             ))}

@@ -32,6 +32,7 @@ import SearchInput from '../shared/SearchInput';
 import { debounce } from 'lodash';
 import CustomPagination from '../shared/CustomPagination';
 import { Product } from '@/types/product';
+import Spinner from '../shared/Spinnet';
 
 type Props = {
   isRefresh: boolean;
@@ -51,12 +52,12 @@ function ProductsTable({ isRefresh, setRefresh }: Props) {
 
   // Get all products
   const fetchProducts = async () => {
-      const { success, data } = await getAllProductsAdmin(currentPage, limit);
-      if (success && data) {
-        setProducts(data.products);
-        setTotalProducts(data.total);
-      }
-      setRefresh(false);
+    const { success, data } = await getAllProductsAdmin(currentPage, limit);
+    if (success && data) {
+      setProducts(data.products);
+      setTotalProducts(data.total);
+    }
+    setRefresh(false);
   };
 
   useEffect(() => {
@@ -86,6 +87,7 @@ function ProductsTable({ isRefresh, setRefresh }: Props) {
     setSearchTerm(value);
     setCurrentPage(1);
     if (value.trim() === '') {
+      debouncedSearch.cancel();
       // Si se borra la búsqueda, volver al listado completo
       fetchProducts();
     } else {
@@ -118,9 +120,11 @@ function ProductsTable({ isRefresh, setRefresh }: Props) {
       </div>
 
       {isRefresh ? (
-        <p className="text-center my-4 text-sm text-gray-500">
-          Buscando productos...
-        </p>
+        <Spinner
+          size={50}
+          text="Cargando productos, espere un momento por favor..."
+          centered
+        />
       ) : products.length === 0 ? (
         <p className="text-muted-foreground mt-10 text-center">
           {searchTerm
@@ -132,17 +136,30 @@ function ProductsTable({ isRefresh, setRefresh }: Props) {
           <Card className="w-full shadow-md  mt-5 mb-6">
             <CardContent>
               <div className="rounded-md border overflow-hidden">
-                <Table>
+                <Table className="table-fixed">
+                  <colgroup>
+                    <col className="w-[140px]" /> 
+                    <col className="w-[140px]" />
+                    <col className="w-[100px]" />
+                    <col className="w-[200px]" />
+                    <col className="w-[90px]" />
+                    <col className="w-[90px]" />
+                    <col className="w-[90px]" />
+                    <col className="w-[80px]" />
+                    <col className="w-[100px]" />
+                    <col className="w-[160px]" />
+                    <col className="w-[80px]" />
+                  </colgroup>
                   <TableHeader className="bg-blue-50">
                     <TableRow /* className='divide-x divide-gray-200' */>
                       <TableHead className="text-left">Categoría</TableHead>
                       <TableHead className="text-left">Sub Categoría</TableHead>
                       <TableHead className="text-left">Marca</TableHead>
-                      <TableHead className="text-left">Nombre</TableHead>
+                      <TableHead className="text-left">Producto</TableHead>
                       <TableHead className="text-left">
                         Precio Original (Bs.)
                       </TableHead>
-                      <TableHead className="text-left">Descuento</TableHead>
+                      <TableHead className="text-left">Descuento (%)</TableHead>
                       <TableHead className="text-left">
                         Precio con Descuento (Bs.)
                       </TableHead>
@@ -174,7 +191,7 @@ function ProductsTable({ isRefresh, setRefresh }: Props) {
                             {item.originalPrice}
                           </TableCell>
                           <TableCell className="text-start">
-                            {item.discount} %
+                            {item.discount}
                           </TableCell>
                           <TableCell className="text-start">
                             {item.discountedPrice}
