@@ -12,6 +12,10 @@ import {
   NavigationMenuTrigger,
 } from './ui/navigation-menu';
 
+type Props = {
+  type?: 'default' | 'transparent';
+};
+
 const components: { title: string; href: string; description: string }[] = [
   {
     title: 'Productos',
@@ -20,14 +24,25 @@ const components: { title: string; href: string; description: string }[] = [
       'Descubre nuestros productos hechos a medida y con diseños exclusivos',
   },
 ];
+
 // This component is used to create a navigation menu with items
-function NbDesktopItems() {
+function NbDesktopItems({ type = 'default' }: Props) {
   return (
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Sobre nosotros</NavigationMenuTrigger>
-          <NavigationMenuContent>
+          <NavigationMenuTrigger
+            className={`${
+              type === 'default'
+                ? 'text-black'
+                : 'text-white bg-transparent transition-colors hover:bg-transparent hover:text-slate-300 focus:text-slate-300 data-[state=open]:text-slate-300 data-[state=open]:bg-transparent data-[state=open]:hover:bg-transparent data-[state=open]:focus:bg-transparent'
+            }`}
+          >
+            Sobre nosotros
+          </NavigationMenuTrigger>
+          <NavigationMenuContent
+            /* className={`${type === 'default' ? 'bg-white' : 'bg-foreground'}`} */
+          >
             <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
               <li className="row-span-3">
                 <NavigationMenuLink asChild>
@@ -68,7 +83,15 @@ function NbDesktopItems() {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Nuestro Catálogo</NavigationMenuTrigger>
+          <NavigationMenuTrigger
+            className={`${
+              type === 'default'
+                ? 'text-black'
+                : 'text-white bg-transparent transition-colors hover:bg-transparent hover:text-slate-300 focus:text-slate-300 data-[state=open]:text-slate-300 data-[state=open]:bg-transparent data-[state=open]:hover:bg-transparent data-[state=open]:focus:bg-transparent'
+            }`}
+          >
+            Nuestro Catálogo
+          </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[200px] gap-3 p-4 md:w-[300px] md:grid-cols-1 lg:w-[400px] ">
               {components.map((component) => (

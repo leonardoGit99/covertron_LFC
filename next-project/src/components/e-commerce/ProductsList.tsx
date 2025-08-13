@@ -65,6 +65,7 @@ function ProductsList() {
       debouncedSearch(value);
     }
   };
+  console.log(searchTerm);
   return (
     <>
       {loading ? (

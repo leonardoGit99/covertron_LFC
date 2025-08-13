@@ -38,14 +38,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <main className="flex-grow pt-[5.75rem] w-full">
-            <div className="max-w-6xl mx-auto">
-              <Navbar />
-            </div>
-            <div className="max-w-8xl mx-auto">
+          <main className="flex-grow w-full">
+            
+            {/* <div className="max-w-8xl mx-auto">
               <Announcements />
-            </div>
-            <div className="max-w-6xl mx-auto">{children}</div>
+            </div> */}
+            <div>{children}</div>
           </main>
         </ThemeProvider>
         <Footer />
