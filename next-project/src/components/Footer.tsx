@@ -16,7 +16,7 @@ function Footer() {
     }
   ]
   return (
-    <footer className='mt-4'>
+    <footer className='mt-4 md:h-[180px]'>
       <div className='h-full  max-h-screen-xl mx-auto p-4 md:py-8 sm:max-w-6xl'>
         <div className='sm:flex sm:items-center sm:justify-between'>
           <div className='flex items-center gap-1'>
