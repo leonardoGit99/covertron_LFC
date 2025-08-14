@@ -8,16 +8,16 @@ type Props ={
   service: Service
 }
 
-function WorkFlowCard({service}:Props) {
+function ServiceCard({service}:Props) {
   return (
-    <Card className=" w-[90vw] sm:w-[350px] overflow-hidden flex flex-col bg-background shadow-none rounded-none">
-      <CardContent className="border-none">
-        <div className="relative w-full aspect-square overflow-hidden">
+    <Card className=" w-[90vw] sm:w-[350px] overflow-hidden flex flex-col bg-background shadow-none rounded-xl">
+      <CardContent className="border-none rounded-xl shadow-lg">
+        <div className="relative w-full aspect-square overflow-hidden rounded-xl">
           <Image
             src={service.image}
             alt="service image"
             fill
-            className="object-cover"
+            className="object-cover hover:scale-105 transition-transform duration-500 ease-in-out"
             sizes="(max-width: 640px) 90vw, 400px"
           />
         </div>
@@ -34,4 +34,4 @@ function WorkFlowCard({service}:Props) {
   );
 }
 
-export default WorkFlowCard;
+export default ServiceCard;

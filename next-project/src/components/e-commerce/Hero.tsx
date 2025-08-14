@@ -15,7 +15,7 @@ function Hero() {
       >
         <div className="absolute inset-0 bg-black/55" />{' '}
         {/* Overlay for darkening the background */}
-        <div className="relative z-40 flex flex-col items-center justify-center h-full text-center text-white  max-w-6xl mx-auto">
+        <div className="relative z-40 flex flex-col items-center justify-center h-full text-center text-white  max-w-7xl mx-auto">
           <h1 className="text-3xl sm:text-6xl mb-6 font-bold">
             Protege tu tecnología con estilo único y viste con moda que cuenta
             historias
@@ -25,10 +25,10 @@ function Hero() {
             segunda mano que reflejan tu personalidad
           </p>
           <Link href={'#servicios'}>
-            <div className="bg-white/45 text-black px-6 py-3 rounded-3xl hover:bg-gray-200 transition-all ease-out duration-300">
+            <div className="bg-white/60 text-black px-6 py-3 rounded-3xl hover:bg-gray-200 transition-all ease-out duration-300">
               <span className="flex flex-col items-center justify-center gap-1">
                 <p className="text-sm md:text-lg text-gray-900">
-                  Conoce más sobre nosotros
+                  Descubre más sobre nosotros
                 </p>
               </span>
             </div>
