@@ -9,7 +9,10 @@ const statistics = [
 
 function About() {
   return (
-    <section className="max-w-7xl mx-auto px-4 py-10 md:py-16">
+    <section
+      id="acerca-de"
+      className="max-w-7xl mx-auto px-4 py-10 md:py-16 min-h-[auto] md:min-h-screen"
+    >
       {/* Título y descripción */}
       <div className="text-center mb-10">
         <h1 className="font-bold text-3xl sm:text-5xl lg:text-6xl mb-4 text-gray-900 leading-tight">
@@ -42,9 +45,12 @@ function About() {
             {statistics.map((stat, index) => (
               <div
                 key={index}
-                className="text-center md:text-left shadow-md rounded-xl p-4 bg-white/60 flex border-l-4 border-blue-900 hover:bg-sky-50 transition-colors duration-500 ease-in-out "
+                className="text-center md:text-left shadow-md rounded-xl p-4 flex border-l-4 border-sky-200 rounded-l-xl 
+                bg-gradient-to-r from-white to-blue-50 
+                hover:from-white/60 hover:to-blue-100 
+                transform transition-all duration-500 ease-in-out    hover:shadow-md"
               >
-                <div className='flex-1'>
+                <div className="flex-1">
                   <h2 className="text-4xl font-bold">{stat.value}</h2>
                   <p className="text-gray-500 font-semibold text-lg">
                     {stat.title}
@@ -56,7 +62,11 @@ function About() {
 
           {/* Misión y Visión */}
           <div className="space-y-6">
-            <div className="p-6 rounded-xl shadow-md bg-white/60 hover:bg-sky-50 transition-colors duration-500 ease-in-out">
+            <div
+              className="p-6 rounded-xl shadow-md bg-gradient-to-r from-white to-blue-50 
+                hover:from-white/60 hover:to-blue-100 
+                transform transition-all duration-500 ease-in-out hover:shadow-md"
+            >
               <h2 className="text-xl font-bold mb-2 text-gray-900">Misión</h2>
               <p className="text-gray-500 leading-relaxed text-justify">
                 En Covertron protegemos y potenciamos la movilidad de tus
@@ -67,7 +77,9 @@ function About() {
                 responsable.
               </p>
             </div>
-            <div className="p-6 rounded-xl shadow-md bg-white/60 hover:bg-sky-50 transition-colors duration-500 ease-in-out">
+            <div className="p-6 rounded-xl shadow-md bg-gradient-to-r from-white to-blue-50 
+                hover:from-white/60 hover:to-blue-100 
+                transform transition-all duration-500 ease-in-out hover:shadow-md">
               <h2 className="text-xl font-bold mb-2 text-gray-900">Visión</h2>
               <p className="text-gray-500 leading-relaxed text-justify">
                 Ser líderes en estuches para portátiles, reconocidos por nuestra

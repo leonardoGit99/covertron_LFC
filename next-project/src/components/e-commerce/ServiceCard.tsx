@@ -10,14 +10,14 @@ type Props ={
 
 function ServiceCard({service}:Props) {
   return (
-    <Card className=" w-[90vw] sm:w-[350px] overflow-hidden flex flex-col bg-background shadow-none rounded-xl">
+    <Card className=" w-[90vw] sm:w-[350px] overflow-hidden flex flex-col bg-background shadow-none rounded-xl group">
       <CardContent className="border-none rounded-xl shadow-lg">
         <div className="relative w-full aspect-square overflow-hidden rounded-xl">
           <Image
             src={service.image}
             alt="service image"
             fill
-            className="object-cover hover:scale-105 transition-transform duration-500 ease-in-out"
+            className="object-cover group-hover:scale-105 transition-transform duration-500 ease-in-out"
             sizes="(max-width: 640px) 90vw, 400px"
           />
         </div>

@@ -3,6 +3,7 @@ import React from 'react';
 import Navbar from '../Navbar';
 import { RiArrowDownDoubleFill } from 'react-icons/ri';
 import Link from 'next/link';
+import { FaWhatsapp } from 'react-icons/fa';
 function Hero() {
   return (
     <>
@@ -24,16 +25,22 @@ function Hero() {
             Explora, descubre y elige entre una amplia gama de fundas y ropas de
             segunda mano que reflejan tu personalidad
           </p>
-          <Link href={'#servicios'}>
+          <Link href={'#whatssapp'}>
             <div className="bg-white/60 text-black px-6 py-3 rounded-3xl hover:bg-gray-200 transition-all ease-out duration-300">
               <span className="flex flex-col items-center justify-center gap-1">
-                <p className="text-sm md:text-lg text-gray-900">
-                  Descubre más sobre nosotros
+                <p className="flex items-center text-sm md:text-lg text-gray-900">
+                  <FaWhatsapp className="mr-2 text-lg" />
+                  Contáctanos por WhatsApp
                 </p>
               </span>
             </div>
           </Link>
-          <RiArrowDownDoubleFill className="text-6xl animate-upDown absolute bottom-5" />
+          <Link
+            href={'#servicios'}
+            className="absolute bottom-5"
+          >
+            <RiArrowDownDoubleFill className="text-6xl animate-upDown " />
+          </Link>
         </div>
       </section>
     </>
