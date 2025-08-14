@@ -11,10 +11,10 @@ import { getOneProduct } from '@/services/product';
 import ImagesDetailProduct from '@/components/e-commerce/ImagesDetailProduct';
 import DetailProduct from '@/components/e-commerce/DetailProduct';
 
-async function Product({ params }: { params: { id: string } }) {
-  const { id } = params;
+async function Product({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const { success, data: product } = await getOneProduct(Number(id));
-
+  console.log(product)
   if (!success || !product) {
     return <>Ocurrio un error, Producto no encontrado!</>;
   }

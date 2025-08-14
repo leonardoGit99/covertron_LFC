@@ -115,6 +115,9 @@ function ProductsTable({ isRefresh, setRefresh }: Props) {
 
   return (
     <>
+      <div className="flex justify-end mt-10 w-full">
+        <SearchInput handleChange={handleChange} />
+      </div>
       {isRefresh ? (
         <Spinner
           size={50}
@@ -129,9 +132,6 @@ function ProductsTable({ isRefresh, setRefresh }: Props) {
         </p>
       ) : (
         <>
-          <div className="flex justify-end mt-10 w-full">
-            <SearchInput handleChange={handleChange} />
-          </div>
           <Card className="w-full shadow-md  mt-5 mb-6">
             <CardContent>
               <div className="rounded-md border overflow-hidden">

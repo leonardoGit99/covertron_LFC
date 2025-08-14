@@ -68,6 +68,9 @@ function ProductsList() {
   console.log(searchTerm);
   return (
     <>
+      <div className="flex justify-start mt-10 w-full">
+        <SearchInput handleChange={handleChange} />
+      </div>
       {loading ? (
         <Spinner
           size={50}
@@ -82,11 +85,7 @@ function ProductsList() {
         </p>
       ) : (
         <>
-          <div className="flex justify-start mt-10 w-full">
-            <SearchInput handleChange={handleChange} />
-          </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 xxl:grid-cols-4  gap-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 xxl:grid-cols-4 gap-12">
             {products.map((item) => (
               <Link
                 href={`/productos/${item.id}`}

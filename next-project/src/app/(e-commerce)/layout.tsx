@@ -25,12 +25,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className="h-full"
+      className="h-full scroll-smooth"
       suppressHydrationWarning
     >
       <head />
       <body
-        className={`${getPoppins.variable} antialiased flex flex-col min-h-screen bg-background`}
+        className={`${getPoppins.variable} antialiased flex flex-col min-h-screen bg-background scroll-smooth`}
       >
         <ThemeProvider
           attribute="class"

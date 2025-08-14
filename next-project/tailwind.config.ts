@@ -72,12 +72,12 @@ export default {
 					'0%, 100%': {
 						transform: 'translateY(0)',
 						opacity: '1',
-						scale: '1',
+						scale: '1.1',
 					},
 					'50%': {
-						transform: 'translateY(2px)',
+						transform: 'translateY(10px)',
 						opacity: '0.5',
-						scale: '0.97',
+						scale: '0.95',
 					},
 				},
 			},

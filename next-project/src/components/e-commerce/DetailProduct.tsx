@@ -1,11 +1,11 @@
 import React from 'react';
 import { Button } from '../ui/button';
 import { FaWhatsapp } from 'react-icons/fa';
-import { Product } from '@/types/product';
+import { Product, ProductDetailDTO } from '@/types/product';
 
 // Types
 type Props = {
-  product: Product;
+  product: ProductDetailDTO;
 };
 
 function DetailProduct({ product }: Props) {
