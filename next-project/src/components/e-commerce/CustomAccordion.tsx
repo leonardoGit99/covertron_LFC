@@ -22,12 +22,12 @@ function CustomAccordion({ questions }: Props) {
         <AccordionItem
           key={index}
           value={`item-${index + 1}`}
-          className="bg-white/50 w-full rounded-lg "
+          className="bg-white/50 w-full rounded-lg dark:bg-gray-900"
         >
-          <AccordionTrigger className="text-xl data-[state=open]:text-sky-700 data-[state=open]:bg-sky-100 transition-all p-5">
+          <AccordionTrigger className="text-sm md:text-xl data-[state=open]:text-sky-700 data-[state=open]:bg-sky-100 transition-all p-5 dark:text-white/85 dark:data-[state=open]:text-white dark:data-[state=open]:bg-gray-800">
             {q.question}
           </AccordionTrigger>
-          <AccordionContent className="flex flex-col gap-4  text-lg p-4">
+          <AccordionContent className="flex flex-col gap-4 text-sm md:text-lg p-4">
             {' '}
             <p>{q.answer}</p>
           </AccordionContent>

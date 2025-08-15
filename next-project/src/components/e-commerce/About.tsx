@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
+import HeaderSection from './HeaderSection';
 
 const statistics = [
   { title: 'Clientes Satisfechos', value: '35k+' },
@@ -13,18 +14,14 @@ function About() {
       id="acerca-de"
       className="max-w-7xl mx-auto px-4 py-10 md:py-16 min-h-[auto] md:min-h-screen"
     >
-      {/* Título y descripción */}
-      <div className="text-center mb-10">
-        <h1 className="font-bold text-3xl sm:text-5xl lg:text-6xl mb-4 text-gray-900 leading-tight">
-          Conoce a <span className="text-elegant">Covertron</span>
-        </h1>
-        <p className="text-gray-500 text-lg sm:text-xl leading-relaxed max-w-3xl mx-auto">
-          En COVERTRON&reg; combinamos innovación y estilo para proteger tu
-          portátil con estuches personalizados y duraderos. Además, promovemos
+      <HeaderSection
+        title="Conoce a"
+        description=" En COVERTRON&reg; combinamos innovación y estilo para proteger tu portátil con estuches personalizados y duraderos. Además, promovemos
           un consumo responsable ofreciendo ropa de segunda mano cuidadosamente
-          seleccionada.
-        </p>
-      </div>
+          seleccionada."
+        highlightWord="Covertron"
+        highlightColor="text-orange-500"
+      />
 
       {/* Contenido principal */}
       <div className="flex flex-col md:flex-row items-stretch gap-8">
@@ -45,14 +42,12 @@ function About() {
             {statistics.map((stat, index) => (
               <div
                 key={index}
-                className="text-center md:text-left shadow-md rounded-xl p-4 flex border-l-4 border-sky-200 rounded-l-xl 
-                bg-gradient-to-r from-white to-blue-50 
-                hover:from-white/60 hover:to-blue-100 
-                transform transition-all duration-500 ease-in-out    hover:shadow-md"
+                className="text-center md:text-left shadow-md rounded-xl p-4 flex border-l-4 border-orange-200 rounded-l-xl bg-white/95 dark:bg-gray-900 dark:border-orange-700
+                hover:-inset-1 dark:hover:shadow-white/80 dark:shadow-white/50 transition-all duration-500 ease-in-out"
               >
                 <div className="flex-1">
                   <h2 className="text-4xl font-bold">{stat.value}</h2>
-                  <p className="text-gray-500 font-semibold text-lg">
+                  <p className="text-gray-500 font-semibold text-lg dark:text-gray-300">
                     {stat.title}
                   </p>
                 </div>
@@ -62,13 +57,11 @@ function About() {
 
           {/* Misión y Visión */}
           <div className="space-y-6">
-            <div
-              className="p-6 rounded-xl shadow-md bg-gradient-to-r from-white to-blue-50 
-                hover:from-white/60 hover:to-blue-100 
-                transform transition-all duration-500 ease-in-out hover:shadow-md"
-            >
-              <h2 className="text-xl font-bold mb-2 text-gray-900">Misión</h2>
-              <p className="text-gray-500 leading-relaxed text-justify">
+            <div className="p-6 rounded-xl shadow-md bg-gradient-to-r from-white to-orange-50 dark:bg-none dark:bg-gray-900  dark:shadow-sm dark:hover:shadow-white/50  hover:shadow-lg   dark:border dark:border-white/30 transform transition-all duration-500 ease-in-out">
+              <h2 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+                Misión
+              </h2>
+              <p className="text-gray-500 leading-relaxed text-justify dark:text-gray-300">
                 En Covertron protegemos y potenciamos la movilidad de tus
                 dispositivos con estuches innovadores, personalizados y de alta
                 calidad que combinan diseño y funcionalidad. Además, impulsamos
@@ -77,11 +70,11 @@ function About() {
                 responsable.
               </p>
             </div>
-            <div className="p-6 rounded-xl shadow-md bg-gradient-to-r from-white to-blue-50 
-                hover:from-white/60 hover:to-blue-100 
-                transform transition-all duration-500 ease-in-out hover:shadow-md">
-              <h2 className="text-xl font-bold mb-2 text-gray-900">Visión</h2>
-              <p className="text-gray-500 leading-relaxed text-justify">
+            <div className="p-6 rounded-xl shadow-md bg-gradient-to-r from-white to-orange-50 hover:shadow-lg  dark:bg-none dark:bg-gray-900  dark:shadow-sm dark:hover:shadow-white/80   dark:border dark:border-white/30 transform transition-all duration-500 ease-in-out">
+              <h2 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+                Visión
+              </h2>
+              <p className="text-gray-500 leading-relaxed text-justify dark:text-gray-300">
                 Ser líderes en estuches para portátiles, reconocidos por nuestra
                 personalización, durabilidad e innovación. Al mismo tiempo,
                 inspirar el consumo consciente con ropa de segunda mano de alta

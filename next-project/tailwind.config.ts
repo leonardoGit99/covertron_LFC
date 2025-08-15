@@ -10,6 +10,7 @@ export default {
 	theme: {
     	extend: {
     		colors: {
+					backgroundDark: '#0F172A',
     			elegant: '#00C6FF',
     			backgroundColor: '#F5F5FA',
     			background: '#F5F5FA',

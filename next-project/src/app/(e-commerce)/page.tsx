@@ -6,7 +6,7 @@ import Services from '@/components/e-commerce/Services';
 
 export default function Home() {
   return (
-    <div>
+    <div className='bg-background dark:bg-backgroundDark'>
       <Hero />
       <Services />
       <About />
