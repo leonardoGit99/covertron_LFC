@@ -1,6 +1,7 @@
 import React from 'react';
 import ReasonCard from './ReasonCard';
 import HeaderSection from './HeaderSection';
+import Reveal from './Reveal';
 
 export type Reason = {
   number: string;
@@ -33,7 +34,7 @@ function Reasons() {
   return (
     <section
       id="razones"
-      className="min-h-[auto] md:min-h-screen max-w-7xl mx-auto px-4 py-10 md:py-16"
+      className="min-h-[auto] md:min-h-screen sm:max-w-6xl 2xl:max-w-7xl mx-auto px-4 mt-5 md:mt-10"
     >
       <HeaderSection
         title="Porque"
@@ -43,14 +44,19 @@ function Reasons() {
       />
 
       {/* Principal Content */}
-      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6">
+      <Reveal
+        direction="right"
+        stagger={0.3}
+        delay={0.2}
+        className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6"
+      >
         {reasons.map((reason, index) => (
           <ReasonCard
             key={index}
             reason={reason}
           />
         ))}
-      </div>
+      </Reveal>
     </section>
   );
 }

@@ -11,6 +11,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from './ui/navigation-menu';
+import Link from 'next/link';
 
 type Props = {
   type?: 'default' | 'transparent';
@@ -35,49 +36,55 @@ function NbDesktopItems({ type = 'default' }: Props) {
             className={`${
               type === 'default'
                 ? 'text-black'
-                : 'text-white bg-transparent transition-colors hover:bg-transparent hover:text-slate-300 focus:text-slate-300 data-[state=open]:text-slate-300 data-[state=open]:bg-transparent data-[state=open]:hover:bg-transparent data-[state=open]:focus:bg-transparent'
+                : 'text-white bg-transparent transition-colors hover:bg-transparent hover:text-slate-300 focus:text-slate-300 data-[state=open]:text-slate-300 data-[state=open]:bg-transparent data-[state=open]:hover:bg-transparent data-[state=open]:focus:bg-transparent focus:bg-transparent'
             }`}
           >
             Sobre nosotros
           </NavigationMenuTrigger>
           <NavigationMenuContent
-            /* className={`${type === 'default' ? 'bg-white' : 'bg-foreground'}`} */
+          /* className={`${type === 'default' ? 'bg-white' : 'bg-foreground'}`} */
           >
             <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              <li className="row-span-3">
+              <li className="row-span-4">
                 <NavigationMenuLink asChild>
-                  <a
-                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                  <Link
+                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-8 no-underline outline-none focus:shadow-md"
                     href="/"
                   >
-                    <GiKangaroo className="text-3xl" />
+                    <GiKangaroo className="text-4xl" />
                     <div className="mb-2 mt-4 text-lg font-medium">
                       COVERTRON
                     </div>
                     <p className="text-sm leading-tight text-muted-foreground">
                       Diseño que te cuida. Estilo que te representa
                     </p>
-                  </a>
+                  </Link>
                 </NavigationMenuLink>
               </li>
               <ListItem
-                href="/acercade"
-                title="Covertron"
-              >
-                ¿Quiénes somos?
-              </ListItem>
-              <ListItem
-                href="/servicios"
+                href="/#servicios"
                 title="Servicios"
               >
                 Conoce todo lo que hacemos y encuentra la combinación perfecta
                 entre protección y moda
               </ListItem>
               <ListItem
-                href="#"
-                title="Item 3"
+                href="/#acerca-de"
+                title="Covetron"
               >
-                Descripcion 3
+                ¿Quienes somos?
+              </ListItem>
+              <ListItem
+                href="/#razones"
+                title="Razones para elegirnos"
+              >
+                ¿Qué nos distingue?
+              </ListItem>
+              <ListItem
+                href="/#preguntas-frecuentes"
+                title="Preguntas frecuentes"
+              >
+                Resuelve tus dudas
               </ListItem>
             </ul>
           </NavigationMenuContent>
@@ -87,7 +94,7 @@ function NbDesktopItems({ type = 'default' }: Props) {
             className={`${
               type === 'default'
                 ? 'text-black'
-                : 'text-white bg-transparent transition-colors hover:bg-transparent hover:text-slate-300 focus:text-slate-300 data-[state=open]:text-slate-300 data-[state=open]:bg-transparent data-[state=open]:hover:bg-transparent data-[state=open]:focus:bg-transparent'
+                : 'text-white bg-transparent transition-colors hover:bg-transparent hover:text-slate-300 focus:text-slate-300 data-[state=open]:text-slate-300 data-[state=open]-bg-none data-[state=open]:bg-transparent data-[state=open]:hover:bg-transparent data-[state=open]:focus:bg-transparent focus:bg-transparent'
             }`}
           >
             Nuestro Catálogo
@@ -113,28 +120,34 @@ function NbDesktopItems({ type = 'default' }: Props) {
 export default NbDesktopItems;
 
 // This component is used to create a list item for the navigation menu
-const ListItem = React.forwardRef<
-  React.ElementRef<'a'>,
-  React.ComponentPropsWithoutRef<'a'>
->(({ className, title, children, ...props }, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={cn(
-            'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
-            className
-          )}
-          {...props}
-        >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </a>
-      </NavigationMenuLink>
-    </li>
-  );
-});
+type ListItemProps = {
+  title: string;
+  href: string; // obligatorio y siempre string
+  children: React.ReactNode;
+  className?: string;
+};
+
+const ListItem = React.forwardRef<HTMLAnchorElement, ListItemProps>(
+  ({ title, href, children, className, ...props }, ref) => {
+    return (
+      <li>
+        <NavigationMenuLink asChild>
+          <Link
+            href={href} // ahora TypeScript sabe que es string
+            ref={ref}
+            className={cn(
+              'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
+              className
+            )}
+            {...props}
+          >
+            <div className="text-sm font-medium leading-none">{title}</div>
+            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">{children}</p>
+          </Link>
+        </NavigationMenuLink>
+      </li>
+    );
+  }
+);
+
 ListItem.displayName = 'ListItem';

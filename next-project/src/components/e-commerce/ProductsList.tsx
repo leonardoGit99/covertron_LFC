@@ -86,17 +86,17 @@ function ProductsList() {
       ) : (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 xxl:grid-cols-4 gap-12">
-            {products.map((item) => (
+            {products.map((product) => (
               <Link
-                href={`/productos/${item.id}`}
-                key={item.id}
+                href={`/productos/${product.id}`}
+                key={product.id}
               >
                 <ProductCard
-                  img={item.image}
-                  name={item.name}
-                  originalPrice={item.originalPrice}
-                  discountedPrice={item.discountedPrice}
-                  discount={item.discount}
+                  img={product.image}
+                  name={product.name}
+                  originalPrice={product.originalPrice}
+                  discountedPrice={product.discountedPrice}
+                  discount={product.discount}
                 />
               </Link>
             ))}

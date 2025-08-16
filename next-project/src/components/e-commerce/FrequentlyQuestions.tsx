@@ -1,6 +1,7 @@
 import React from 'react';
 import CustomAccordion from './CustomAccordion';
 import HeaderSection from './HeaderSection';
+import Reveal from './Reveal';
 
 export type Question = {
   question: string;
@@ -38,19 +39,24 @@ const questions: Question[] = [
 
 function FrequentlyQuestions() {
   return (
-    <section className="min-h-[auto] md:min-h-[calc(100vh-280px)] mx-w-7xl -mb-4">
+    <section
+      id="preguntas-frecuentes"
+      className="min-h-[auto] md:min-h-[calc(100vh-280px)] mx-w-7xl sm:max-w-6xl 2xl:max-w-7xl mx-auto -mb-4"
+    >
       <HeaderSection
         title="Preguntas"
         description="Todo lo que necesitas saber sobre COVERTRON&reg; y nuestros productos,
-        explicado de manera clara y sencilla." 
+        explicado de manera clara y sencilla."
         highlightWord="Frecuentes"
         highlightColor="text-orange-500"
       />
 
       {/* Frequently questions Acordion */}
-      <div className="max-w-3xl md:mx-auto mx-6 bg-white/50 rounded-lg shadow-xl dark:bg-gray-900 dark:border dark:border-white/30">
-        <CustomAccordion questions={questions} />
-      </div>
+      <Reveal>
+        <div className="max-w-3xl md:mx-auto mx-6 bg-white/50 rounded-lg shadow-xl dark:bg-gray-900 dark:border dark:border-white/30 h-[20rem] overflow-y-scroll">
+          <CustomAccordion questions={questions} />
+        </div>
+      </Reveal>
     </section>
   );
 }

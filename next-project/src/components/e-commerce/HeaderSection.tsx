@@ -1,4 +1,5 @@
 import React from 'react';
+import Reveal from './Reveal';
 
 type Props = {
   title: string;
@@ -7,16 +8,23 @@ type Props = {
   highlightColor: string;
 };
 
-function HeaderSection({title, description, highlightWord, highlightColor}: Props) {
+function HeaderSection({
+  title,
+  description,
+  highlightWord,
+  highlightColor,
+}: Props) {
   return (
-    <div className="text-center mb-8">
-      <h1 className="font-bold text-4xl sm:text-5xl lg:text-6xl mb-4 text-gray-900 dark:text-white/90 leading-tight">
-        {title} <span className={`${highlightColor}`}>{highlightWord}</span>
-      </h1>
-      <p className="text-gray-500 dark:text-gray-400 text-lg sm:text-xl leading-relaxed max-w-3xl mx-auto">
-        {description}
-      </p>
-    </div>
+    <Reveal direction="down">
+      <div className="text-center mb-6">
+        <h1 className="font-bold text-4xl sm:text-5xl lg:text-6xl mb-4 text-gray-900 dark:text-white/90 leading-tight">
+          {title} <span className={`${highlightColor}`}>{highlightWord}</span>
+        </h1>
+        <p className="text-gray-500 dark:text-gray-400 text-lg sm:text-lg leading-relaxed max-w-3xl mx-auto">
+          {description}
+        </p>
+      </div>
+    </Reveal>
   );
 }
 

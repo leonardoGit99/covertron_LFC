@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 import HeaderSection from './HeaderSection';
+import Reveal from './Reveal';
 
 const statistics = [
   { title: 'Clientes Satisfechos', value: '35k+' },
@@ -12,7 +13,7 @@ function About() {
   return (
     <section
       id="acerca-de"
-      className="max-w-7xl mx-auto px-4 py-10 md:py-16 min-h-[auto] md:min-h-screen"
+      className="sm:max-w-6xl 2xl:max-w-7xl mx-auto px-4 mt:5 md:mt-10 min-h-[auto] md:min-h-screen "
     >
       <HeaderSection
         title="Conoce a"
@@ -26,19 +27,25 @@ function About() {
       {/* Contenido principal */}
       <div className="flex flex-col md:flex-row items-stretch gap-8">
         {/* Imagen */}
-        <div className="relative w-full md:w-1/3 min-h-[24rem] rounded-xl shadow-lg overflow-hidden ">
+
+        <div className="relative w-full md:w-1/3 min-h-[24rem] rounded-xl  overflow-hidden">
           <Image
             src="/assets/about.webp"
             alt="about image"
             fill
-            className="object-cover hover:scale-105 transition-transform duration-500 ease-in-out"
+            className="object-cover hover:scale-105 transition-transform duration-500 ease-in-out shadow-lg rounded-xl"
           />
         </div>
 
         {/* Texto y estadísticas */}
         <div className="flex-1 flex flex-col justify-stretch gap-6">
           {/* Estadísticas */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
+          <Reveal
+            direction="left"
+            stagger={0.3}
+            delay={0.1}
+            className="grid grid-cols-2 sm:grid-cols-3 gap-6"
+          >
             {statistics.map((stat, index) => (
               <div
                 key={index}
@@ -46,22 +53,27 @@ function About() {
                 hover:-inset-1 dark:hover:shadow-white/80 dark:shadow-white/50 transition-all duration-500 ease-in-out"
               >
                 <div className="flex-1">
-                  <h2 className="text-4xl font-bold">{stat.value}</h2>
-                  <p className="text-gray-500 font-semibold text-lg dark:text-gray-300">
+                  <h2 className="text-3xl font-bold">{stat.value}</h2>
+                  <p className="text-gray-500 font-semibold text-normal dark:text-gray-300">
                     {stat.title}
                   </p>
                 </div>
               </div>
             ))}
-          </div>
+          </Reveal>
 
           {/* Misión y Visión */}
-          <div className="space-y-6">
-            <div className="p-6 rounded-xl shadow-md bg-gradient-to-r from-white to-orange-50 dark:bg-none dark:bg-gray-900  dark:shadow-sm dark:hover:shadow-white/50  hover:shadow-lg   dark:border dark:border-white/30 transform transition-all duration-500 ease-in-out">
-              <h2 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+          <Reveal
+            direction="left"
+            stagger={0.3}
+            delay={0.1}
+            className="space-y-6"
+          >
+            <div className="relative overflow-hidden p-6 rounded-xl shadow-md bg-gradient-to-b from-white to-orange-50 dark:bg-none hover:shadow-lg transform transition-all duration-500 ease-in-out dark:bg-gray-900 dark:shadow-white/50 dark:hover:shadow-white/80 dark:border dark:border-white/30">
+              <h2 className="text-lg font-bold mb-2 text-gray-900 dark:text-white">
                 Misión
               </h2>
-              <p className="text-gray-500 leading-relaxed text-justify dark:text-gray-300">
+              <p className="text-gray-500 leading-relaxed text-justify dark:text-gray-300 text-sm">
                 En Covertron protegemos y potenciamos la movilidad de tus
                 dispositivos con estuches innovadores, personalizados y de alta
                 calidad que combinan diseño y funcionalidad. Además, impulsamos
@@ -70,11 +82,11 @@ function About() {
                 responsable.
               </p>
             </div>
-            <div className="p-6 rounded-xl shadow-md bg-gradient-to-r from-white to-orange-50 hover:shadow-lg  dark:bg-none dark:bg-gray-900  dark:shadow-sm dark:hover:shadow-white/80   dark:border dark:border-white/30 transform transition-all duration-500 ease-in-out">
-              <h2 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+            <div className="relative overflow-hidden p-6 rounded-xl shadow-md bg-gradient-to-b from-white/90 to-orange-50  dark:bg-none hover:shadow-lg transform transition-all duration-500 ease-in-out dark:bg-gray-900 dark:shadow-white/50 dark:hover:shadow-white/80 dark:border dark:border-white/30">
+              <h2 className="text-lg font-bold mb-2 text-gray-900 dark:text-white">
                 Visión
               </h2>
-              <p className="text-gray-500 leading-relaxed text-justify dark:text-gray-300">
+              <p className="text-gray-500 leading-relaxed text-justify dark:text-gray-300 text-sm">
                 Ser líderes en estuches para portátiles, reconocidos por nuestra
                 personalización, durabilidad e innovación. Al mismo tiempo,
                 inspirar el consumo consciente con ropa de segunda mano de alta
@@ -82,7 +94,7 @@ function About() {
                 través de cada prenda.
               </p>
             </div>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

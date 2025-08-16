@@ -10,7 +10,7 @@ function ReasonCard({ reason }: Props) {
     <div
       className={`
         group relative flex flex-col gap-6 p-8 rounded-2xl 
-        bg-gradient-to-r from-white/60 to-orange-50 border-1 border-gray-100
+        bg-white/20 border-1 border-gray-100
         hover:shadow-xl hover:-translate-y-1
         transition-all duration-300 ease-out
         items-center justify-center overflow-hidden shadow-xl
@@ -19,7 +19,7 @@ function ReasonCard({ reason }: Props) {
       aria-labelledby={`reason-title-${reason.number}`}
     >
       {/* Decorative background element */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-gray-400 to-transparent rounded-full -translate-y-16 translate-x-16 opacity-50 group-hover:opacity-75 transition-opacity duration-300" />
+      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-orange-200 to-transparent rounded-full -translate-y-16 translate-x-16 opacity-50 group-hover:opacity-75 transition-opacity duration-300 dark:from-orange-300 dark:to-gray-950" />
 
       {/* Number badge */}
       <div

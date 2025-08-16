@@ -10,6 +10,7 @@ import {
 import { getOneProduct } from '@/services/product';
 import ImagesDetailProduct from '@/components/e-commerce/ImagesDetailProduct';
 import DetailProduct from '@/components/e-commerce/DetailProduct';
+import Link from 'next/link';
 
 async function Product({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -25,7 +26,7 @@ async function Product({ params }: { params: Promise<{ id: string }> }) {
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href="/productos">Catálogo</BreadcrumbLink>
+             <Link href={'/productos'}>Catálogo</Link> 
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>

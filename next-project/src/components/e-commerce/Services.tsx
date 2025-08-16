@@ -7,6 +7,7 @@ import servicesThree from '../../../public/assets/services-3.jpg';
 import { FaLaptop, FaPalette } from 'react-icons/fa';
 import { GiClothes } from 'react-icons/gi';
 import HeaderSection from './HeaderSection';
+import Reveal from './Reveal';
 
 export type Service = {
   title: string;
@@ -39,7 +40,7 @@ function Services() {
   return (
     <section
       id="servicios"
-      className="relative min-h-[auto] md:min-h-screen max-w-7xl mx-auto flex flex-col items-center justify-center mt-0 md:mt-10 px-4"
+      className="relative min-h-[auto] md:min-h-screen  sm:max-w-6xl 2xl:max-w-7xl mx-auto flex flex-col items-center justify-center mt-5 md:mt-10 px-4"
     >
       <HeaderSection
         title="Explora nuestros"
@@ -49,16 +50,21 @@ function Services() {
       />
 
       {/* Grid de servicios */}
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-6 w-full">
+      <Reveal
+        direction="right"
+        stagger={0.2}
+        delay={0.3}
+        className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-6 w-full"
+      >
         {services.map((service, index) => (
           <div
             key={index}
-            className="flex justify-center"
+            className="flex justify-between"
           >
             <ServiceCard service={service} />
           </div>
         ))}
-      </div>
+      </Reveal>
     </section>
   );
 }

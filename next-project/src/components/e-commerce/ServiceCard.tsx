@@ -10,7 +10,7 @@ type Props ={
 
 function ServiceCard({service}:Props) {
   return (
-    <Card className=" w-[90vw] sm:w-[350px] overflow-hidden flex flex-col bg-background dark:bg-backgroundDark shadow-none rounded-xl group">
+    <Card className=" w-[90vw] sm:w-[300px] overflow-hidden flex flex-col bg-background dark:bg-backgroundDark shadow-none rounded-xl group">
       <CardContent className="border-none rounded-xl shadow-lg">
         <div className="relative w-full aspect-square overflow-hidden rounded-xl">
           <Image
@@ -23,10 +23,10 @@ function ServiceCard({service}:Props) {
         </div>
       </CardContent>
       <CardFooter className="mt-2 gap-2">
-        <p className="font-bold text-3xl text-gray-900 dark:text-white">
+        <p className="font-bold text-2xl text-gray-900 dark:text-white">
           {service.title}
         </p>
-        <p className="text-gray-500 dark:text-gray-300 text-lg text-justify leading-relaxed font-medium">
+        <p className="text-gray-500 dark:text-gray-300 text-normal text-justify leading-relaxed font-medium">
           {service.description}
         </p>
       </CardFooter>

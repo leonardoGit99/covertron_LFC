@@ -11,15 +11,6 @@ type ProductCardProps = {
   discount?: number;
 };
 
-type ColorKey = 'beige' | 'blue' | 'brown';
-
-const colorClasses: Record<ColorKey, string> = {
-  beige: 'bg-[#C77E4F]',
-  blue: 'bg-[#003672]',
-  brown: 'bg-[#787878]',
-};
-
-const availableColors: ColorKey[] = ['beige', 'blue', 'brown'];
 
 function ProductCard({
   img,
@@ -29,7 +20,7 @@ function ProductCard({
   discount,
 }: ProductCardProps) {
   return (
-    <Card className="group w-[90vw] sm:w-[350px] h-[425px] overflow-hidden hover:shadow-md hover:bg-slate-50 hover:shadow-gray-400 transition-shadow duration-300 hover:cursor-pointer flex flex-col">
+    <Card className="group w-[90vw] sm:w-[350px] h-[390px] overflow-hidden hover:shadow-md hover:bg-slate-50 hover:shadow-gray-400 transition-shadow duration-300 hover:cursor-pointer flex flex-col">
       <CardContent>
         <div className="relative w-full aspect-[3/2] overflow-hidden">
           <Image
@@ -45,7 +36,7 @@ function ProductCard({
       <CardFooter className="text-slate-700  p-4 gap-3  flex-grow">
           <p className="flex-grow font-semibold">{name}</p>
           {/* Price with discount */}
-          <div className=" flex flex-col">
+          <div className="flex flex-col">
             <p className="text-md font-bold text-gray-800">
               Bs. {discountedPrice || originalPrice}
             </p>
@@ -60,15 +51,6 @@ function ProductCard({
               <></>
             )}
           </div>
-
-        <div className="flex gap-2">
-          {availableColors.map((c, i) => (
-            <span
-              key={i}
-              className={`w-4 h-4 rounded-full ${colorClasses[c]} border border-gray-300`}
-            />
-          ))}
-        </div>
       </CardFooter>
     </Card>
   );
