@@ -71,7 +71,6 @@ function ProductsList() {
       debouncedSearch(value);
     }
   };
-  console.log(searchTerm);
 
   const handleGetFiltersClick = async () => {
     const { success, data } = await getAllCategories();
@@ -115,10 +114,14 @@ function ProductsList() {
         />
       </div>
 
-      <p className="text-sm text-muted-foreground text-start w-full px-4 md:px-0 dark:text-gray-500">
-        Descubre {totalProducts} {totalProducts > 1 ? 'productos' : 'producto'}{' '}
-        para ti
-      </p>
+      {loading ? (
+        <div className='h-5 w-full'></div>
+      ) : (
+        <p className="text-sm text-muted-foreground text-start w-full px-4 md:px-0 dark:text-gray-500">
+          Tenemos {totalProducts} {totalProducts > 1 ? 'productos' : 'producto'}{' '}
+          {totalProducts > 1 ? 'seleccionados' : 'seleccionado'} para ti
+        </p>
+      )}
 
       <div className="border-b border-gray-200 mt-6 mb-12 dark:border-gray-600 mx-2" />
 

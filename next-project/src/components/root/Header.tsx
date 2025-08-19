@@ -1,20 +1,19 @@
-import React from 'react'
-import { SidebarProvider, SidebarTrigger } from '../ui/sidebar'
+import React from 'react';
+import Logo from '../shared/Logo';
+import { ModeToggle } from '../ui/toggle-theme';
 
 function Header() {
   return (
-    <div className=' bg-white w-full h-[5.75rem] shadow-sm'>
-      <SidebarTrigger />
-      <div className='flex justify-between items-center px-7'>
-        <div>
-          LOGO
-        </div>
-        <div>
-          ContextBtn
-        </div>
+    <div className=" bg-white w-full h-[5.75rem] shadow-sm dark:bg-backgroundDark shadow-gray-400 sticky top-0">
+      <div className="flex justify-between items-center max-w-5xl mx-auto h-full">
+        <Logo
+          type="default"
+          href="/admin"
+        />
+        <ModeToggle type="default" />
       </div>
     </div>
-  )
+  );
 }
 
-export default Header
+export default Header;

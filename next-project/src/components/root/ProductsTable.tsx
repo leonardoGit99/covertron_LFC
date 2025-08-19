@@ -135,7 +135,7 @@ function ProductsTable({ isRefresh, setRefresh }: Props) {
         </p>
       ) : (
         <>
-          <Card className="w-full shadow-md  mt-5 mb-6">
+          <Card className="w-full shadow-md  mt-5 mb-6 dark:border dark:border-gray-600">
             <CardContent>
               <div className="rounded-md border overflow-hidden">
                 <Table className="table-fixed">
@@ -152,25 +152,37 @@ function ProductsTable({ isRefresh, setRefresh }: Props) {
                     <col className="w-[160px]" />
                     <col className="w-[80px]" />
                   </colgroup>
-                  <TableHeader className="bg-blue-50">
-                    <TableRow /* className='divide-x divide-gray-200' */>
-                      <TableHead className="text-left">Categoría</TableHead>
-                      <TableHead className="text-left">Sub Categoría</TableHead>
-                      <TableHead className="text-left">Marca</TableHead>
-                      <TableHead className="text-left">Producto</TableHead>
-                      <TableHead className="text-left">
+                  <TableHeader className="bg-blue-50 ">
+                    <TableRow
+                      /* className='divide-x divide-gray-200' */ className="dark:hover:bg-sky-800"
+                    >
+                      <TableHead className="text-left  ">Categoría</TableHead>
+                      <TableHead className="text-left ">
+                        Sub Categoría
+                      </TableHead>
+                      <TableHead className="text-left ">Marca</TableHead>
+                      <TableHead className="text-left dark:text-white">
+                        Producto
+                      </TableHead>
+                      <TableHead className="text-left ">
                         Precio Original (Bs.)
                       </TableHead>
-                      <TableHead className="text-left">Descuento (%)</TableHead>
-                      <TableHead className="text-left">
+                      <TableHead className="text-left dark:text-white">
+                        Descuento (%)
+                      </TableHead>
+                      <TableHead className="text-left ">
                         Precio con Descuento (Bs.)
                       </TableHead>
-                      <TableHead className="text-center">Imagen</TableHead>
-                      <TableHead className="text-left">Estado</TableHead>
-                      <TableHead className="text-left">
+                      <TableHead className="text-center dark:text-white">
+                        Imagen
+                      </TableHead>
+                      <TableHead className="text-left ">Estado</TableHead>
+                      <TableHead className="text-left ">
                         Ultima fecha de actualización
                       </TableHead>
-                      <TableHead className="text-right">Acciones</TableHead>
+                      <TableHead className="text-right dark:text-white">
+                        Acciones
+                      </TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -221,9 +233,9 @@ function ProductsTable({ isRefresh, setRefresh }: Props) {
                             {item.state === 'available' ? (
                               <Badge
                                 variant="outline"
-                                className="bg-green-100 px-1"
+                                className="bg-green-100 px-1 dark:bg-green-700"
                               >
-                                <span className="text-xs text-green-600 transition-colors duration-300">
+                                <span className="text-xs text-green-600 transition-colors duration-300 dark:text-green-100">
                                   Disponible
                                 </span>
                               </Badge>
@@ -231,9 +243,9 @@ function ProductsTable({ isRefresh, setRefresh }: Props) {
                               item.state === 'sold out' && (
                                 <Badge
                                   variant="outline"
-                                  className="bg-red-100"
+                                  className="bg-red-100 dark:bg-red-700"
                                 >
-                                  <span className="text-xs text-red-600">
+                                  <span className="text-xs text-red-600 dark:text-red-100">
                                     Agotado
                                   </span>
                                 </Badge>
@@ -260,7 +272,7 @@ function ProductsTable({ isRefresh, setRefresh }: Props) {
                                       variant="ghost"
                                       onClick={() => setEditingId(item.id)}
                                     >
-                                      <HiOutlinePencilAlt className="text-blue-600" />
+                                      <HiOutlinePencilAlt className="text-blue-600 dark:text-blue-400" />
                                     </Button>
                                   </DropdownMenuItem>
                                   <DropdownMenuSeparator />
@@ -273,7 +285,7 @@ function ProductsTable({ isRefresh, setRefresh }: Props) {
                                       }
                                       className="w-full"
                                     >
-                                      <HiOutlineTrash className="text-destructive" />
+                                      <HiOutlineTrash className="text-destructive dark:text-red-500" />
                                     </Button>
                                   </DropdownMenuItem>
                                 </DropdownMenuGroup>

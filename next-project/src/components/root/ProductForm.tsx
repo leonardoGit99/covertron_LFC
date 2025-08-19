@@ -284,7 +284,7 @@ function ProductForm({ form, onSubmit, id, product, categories, images, setImage
         />
         <Button
           type="submit"
-          className="w-full"
+          className="w-full bg-slate-900 hover:bg-slate-800 active:bg-slate-700 dark:bg-sky-900 dark:hover:bg-sky-800 dark:active:bg-sky-700 dark:text-white dark:border dark:border-gray-500"
         // disabled={
         //   product.name === values.name && product.description === values.description
         // }

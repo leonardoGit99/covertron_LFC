@@ -12,13 +12,13 @@ import {
 import { Button } from '@/components/ui/button';
 import { IoIosSave } from "react-icons/io";
 import { UseFormReturn } from 'react-hook-form';
-import { NewCategory } from '@/types';
+import { CreateCategoryDTO } from '@/types';
 
 
 type Props = {
-  form: UseFormReturn<NewCategory>,
-  onSubmit: (body: NewCategory) => void,
-  category: NewCategory
+  form: UseFormReturn<CreateCategoryDTO>,
+  onSubmit: (body: CreateCategoryDTO) => void,
+  category: CreateCategoryDTO
 };
 
 function CategoryForm({ form, onSubmit, category }: Props) {
@@ -82,7 +82,7 @@ function CategoryForm({ form, onSubmit, category }: Props) {
         {/* Save button */}
         <Button
           type="submit"
-          className="w-full"
+          className="w-full bg-slate-900 hover:bg-slate-800 active:bg-slate-700 dark:bg-sky-900 dark:hover:bg-sky-800 dark:active:bg-sky-700 dark:text-white dark:border dark:border-gray-500"
           disabled={isSubmitDisabled}
         >
           <IoIosSave /> Guardar

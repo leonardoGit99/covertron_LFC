@@ -132,7 +132,7 @@ function SubCategoryDialog({ subCategoryId, open, onOpenChange }: DialogProps) {
           <DialogTitle className="text-center mb-3">
             {subCategoryId ? 'Actualizar Sub-Categoría' : 'Nueva Sub-Categoría'}
           </DialogTitle>
-          <Separator />
+          <Separator/>
         </DialogHeader>
         {/* Create or Update Form*/}
         <SubCategoryForm

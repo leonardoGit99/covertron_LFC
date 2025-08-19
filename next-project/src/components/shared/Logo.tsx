@@ -4,11 +4,12 @@ import { GiKangaroo } from 'react-icons/gi';
 
 type Props = {
   type: string;
+  href: string;
 };
 
-function Logo({ type }: Props) {
+function Logo({ type, href }: Props) {
   return (
-    <Link href={'/'}>
+    <Link href={href}>
       <div
         className={`flex items-center gap-0 sm:gap-2 ${
           type === 'default' ? 'text-black dark:text-white' : 'text-white'

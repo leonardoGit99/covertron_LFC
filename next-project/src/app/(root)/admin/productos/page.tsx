@@ -10,7 +10,7 @@ function Products() {
   const [isRefresh, setIsRefresh] = useState<boolean>(true);
   return (
     <>
-      <Card className="w-full shadow-md p-6">
+      <Card className="w-full shadow-md p-6 dark:bg-slate-800 dark:border dark:border-gray-600">
         <CardContent className="flex flex-col gap-4 justify-between items-center sm:flex-row sm:gap-0">
           <SectionHeader
             title="Productos"

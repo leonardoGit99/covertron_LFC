@@ -19,7 +19,10 @@ function Navbar({ type = 'default' }: Props) {
       }`}
     >
       <div className="flex items-center justify-between py-4 mx-auto sm:max-w-6xl">
-        <Logo type={type} />
+        <Logo
+          type={type}
+          href="/"
+        />
         <div className="items-center justify-between hidden sm:flex">
           <NbDesktopItems type={type} />
         </div>

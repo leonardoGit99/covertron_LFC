@@ -13,14 +13,14 @@ import { Button } from '@/components/ui/button';
 import { IoIosSave } from "react-icons/io";
 import { UseFormReturn } from 'react-hook-form';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '../ui/select';
-import { NewSubCategory, SubCategory } from '@/types/subcategory';
+import { CreateSubCategory, SubCategory } from '@/types/subcategory';
 import { Categories } from '@/types';
 
 
 // Types
 type Props = {
-  form: UseFormReturn<NewSubCategory>;
-  onSubmit: (body: NewSubCategory) => void;
+  form: UseFormReturn<CreateSubCategory>;
+  onSubmit: (body: CreateSubCategory) => void;
   categories: Categories,
   subCategory: SubCategory;
 };
@@ -120,7 +120,7 @@ function SubCategoryForm({ form, onSubmit, categories, subCategory }: Props) {
 
         <Button
           type="submit"
-          className="w-full"
+          className="w-full bg-slate-900 hover:bg-slate-800 active:bg-slate-700 dark:bg-sky-900 dark:hover:bg-sky-800 dark:active:bg-sky-700 dark:text-white dark:border dark:border-gray-500"
           disabled={isSubmitDisabled}
         >
           <IoIosSave /> Guardar

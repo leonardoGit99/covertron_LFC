@@ -44,7 +44,7 @@ export default function Upload({ images, setImages, imageUrls, id, setImageUrls,
     <div>
       <div
         {...getRootProps()}
-        className={`p-6 border-2 border-dashed rounded-md cursor-pointer mb-4 ${isDragActive ? "border-blue-600 bg-blue-50" : "border-gray-300"
+        className={`p-6 border-2 border-dashed rounded-md cursor-pointer mb-4 ${isDragActive ? "border-blue-600 bg-blue-50 dark:bg-slate-700 dark:border-blue-500" : "border-gray-300 dark:border-gray-400"
           }`}
       >
         <input {...getInputProps()} />

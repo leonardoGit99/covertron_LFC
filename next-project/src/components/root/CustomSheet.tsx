@@ -189,7 +189,7 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange, setRefresh }: Props) 
 
   return (
     <Sheet open={open} onOpenChange={handleOpenChange}>
-      <SheetContent side="right">
+      <SheetContent side="right" className='dark:bg-backgroundDark'>
         <SheetHeader>
           <SheetTitle>{sheetTitle}</SheetTitle>
           {
