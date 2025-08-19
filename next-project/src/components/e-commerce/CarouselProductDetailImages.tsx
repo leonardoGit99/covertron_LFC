@@ -49,7 +49,7 @@ export function CarouselProductDetailImages({ images, handleClick }: Props) {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious />
+      <CarouselPrevious/>
       <CarouselNext />
     </Carousel>
   );

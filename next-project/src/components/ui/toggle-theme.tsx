@@ -24,7 +24,7 @@ export function ModeToggle({ type = 'default' }: Props) {
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger
           asChild
-          className={`${type === 'default' ? 'text-black' : 'text-white bg-transparent hover:bg-transparent hover:text-white'} border-none shadow-none`}
+          className={`${type === 'default' ? 'text-black dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800 dark:active:bg-slate-700' : 'text-white bg-transparent hover:bg-transparent hover:text-white'} border-none shadow-none`}
         >
           <Button
             variant="outline"
@@ -38,6 +38,7 @@ export function ModeToggle({ type = 'default' }: Props) {
         <DropdownMenuContent
           side="bottom"
           align="end"
+          className='dark:bg-slate-900'
         >
           <DropdownMenuItem onClick={() => setTheme('light')}>
             Claro

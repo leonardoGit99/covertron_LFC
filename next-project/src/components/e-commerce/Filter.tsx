@@ -32,16 +32,16 @@ function Filter({
   // }
 
   return (
-    <Menubar className="bg-white shadow-md">
+    <Menubar className="bg-white shadow-md dark:bg-gray-800 dark:border dark:border-gray-700 dark:hover:bg-gray-700 dark:active:bg-gray-600">
       <MenubarMenu>
         <MenubarTrigger
-          className="hover:cursor-pointer"
+          className="hover:cursor-pointer dark:hover:bg-gray-700 dark:active:bg-gray-600"
           onClick={handleGetFiltersClick}
         >
           {/* Icon */}
           <BsFilter className="text-lg md:text-xl" />
         </MenubarTrigger>
-        <MenubarContent align="end">
+        <MenubarContent align="end" className='dark:bg-slate-900'>
           <MenubarItem
             className="hover:cursor-pointer"
             onClick={() => handleClearFilterClick()}

@@ -41,7 +41,7 @@ function FrequentlyQuestions() {
   return (
     <section
       id="preguntas-frecuentes"
-      className="min-h-[auto] md:min-h-[calc(100vh-280px)] mx-w-7xl sm:max-w-6xl 2xl:max-w-7xl mx-auto -mb-4"
+      className="min-h-[auto] md:min-h-[calc(100vh-280px)] mx-w-7xl sm:max-w-6xl 2xl:max-w-7xl mx-auto "
     >
       <HeaderSection
         title="Preguntas"

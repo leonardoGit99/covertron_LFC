@@ -35,7 +35,7 @@ function NbDesktopItems({ type = 'default' }: Props) {
           <NavigationMenuTrigger
             className={`${
               type === 'default'
-                ? 'text-black'
+                ? 'text-black dark:text-white dark:bg-slate-900 dark:hover:bg-slate-700 dark:active:bg-slate-600'
                 : 'text-white bg-transparent transition-colors hover:bg-transparent hover:text-slate-300 focus:text-slate-300 data-[state=open]:text-slate-300 data-[state=open]:bg-transparent data-[state=open]:hover:bg-transparent data-[state=open]:focus:bg-transparent focus:bg-transparent'
             }`}
           >
@@ -93,7 +93,7 @@ function NbDesktopItems({ type = 'default' }: Props) {
           <NavigationMenuTrigger
             className={`${
               type === 'default'
-                ? 'text-black'
+                ? 'text-black dark:text-white dark:bg-slate-900 dark:hover:bg-slate-700 dark:active:bg-slate-600'
                 : 'text-white bg-transparent transition-colors hover:bg-transparent hover:text-slate-300 focus:text-slate-300 data-[state=open]:text-slate-300 data-[state=open]-bg-none data-[state=open]:bg-transparent data-[state=open]:hover:bg-transparent data-[state=open]:focus:bg-transparent focus:bg-transparent'
             }`}
           >

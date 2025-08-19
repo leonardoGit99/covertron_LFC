@@ -37,7 +37,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <main className="flex-grow w-full">
+          <main className="flex-grow w-full dark:bg-backgroundDark -mb-4">
             
             {/* <div className="max-w-8xl mx-auto">
               <Announcements />

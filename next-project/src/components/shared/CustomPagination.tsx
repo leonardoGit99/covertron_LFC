@@ -16,7 +16,12 @@ type Props = {
   onPageChange: (page: number) => void;
 };
 
-function CustomPagination({ currentPage, totalPages, limit, onPageChange }: Props) {
+function CustomPagination({
+  currentPage,
+  totalPages,
+  limit,
+  onPageChange,
+}: Props) {
   const handleClick = (e: React.MouseEvent, page: number) => {
     e.preventDefault();
     if (page !== currentPage) {
@@ -27,7 +32,7 @@ function CustomPagination({ currentPage, totalPages, limit, onPageChange }: Prop
   const isFirstPage = currentPage === 1;
   const isLastPage = currentPage === totalPages;
   return (
-    <Pagination className='mb-6'>
+    <Pagination className="mb-6">
       <PaginationContent>
         <PaginationItem>
           {/* Previous button */}
@@ -45,6 +50,7 @@ function CustomPagination({ currentPage, totalPages, limit, onPageChange }: Prop
           return (
             <PaginationItem key={page}>
               <PaginationLink
+                className="dark:bg-gray-800 dark:hover:bg-gray-700 dark:active:bg-gray-600 dark:border dark:border-gray-600"
                 href="#"
                 isActive={currentPage === page}
                 onClick={(e) => handleClick(e, page)}

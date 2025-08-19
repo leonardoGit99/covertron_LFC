@@ -10,13 +10,13 @@ type Props = {
 
 function SearchInput({ handleChange, searchTerm }: Props) {
   return (
-    <Card className="w-[90vw] md:w-[350px] shadow-md">
+    <Card className="w-[90vw] md:w-[350px] shadow-md dark:bg-slate-800 dark:border dark:border-slate-700">
       <div className="relative">
         <CgSearch className="absolute left-3 top-5 -translate-y-1/2 text-gray-400 text-xl" />
         <Input
           placeholder="¿Qué estás buscando?"
           onChange={handleChange}
-          className="pl-9"
+          className="pl-9 dark:bg-gray-800 dark:border dark:border-gray-700"
           value={searchTerm}
         />
       </div>

@@ -21,7 +21,7 @@ async function Product({ params }: { params: Promise<{ id: string }> }) {
   }
 
   return (
-    <div>
+    <>
       <div className="mt-6 mb-10">
         <Breadcrumb>
           <BreadcrumbList>
@@ -41,7 +41,7 @@ async function Product({ params }: { params: Promise<{ id: string }> }) {
           product={product}
         />
       </div>
-    </div>
+    </>
   );
 }
 

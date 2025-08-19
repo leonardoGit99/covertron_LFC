@@ -18,10 +18,10 @@ function ProductCard({
   originalPrice,
   discountedPrice,
   discount,
-  categoryName
+  categoryName,
 }: ProductCardProps) {
   return (
-    <Card className="group w-[90vw] sm:w-[350px] md:h-[370px]  overflow-hidden shadow-sm hover:shadow-md hover:bg-slate-50 hover:shadow-gray-400  hover:cursor-pointer flex flex-col transition-all duration-300 ease-in-out hover:-translate-y-1 bg-gradient-to-br from-white via-slate-50 to-sky-100  border-gray-200">
+    <Card className="group w-[90vw] sm:w-[350px] md:h-[370px]  overflow-hidden shadow-md shadow-slate-400 hover:shadow-lg hover:bg-slate-50 hover:shadow-gray-400  hover:cursor-pointer flex flex-col transition-all duration-300 ease-in-out hover:-translate-y-1 bg-gradient-to-br from-white via-slate-50 to-sky-100  border-gray-200 dark:from-slate-900 dark:via-slate-950 dark:to-sky-950 dark:border dark:border-white/10 dark:shadow-md dark:shadow-white/20 dark:hover:shadow-gray-400">
       <CardContent>
         <div className="relative w-full aspect-[3/2] overflow-hidden">
           <Image
@@ -37,11 +37,11 @@ function ProductCard({
         </div>
       </CardContent>
 
-      <CardFooter className="text-slate-700  p-3 gap-3  flex-grow">
-        <p className="flex-grow font-semibold">{name}</p>
+      <CardFooter className="p-3 gap-3  flex-grow">
+        <p className="flex-grow font-semibold text-gray-900 dark:text-white">{name}</p>
         {/* Price with discount */}
         <div className="flex items-center gap-3">
-          <p className="text-md font-bold text-gray-800">
+          <p className="text-md font-bold text-gray-800 dark:text-gray-300">
             Bs. {discountedPrice || originalPrice}
           </p>
           {discount &&

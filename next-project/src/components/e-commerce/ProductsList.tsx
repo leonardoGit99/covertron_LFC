@@ -115,12 +115,13 @@ function ProductsList() {
         />
       </div>
 
-      <p className="text-sm text-muted-foreground text-start w-full px-4 md:px-0">
+      <p className="text-sm text-muted-foreground text-start w-full px-4 md:px-0 dark:text-gray-500">
         Descubre {totalProducts} {totalProducts > 1 ? 'productos' : 'producto'}{' '}
         para ti
       </p>
 
-<div className='border-b border-gray-200 mt-6 mb-6'/>
+      <div className="border-b border-gray-200 mt-6 mb-12 dark:border-gray-600 mx-2" />
+
       {loading ? (
         <Spinner
           size={50}
