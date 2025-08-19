@@ -13,13 +13,15 @@ type Props = {
 function ImagesDetailProduct({ images }: Props) {
   const [image, setImage] = useState<string>('');
   const [openImage, setOpenImage] = useState<boolean>(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     setImage(images[0]);
   }, []);
 
-  const handleClick = (selectedImage: string) => {
+  const handleClick = (selectedImage: string, selectedIndex: number) => {
     setImage(selectedImage);
+    setCurrentIndex(selectedIndex);
   };
   return (
     <div className="h-full w-full flex flex-col gap-5">
@@ -35,10 +37,12 @@ function ImagesDetailProduct({ images }: Props) {
           />
         )}
       </div>
+
       <Lightbox
         open={openImage}
         close={() => setOpenImage(false)}
         slides={images.map((image) => ({ src: image }))}
+        index={currentIndex}
         plugins={[Zoom]}
       />
 

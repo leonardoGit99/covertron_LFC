@@ -12,7 +12,7 @@ import Image from 'next/image';
 
 type Props = {
   images: string[];
-  handleClick: (selectedImage: string) => void;
+  handleClick: (selectedImage: string, index: number) => void;
 };
 
 export function CarouselProductDetailImages({ images, handleClick }: Props) {
@@ -30,7 +30,7 @@ export function CarouselProductDetailImages({ images, handleClick }: Props) {
             className="md:basis-1/2 lg:basis-1/4"
           >
             <Card
-              onClick={() => handleClick(image)}
+              onClick={() => handleClick(image, index)}
               className="group transform transition-all duration-400 ease-out hover:scale-[1.02] hover:shadow-lg hover:-translate-y-0.5 cursor-pointer rounded-lg overflow-hidden will-change-transform"
             >
               <CardContent className="p-0">
