@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import Navbar from '../Navbar';
+import Navbar from './Navbar';
 import { RiArrowDownDoubleFill } from 'react-icons/ri';
 import Link from 'next/link';
 import { FaWhatsapp } from 'react-icons/fa';

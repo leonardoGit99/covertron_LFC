@@ -23,7 +23,7 @@ function ServiceCard({service}:Props) {
         </div>
       </CardContent>
       <CardFooter className="mt-2 gap-2">
-        <p className="font-bold text-2xl text-gray-900 dark:text-white">
+        <p className="font-bold text-2xl text-gray-800 dark:text-white">
           {service.title}
         </p>
         <p className="text-gray-500 dark:text-gray-300 text-normal text-justify leading-relaxed font-medium">

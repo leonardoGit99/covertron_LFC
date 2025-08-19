@@ -115,8 +115,11 @@ function ProductsTable({ isRefresh, setRefresh }: Props) {
 
   return (
     <>
-      <div className="flex justify-end mt-10 w-full">
-        <SearchInput handleChange={handleChange} />
+      <div className="flex justify-start mt-10 w-full">
+        <SearchInput
+          searchTerm={searchTerm}
+          handleChange={handleChange}
+        />
       </div>
       {isRefresh ? (
         <Spinner

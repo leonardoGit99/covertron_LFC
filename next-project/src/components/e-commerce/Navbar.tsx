@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { GiKangaroo } from 'react-icons/gi';
 import NbDesktopItems from './NbDesktopItems';
 import NbMobileItems from './NbMobileItems';
-import { ModeToggle } from './ui/toggle-theme';
+import { ModeToggle } from '../ui/toggle-theme';
 
 type Props = {
   type?: 'default' | 'transparent';

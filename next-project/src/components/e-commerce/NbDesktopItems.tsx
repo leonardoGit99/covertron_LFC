@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { GiKangaroo } from 'react-icons/gi';
-import { cn } from '../lib/utils';
+import { cn } from '../../lib/utils';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -10,7 +10,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-} from './ui/navigation-menu';
+} from '../ui/navigation-menu';
 import Link from 'next/link';
 
 type Props = {

@@ -39,7 +39,7 @@ export default function AdminLayout({
               <AppSidebar />
               <div className="w-full">
                 <Header />
-                <main className="w-full max-w-6xl mx-auto pt-6 sm:px-1 px-2">
+                <main className="w-full max-w-5xl mx-auto pt-6 sm:px-1 px-2">
                   {children}
                 </main>
                 <Toaster />

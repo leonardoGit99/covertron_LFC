@@ -1,6 +1,6 @@
 import React from 'react';
 import Products from './page';
-import Navbar from '@/components/Navbar';
+import Navbar from '@/components/e-commerce/Navbar';
 
 function ProductsLayout({
   children,

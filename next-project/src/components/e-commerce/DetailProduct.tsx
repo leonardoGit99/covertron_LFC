@@ -18,7 +18,7 @@ function DetailProduct({ product }: Props) {
             {product.brand}
           </span>
           <div className="flex flex-col items-end gap-1">
-            <div className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
+            <div className="bg-sky-500 text-white px-2 py-1 rounded text-xs font-bold">
               NUEVO
             </div>
             <span className="text-xs text-gray-600">
@@ -39,7 +39,7 @@ function DetailProduct({ product }: Props) {
 
         {/* Price with discount */}
         <div className="flex items-center gap-3">
-          <p className="text-4xl font-extrabold text-gray-800">
+          <p className="text-3xl font-extrabold text-gray-800">
             Bs. {product.discountedPrice || product.originalPrice}
           </p>
           {product.discount &&
@@ -47,10 +47,10 @@ function DetailProduct({ product }: Props) {
           product.discountedPrice &&
           Number(product.discountedPrice) < Number(product.originalPrice) ? (
             <div className="flex flex-col">
-              <span className="text-sm text-gray-500 line-through">
+              <span className=" text-gray-500 line-through">
                 Bs. {product.originalPrice}
               </span>
-              <span className="text-xs text-green-600 font-semibold">
+              <span className="text-sm text-green-600 font-semibold">
                 {product.discount}% OFF
               </span>
             </div>
@@ -64,7 +64,7 @@ function DetailProduct({ product }: Props) {
       <div className="w-full flex justify-center mt-6">
         <Button
           variant="default"
-          className="w-full max-w-xs"
+          className="w-full max-w-xs bg-gray-900 text-white/95 hover:text-white/100 hover:bg-gray-800 active:bg-gray-700 rounded-xl"
         >
           <FaWhatsapp className="text-lg" />
           Reservar por WhatsApp

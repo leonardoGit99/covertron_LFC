@@ -1,6 +1,6 @@
 import React from 'react'
 import { CiMenuFries } from 'react-icons/ci'
-import { MenuDrawer } from './MenuDrawer'
+import { MenuDrawer } from '@/components/MenuDrawer'
 
 function NbMobileItems() {
   const burguerBtn = (<CiMenuFries />)

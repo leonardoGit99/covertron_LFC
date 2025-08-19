@@ -25,7 +25,7 @@ export type ProductsResponseAdmin = {
 
 
 // NORMAL USER
-export type ProductSummary = Omit<Product, 'description' | 'categoryId' | 'subCategoryId' | 'state' | 'categoryName' | 'subCategoryName' | 'images' | 'createdAt' | 'updatedAt'> & {
+export type ProductSummary = Omit<Product, 'description' | 'categoryId' | 'subCategoryId' | 'state' | 'subCategoryName' | 'images' | 'createdAt' | 'updatedAt'> & {
   image: string
 }
 

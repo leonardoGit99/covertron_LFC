@@ -31,7 +31,7 @@ function CustomAccordion({ questions }: Props) {
           }`}
         >
           <AccordionTrigger
-            className={`text-sm md:text-sm text-gray-700 data-[state=open]:text-gray-950 data-[state=open]:bg-gray-200 transition-all p-5 dark:text-white/85 dark:data-[state=open]:text-white dark:data-[state=open]:bg-gray-800 ${
+            className={`text-sm md:text-sm text-gray-700 data-[state=open]:text-gray-900 data-[state=open]:bg-gray-200 transition-all p-5 dark:text-white/85 dark:data-[state=open]:text-white dark:data-[state=open]:bg-gray-800 ${
               index === 0 ? 'rounded-t-lg' : 'rounded-none'
             }`}
           >

@@ -9,7 +9,7 @@ import ProductSheetButton from '@/components/root/ProductSheetBtn';
 function Products() {
   const [isRefresh, setIsRefresh] = useState<boolean>(true);
   return (
-    <div>
+    <>
       <Card className="w-full shadow-md p-6">
         <CardContent className="flex flex-col gap-4 justify-between items-center sm:flex-row sm:gap-0">
           <SectionHeader
@@ -34,7 +34,7 @@ function Products() {
         isRefresh={isRefresh}
         setRefresh={setIsRefresh}
       />
-    </div>
+    </>
   );
 }
 

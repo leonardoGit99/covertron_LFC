@@ -40,7 +40,7 @@ function ReasonCard({ reason }: Props) {
       <div className="flex flex-col justify-center items-center gap-3 text-center flex-1">
         <h3
           id={`reason-title-${reason.number}`}
-          className="text-2xl lg:text-3xl font-bold text-gray-900 leading-tight group-hover:text-gray-800 transition-colors duration-300 dark:text-white/90 dark:group-hover:text-white"
+          className="text-2xl lg:text-3xl font-bold text-gray-800 leading-tight group-hover:text-gray-700 transition-colors duration-300 dark:text-white/90 dark:group-hover:text-white"
         >
           {reason.title}
         </h3>

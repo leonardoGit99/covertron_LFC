@@ -1,5 +1,5 @@
 import { ApiResponse } from "@/types/api";
-import {  ProductDetailAdminDTO, ProductDetailDTO, ProductsResponse, ProductsResponseAdmin } from "@/types/product";
+import { ProductDetailAdminDTO, ProductDetailDTO, ProductsResponse, ProductsResponseAdmin } from "@/types/product";
 import api from "./axios";
 
 export const createProduct = async (body: FormData): Promise<ApiResponse<ProductDetailAdminDTO>> => {
@@ -32,7 +32,7 @@ export const getAllAvailableProducts = async (currentPage: number, limit: number
 
 export const getFilteredProducts = async (search: string, limit: number, currentPage: number): Promise<ApiResponse<ProductsResponseAdmin>> => {
   try {
-    const { data } = await api.get<ApiResponse<ProductsResponseAdmin>>(`/admin/products?search=${search}&page=${currentPage}&limit${limit}`);
+    const { data } = await api.get<ApiResponse<ProductsResponseAdmin>>(`/admin/products?search=${search}&page=${currentPage}&limit=${limit}`);
     return data;
   } catch (error: any) {
     return error.response?.data;
@@ -41,7 +41,17 @@ export const getFilteredProducts = async (search: string, limit: number, current
 
 export const getFilteredAvailableProducts = async (search: string, limit: number, currentPage: number): Promise<ApiResponse<ProductsResponse>> => {
   try {
-    const { data } = await api.get<ApiResponse<ProductsResponse>>(`/products?search=${search}&page=${currentPage}&limit${limit}`);
+    const { data } = await api.get<ApiResponse<ProductsResponse>>(`/products?search=${search}&page=${currentPage}&limit=${limit}`);
+    return data;
+  } catch (error: any) {
+    return error.response?.data;
+  }
+}
+
+export const getAllProductsByCategory = async (categoryId: number, limit: number, currentPage: number): Promise<ApiResponse<ProductsResponse>> => {
+  try {
+    const { data } = await api.get<ApiResponse<ProductsResponse>>(`/products?category=${categoryId}&page=${currentPage}&limit=${limit}`);
+    
     return data;
   } catch (error: any) {
     return error.response?.data;

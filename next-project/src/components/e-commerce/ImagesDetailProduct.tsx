@@ -18,7 +18,7 @@ function ImagesDetailProduct({ images }: Props) {
     setImage(selectedImage);
   };
   return (
-    <div className=" h-full w-full flex flex-col gap-5">
+    <div className="h-full w-full flex flex-col gap-5">
       <div className="relative w-full aspect-[4/3] overflow-hidden rounded-2xl">
         {image && (
           <Image
