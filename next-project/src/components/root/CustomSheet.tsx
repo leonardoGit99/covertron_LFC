@@ -52,8 +52,8 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange, setRefresh }: Props) 
     defaultValues: {
       name: '',
       description: '',
-      categoryId: null,
-      subCategoryId: null,
+      categoryId: undefined,
+      subCategoryId: undefined,
       originalPrice: undefined,
       brand: '',
       discount: undefined
@@ -102,6 +102,7 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange, setRefresh }: Props) 
   // Function to submit body to backend depending whether there's an id or not
   const onSubmit = async (body: CreateProductDTO | ProductDetailAdminDTO) => {
     const { categoryId, ...newBody } = body;
+
     const formData = new FormData();
     if (id) {
       /* const isDifferentBody = product.name !== newBody.name || product.description !== newBody.description || product.subCategoryId != newBody.subCategoryId || product.price !== newBody.price || product.discount !== newBody.discount || product.brand !== newBody.brand */
@@ -110,6 +111,7 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange, setRefresh }: Props) 
         if (key === 'originalPrice') {
           const numberValue = typeof value === 'number' ? value : parseFloat(String(value));
           formData.append(key, numberValue.toFixed(2)); // Fuerza "120.00"
+          
         } else {
           formData.append(key, String(value));
         }
@@ -219,6 +221,7 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange, setRefresh }: Props) 
           setImages={setImages}
           imageUrls={imageUrls}
           setDeletedImages={setDeletedImages}
+          deletedImages={deletedImages}
           setImageUrls={setImageUrls}
         />
       </SheetContent>

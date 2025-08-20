@@ -138,7 +138,7 @@ function ProductsTable({ isRefresh, setRefresh }: Props) {
           <Card className="w-full shadow-md  mt-5 mb-6 dark:border dark:border-gray-600">
             <CardContent>
               <div className="rounded-md border overflow-hidden">
-                <Table className="table-fixed">
+                <Table className='table-fixed'>
                   <colgroup>
                     <col className="w-[140px]" />
                     <col className="w-[140px]" />
@@ -156,61 +156,51 @@ function ProductsTable({ isRefresh, setRefresh }: Props) {
                     <TableRow
                       /* className='divide-x divide-gray-200' */ className="dark:hover:bg-sky-800"
                     >
-                      <TableHead className="text-left  ">Categoría</TableHead>
-                      <TableHead className="text-left ">
-                        Sub Categoría
-                      </TableHead>
-                      <TableHead className="text-left ">Marca</TableHead>
-                      <TableHead className="text-left dark:text-white">
-                        Producto
-                      </TableHead>
-                      <TableHead className="text-left ">
+                      <TableHead className="text-left">Categoría</TableHead>
+                      <TableHead className="text-left">Sub Categoría</TableHead>
+                      <TableHead className="text-left">Marca</TableHead>
+                      <TableHead className="text-left">Producto</TableHead>
+                      <TableHead className="text-left">
                         Precio Original (Bs.)
                       </TableHead>
-                      <TableHead className="text-left dark:text-white">
-                        Descuento (%)
-                      </TableHead>
-                      <TableHead className="text-left ">
+                      <TableHead className="text-left">Descuento (%)</TableHead>
+                      <TableHead className="text-left">
                         Precio con Descuento (Bs.)
                       </TableHead>
-                      <TableHead className="text-center dark:text-white">
-                        Imagen
-                      </TableHead>
+                      <TableHead className="text-center">Imagen</TableHead>
                       <TableHead className="text-left ">Estado</TableHead>
                       <TableHead className="text-left ">
                         Ultima fecha de actualización
                       </TableHead>
-                      <TableHead className="text-right dark:text-white">
-                        Acciones
-                      </TableHead>
+                      <TableHead className="text-right">Acciones</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {products.length > 0 &&
                       (products as Product[]).map((item) => (
                         <TableRow key={item.id}>
-                          <TableCell className="text-start">
+                          <TableCell className="text-start break-words max-w-[140px]">
                             {item.categoryName}
                           </TableCell>
-                          <TableCell className="text-start">
+                          <TableCell className="text-start break-words max-w-[140px]">
                             {item.subCategoryName}
                           </TableCell>
-                          <TableCell className="text-start">
+                          <TableCell className="text-start break-words max-w-[100px]">
                             {item.brand}
                           </TableCell>
-                          <TableCell className="text-start">
+                          <TableCell className="text-start break-words max-w-[200px]">
                             {item.name}
                           </TableCell>
-                          <TableCell className="text-start">
+                          <TableCell className="text-start break-words max-w-[90px]">
                             {item.originalPrice}
                           </TableCell>
-                          <TableCell className="text-start">
+                          <TableCell className="text-start break-words max-w-[90px]">
                             {item.discount}
                           </TableCell>
-                          <TableCell className="text-start">
+                          <TableCell className="text-start break-words max-w-[90px]">
                             {item.discountedPrice}
                           </TableCell>
-                          <TableCell className="text-start">
+                          <TableCell className="text-start break-words max-w-[80px]">
                             <div className="relative w-full aspect-[4/3] overflow-hidden rounded-sm">
                               {item.images &&
                               item.images.length > 0 &&
@@ -229,7 +219,7 @@ function ProductsTable({ isRefresh, setRefresh }: Props) {
                               )}
                             </div>
                           </TableCell>
-                          <TableCell className="text-start">
+                          <TableCell className="text-start break-words max-w-[100px]">
                             {item.state === 'available' ? (
                               <Badge
                                 variant="outline"
@@ -252,10 +242,10 @@ function ProductsTable({ isRefresh, setRefresh }: Props) {
                               )
                             )}
                           </TableCell>
-                          <TableCell className="text-start whitespace-pre-line">
+                          <TableCell className="text-start whitespace-pre-line break-words max-w-[160px]">
                             {item.updatedAt}
                           </TableCell>
-                          <TableCell className="text-right">
+                          <TableCell className="text-right break-words max-w-[80px]">
                             <DropdownMenu>
                               <DropdownMenuTrigger asChild>
                                 <Button

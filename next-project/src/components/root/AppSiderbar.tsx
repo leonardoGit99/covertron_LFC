@@ -1,5 +1,4 @@
 import { VscGraphLine } from "react-icons/vsc"
-import { MdLabelOutline } from "react-icons/md"
 import { IoCartOutline } from "react-icons/io5"
 import { HiOutlineFolder } from "react-icons/hi";
 import { HiOutlineCollection } from "react-icons/hi";
@@ -12,7 +11,6 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarTrigger,
 } from "@/components/ui/sidebar"
 
 // Menu items.
@@ -42,7 +40,6 @@ const items = [
 export function AppSidebar() {
   return (
     <Sidebar>
-      <SidebarTrigger className="absolute top-2 left-64 z-50 ml-2" />
       <SidebarContent className="bg-[#000319]">
         <SidebarGroup>
           <SidebarGroupLabel className="text-gray-50">Covertron - Administrador</SidebarGroupLabel>

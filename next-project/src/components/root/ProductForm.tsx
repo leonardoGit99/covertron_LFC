@@ -1,5 +1,5 @@
-"use client"
-import React, { useEffect, useState } from 'react'
+'use client';
+import React, { useEffect, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '../ui/textarea';
 import {
@@ -9,9 +9,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
+} from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
-import { IoIosSave } from "react-icons/io";
+import { IoIosSave } from 'react-icons/io';
 import { UseFormReturn } from 'react-hook-form';
 import {
   Select,
@@ -21,7 +21,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from '@/components/ui/select';
 import { Categories } from '@/types';
 import { CreateProductDTO, Product } from '@/types/product';
 import { SubCategories } from '@/types/subcategory';
@@ -30,23 +30,42 @@ import { getSubCategoriesByCategory } from '@/services/subCategories';
 
 // Types
 type Props = {
-  id?: number | null
-  product: Omit<Product, 'categoryName' | 'subCategoryName' | 'discountedPrice' | 'createdAt' | 'updatedAt'>
-  categories: Categories
+  id?: number | null;
+  product: Omit<
+    Product,
+    | 'categoryName'
+    | 'subCategoryName'
+    | 'discountedPrice'
+    | 'createdAt'
+    | 'updatedAt'
+  >;
+  categories: Categories;
   form: UseFormReturn<CreateProductDTO>;
   onSubmit: (body: CreateProductDTO) => void;
-  images: File[],
-  setImages: React.Dispatch<React.SetStateAction<File[]>>,
-  imageUrls: string[],
-  setImageUrls: React.Dispatch<React.SetStateAction<string[]>>
-  setDeletedImages: React.Dispatch<React.SetStateAction<string[]>>
+  images: File[];
+  setImages: React.Dispatch<React.SetStateAction<File[]>>;
+  imageUrls: string[];
+  setImageUrls: React.Dispatch<React.SetStateAction<string[]>>;
+  deletedImages: string[];
+  setDeletedImages: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
-
-
-function ProductForm({ form, onSubmit, id, product, categories, images, setImages, imageUrls, setImageUrls, setDeletedImages }: Props) {
-  const [subCategoriesByCategory, setSubCategoriesByCategory] = useState<SubCategories>([])
-  const categoryId = form.watch("categoryId");
+function ProductForm({
+  form,
+  onSubmit,
+  id,
+  product,
+  categories,
+  images,
+  setImages,
+  imageUrls,
+  setImageUrls,
+  deletedImages,
+  setDeletedImages,
+}: Props) {
+  const [subCategoriesByCategory, setSubCategoriesByCategory] =
+    useState<SubCategories>([]);
+  const categoryId = form.watch('categoryId');
 
   useEffect(() => {
     if (id && product) {
@@ -57,23 +76,26 @@ function ProductForm({ form, onSubmit, id, product, categories, images, setImage
         subCategoryId: product.subCategoryId,
         originalPrice: product.originalPrice,
         discount: product.discount,
-        brand: product.brand
-      })
+        brand: product.brand,
+      });
     }
-  }, [id, product])
-
+  }, [id, product]);
 
   useEffect(() => {
     if (categoryId) {
       // Reset subCategoryId to prevent mismatch when selected category differs from the original product's category (to prevent blank subcategory select when user changes to another category that is not the current category in db)
       if (categoryId === product.categoryId) {
-        form.resetField("subCategoryId", { defaultValue: product.subCategoryId });
+        form.resetField('subCategoryId', {
+          defaultValue: product.subCategoryId,
+        });
       } else {
-        form.resetField("subCategoryId", { defaultValue: null });
+        form.resetField('subCategoryId', { defaultValue: undefined });
       }
 
       const fetchSubCategoriesByCategory = async () => {
-        const { data, success } = await getSubCategoriesByCategory(Number(categoryId));
+        const { data, success } = await getSubCategoriesByCategory(
+          Number(categoryId)
+        );
         if (success && data) {
           setSubCategoriesByCategory(data.subCategories);
         }
@@ -82,18 +104,45 @@ function ProductForm({ form, onSubmit, id, product, categories, images, setImage
     }
   }, [categoryId]);
 
+  useEffect(() => {
+    form.setValue('images', [...images, ...imageUrls]);
+  }, [images, imageUrls]);
 
+  const isFormFilled =
+    form.getValues('name').trim() !== '' &&
+    form.getValues('categoryId') !== 0 &&
+    form.getValues('subCategoryId') !== 0 &&
+    form.getValues('originalPrice') !== 0 &&
+    form.getValues('brand').trim() !== '' &&
+    form.getValues('images').length !== 0;
+
+  const isFormChanged = product
+    ? form.getValues('name') !== product.name ||
+      form.getValues('description') !== product.description ||
+      form.getValues('categoryId') !== product.categoryId || 
+      form.getValues('subCategoryId') !== product.subCategoryId ||
+      form.getValues('originalPrice') !== product.originalPrice ||
+      form.getValues('brand') !== product.brand ||
+      deletedImages.length !== 0
+    : true;
+
+  const isSubmitDisabled = !isFormFilled || (product ? !isFormChanged : false);
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8" autoComplete='off'>
-
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-8"
+        autoComplete="off"
+      >
         {/* Name Input */}
         <FormField
           control={form.control}
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Nombre</FormLabel>
+              <FormLabel>
+                Nombre<span className="text-red-500 ml-1">*</span>
+              </FormLabel>
               <FormControl>
                 <Input
                   placeholder="Ej. Polo, Polera overize..."
@@ -125,21 +174,22 @@ function ProductForm({ form, onSubmit, id, product, categories, images, setImage
           )}
         />
 
-
-        <div className='grid grid-cols-2 grid-rows-2 gap-4'>
+        <div className="grid grid-cols-2 grid-rows-2 gap-4">
           {/* Category Select */}
           <FormField
             control={form.control}
             name="categoryId"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Categoría</FormLabel>
+                <FormLabel>
+                  Categoría<span className="text-red-500 ml-1">*</span>
+                </FormLabel>
                 <FormControl>
                   <Select
                     onValueChange={(value) => {
                       field.onChange(value);
                     }}
-                    value={field.value ? String(field.value) : ""}
+                    value={field.value ? String(field.value) : ''}
                     disabled={categories.length === 0}
                   >
                     <SelectTrigger className="w-full">
@@ -148,16 +198,15 @@ function ProductForm({ form, onSubmit, id, product, categories, images, setImage
                     <SelectContent>
                       <SelectGroup>
                         <SelectLabel>Categorías</SelectLabel>
-                        {
-                          categories.length > 0 && categories.map(({ id, name }) => (
+                        {categories.length > 0 &&
+                          categories.map(({ id, name }) => (
                             <SelectItem
                               value={id.toString()}
                               key={id}
                             >
                               {name}
                             </SelectItem>
-                          ))
-                        }
+                          ))}
                       </SelectGroup>
                     </SelectContent>
                   </Select>
@@ -173,13 +222,15 @@ function ProductForm({ form, onSubmit, id, product, categories, images, setImage
             name="subCategoryId"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Sub-categoría</FormLabel>
+                <FormLabel>
+                  Sub-categoría<span className="text-red-500 ml-1">*</span>
+                </FormLabel>
                 <FormControl>
                   <Select
                     onValueChange={(value) => {
                       field.onChange(value);
                     }}
-                    value={field.value ? String(field.value) : ""}
+                    value={field.value ? String(field.value) : ''}
                     disabled={subCategoriesByCategory.length === 0}
                   >
                     <SelectTrigger className="w-full">
@@ -188,16 +239,15 @@ function ProductForm({ form, onSubmit, id, product, categories, images, setImage
                     <SelectContent>
                       <SelectGroup>
                         <SelectLabel>Sub-categorías</SelectLabel>
-                        {
-                          subCategoriesByCategory.length > 0 && subCategoriesByCategory.map(({ id, name }) => (
+                        {subCategoriesByCategory.length > 0 &&
+                          subCategoriesByCategory.map(({ id, name }) => (
                             <SelectItem
                               value={id.toString()}
                               key={id}
                             >
                               {name}
                             </SelectItem>
-                          ))
-                        }
+                          ))}
                       </SelectGroup>
                     </SelectContent>
                   </Select>
@@ -212,11 +262,15 @@ function ProductForm({ form, onSubmit, id, product, categories, images, setImage
             name="originalPrice"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Precio (Bs.)</FormLabel>
+                <FormLabel>
+                  Precio (Bs.)<span className="text-red-500 ml-1">*</span>
+                </FormLabel>
                 <FormControl>
                   <Input
-                    type='number'
-                    step='0.01'
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    max="10000"
                     placeholder="Ej. 120"
                     {...field}
                     value={field.value ?? ''}
@@ -236,7 +290,6 @@ function ProductForm({ form, onSubmit, id, product, categories, images, setImage
             )}
           />
 
-
           {/* Discount Input */}
           <FormField
             control={form.control}
@@ -246,6 +299,10 @@ function ProductForm({ form, onSubmit, id, product, categories, images, setImage
                 <FormLabel>Descuento (%)</FormLabel>
                 <FormControl>
                   <Input
+                    type="number"
+                    step="1"
+                    min="0"
+                    max="100"
                     placeholder="Ej. 15"
                     {...field}
                     value={field.value ?? ''}
@@ -263,7 +320,9 @@ function ProductForm({ form, onSubmit, id, product, categories, images, setImage
           name="brand"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Marca</FormLabel>
+              <FormLabel>
+                Marca<span className="text-red-500 ml-1">*</span>
+              </FormLabel>
               <FormControl>
                 <Input
                   placeholder="Ej. Covertron"
@@ -274,26 +333,38 @@ function ProductForm({ form, onSubmit, id, product, categories, images, setImage
             </FormItem>
           )}
         />
-        <Upload
-          images={images}
-          setImages={setImages}
-          imageUrls={imageUrls}
-          id={id}
-          setImageUrls={setImageUrls}
-          setDeletedImages={setDeletedImages}
+        <FormField
+          control={form.control}
+          name="images"
+          render={() => (
+            <FormItem>
+              <FormLabel>
+                Imagen(s)<span className="text-red-500 ml-1">*</span>
+              </FormLabel>
+              <Upload
+                images={images}
+                setImages={setImages}
+                imageUrls={imageUrls}
+                id={id}
+                setImageUrls={setImageUrls}
+                setDeletedImages={setDeletedImages}
+                form={form}
+              />
+              <FormMessage />
+            </FormItem>
+          )}
         />
+
         <Button
           type="submit"
           className="w-full bg-slate-900 hover:bg-slate-800 active:bg-slate-700 dark:bg-sky-900 dark:hover:bg-sky-800 dark:active:bg-sky-700 dark:text-white dark:border dark:border-gray-500"
-        // disabled={
-        //   product.name === values.name && product.description === values.description
-        // }
+          disabled={isSubmitDisabled}
         >
           <IoIosSave /> Guardar
         </Button>
       </form>
     </Form>
-  )
+  );
 }
 
-export default ProductForm
+export default ProductForm;

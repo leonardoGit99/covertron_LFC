@@ -1,42 +1,59 @@
-"use client";
+'use client';
 
-import React, { useCallback, useState } from "react";
-import { useDropzone } from "react-dropzone";
-import { IoIosClose } from "react-icons/io";
+import { CreateProductDTO } from '@/types/product';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
+import { UseFormReturn } from 'react-hook-form';
+import { IoIosClose } from 'react-icons/io';
 
 type Props = {
-  images: File[],
+  images: File[];
   setImages: React.Dispatch<React.SetStateAction<File[]>>;
-  imageUrls: string[],
-  id?: number | null,
-  setImageUrls: React.Dispatch<React.SetStateAction<string[]>>
-  setDeletedImages: React.Dispatch<React.SetStateAction<string[]>>
-}
+  imageUrls: string[];
+  id?: number | null;
+  setImageUrls: React.Dispatch<React.SetStateAction<string[]>>;
+  setDeletedImages: React.Dispatch<React.SetStateAction<string[]>>;
+  form: UseFormReturn<CreateProductDTO>;
+};
 
-export default function Upload({ images, setImages, imageUrls, id, setImageUrls, setDeletedImages }: Props) {
+export default function Upload({
+  images,
+  setImages,
+  imageUrls,
+  id,
+  setImageUrls,
+  setDeletedImages,
+  form,
+}: Props) {
   const visibleImages = [...imageUrls, ...images]; // Concat both arrays to show
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
-    // Añadimos las nuevas imágenes al estado
-    setImages((curr) => [...curr, ...acceptedFiles]);
+    setImages((currImages) => [...currImages, ...acceptedFiles]);
   }, []);
 
-  const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone({
-    onDrop,
-    // accept: { "image/*": [] },
-  });
+  // Sincroniza images con form
+  useEffect(() => {
+    form.clearErrors('images');
+    form.setValue('images', images /* { shouldValidate: false } */);
+  }, [images, form]);
+
+  const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
+    useDropzone({
+      onDrop,
+      // accept: { "image/*": [] },
+    });
 
   // Función para borrar una imagen seleccionada
   const removeFile = (file: File | string) => {
     // Si es una imagen que ya estaba en el servidor (string)
-    if (typeof file === "string") {
-      setImageUrls((curr) => curr.filter((f) => f !== file));
-      setDeletedImages((curr) => [...curr, file]); 
-    }
-
-    // Si es una imagen nueva (File)
-    if (file instanceof File) {
-      setImages((curr) => curr.filter((f) => f !== file));
+    if (typeof file === 'string') {
+      setImageUrls((curr) => {
+        const updated = curr.filter((f) => f !== file);
+        setDeletedImages((currDel) => [...currDel, file]);
+        return updated;
+      });
+    } else {
+      setImages((currImages) => currImages.filter((f) => f !== file));
     }
   };
 
@@ -44,8 +61,11 @@ export default function Upload({ images, setImages, imageUrls, id, setImageUrls,
     <div>
       <div
         {...getRootProps()}
-        className={`p-6 border-2 border-dashed rounded-md cursor-pointer mb-4 ${isDragActive ? "border-blue-600 bg-blue-50 dark:bg-slate-700 dark:border-blue-500" : "border-gray-300 dark:border-gray-400"
-          }`}
+        className={`p-6 border-2 border-dashed rounded-md cursor-pointer mb-4 ${
+          isDragActive
+            ? 'border-blue-600 bg-blue-50 dark:bg-slate-700 dark:border-blue-500'
+            : 'border-gray-300 dark:border-gray-400'
+        }`}
       >
         <input {...getInputProps()} />
         {isDragActive ? (
