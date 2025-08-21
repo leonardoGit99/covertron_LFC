@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '../ui/textarea';
 import {
@@ -46,6 +46,7 @@ type Props = {
     | 'updatedAt'
   >;
   categories: Categories;
+  subCategories: SubCategories;
   form: UseFormReturn<CreateProductDTO>;
   onSubmit: (body: CreateProductDTO) => void;
   images: File[];
@@ -54,7 +55,6 @@ type Props = {
   setImageUrls: React.Dispatch<React.SetStateAction<string[]>>;
   deletedImages: string[];
   setDeletedImages: React.Dispatch<React.SetStateAction<string[]>>;
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
   setProduct: React.Dispatch<React.SetStateAction<ProductDetailAdminDTO>>;
   setProductState: React.Dispatch<React.SetStateAction<string>>;
   setCategories: React.Dispatch<React.SetStateAction<Categories>>;
@@ -66,56 +66,17 @@ function ProductForm({
   id,
   product,
   categories,
+  subCategories,
   images,
   setImages,
   imageUrls,
   setImageUrls,
   deletedImages,
   setDeletedImages,
-  setIsLoading,
   setProduct,
   setProductState,
   setCategories,
 }: Props) {
-  const [subCategoriesByCategory, setSubCategoriesByCategory] =
-    useState<SubCategories>([]);
-  const categoryId = form.watch('categoryId');
-  // useEffect(() => {
-  //   if (id && product) {
-  //     form.reset({
-  //       name: product.name,
-  //       description: product.description,
-  //       categoryId: product.categoryId,
-  //       subCategoryId: product.subCategoryId,
-  //       originalPrice: product.originalPrice,
-  //       discount: product.discount,
-  //       brand: product.brand,
-  //     });
-  //   }
-  // }, [id, product]);
-
-  /*   useEffect(() => {
-    if (categoryId) {
-      // Reset subCategoryId to prevent mismatch when selected category differs from the original product's category (to prevent blank subcategory select when user changes to another category that is not the current category in db)
-      if (categoryId === product.categoryId) {
-        form.resetField('subCategoryId', {
-          defaultValue: product.subCategoryId,
-        });
-      } else {
-        form.resetField('subCategoryId', { defaultValue: undefined });
-      }
-
-      const fetchSubCategoriesByCategory = async () => {
-        const { data, success } = await getSubCategoriesByCategory(
-          Number(categoryId)
-        );
-        if (success && data) {
-          setSubCategoriesByCategory(data.subCategories);
-        }
-      };
-      fetchSubCategoriesByCategory();
-    }
-  }, [categoryId]); */
 
   useEffect(() => {
     form.setValue('images', [...images, ...imageUrls]);
@@ -140,91 +101,6 @@ function ProductForm({
     : true;
 
   const isSubmitDisabled = !isFormFilled || (product ? !isFormChanged : false);
-
-  useEffect(() => {
-    const fetchProduct = async () => {
-      setIsLoading(true);
-
-      const productPromise = id
-        ? getOneProductAdmin(id)
-        : Promise.resolve({ success: false, data: null });
-      const categoriesPromise = getAllCategories();
-
-      const [productRes, categoriesRes] = await Promise.all([
-        productPromise,
-        categoriesPromise,
-      ]);
-
-      // set categories
-      if (categoriesRes.success && categoriesRes.data) {
-        setCategories(categoriesRes.data.categories);
-      }
-
-      // si hay producto, set product e imágenes
-      if (productRes.success && productRes.data) {
-        const prod = productRes.data;
-        setProduct(prod);
-        setImageUrls(prod.images);
-        setProductState(prod.state);
-
-        // fetch subcategorías basadas en categoryId del producto
-        if (prod.categoryId) {
-          const { success, data } = await getSubCategoriesByCategory(
-            prod.categoryId
-          );
-          if (success && data) {
-            setSubCategoriesByCategory(data.subCategories);
-
-            // resetear form después de que las subcategorías estén listas
-            form.reset({
-              name: prod.name,
-              description: prod.description ?? '',
-              categoryId: prod.categoryId,
-              subCategoryId: prod.subCategoryId,
-              originalPrice: prod.originalPrice,
-              discount: prod.discount ?? 0,
-              brand: prod.brand,
-              images: prod.images ?? [],
-            });
-          }
-        }
-      }
-
-      setIsLoading(false);
-    };
-
-    fetchProduct();
-  }, [id]);
-
-  useEffect(() => {
-    const fetchSubCategories = async () => {
-      console.log('bandera');
-      form.resetField('subCategoryId', { defaultValue: undefined });
-      const { success, data } = await getSubCategoriesByCategory(categoryId);
-      if (success && data) {
-        setSubCategoriesByCategory(data.subCategories);
-      }
-    };
-    if (categoryId) {
-      fetchSubCategories();
-    }
-  }, [categoryId]);
-
-  /*   useEffect(() => {
-    if (id && product?.id) {
-      // solo si estoy editando y ya tengo datos
-      form.reset({
-        name: product.name,
-        description: product.description,
-        categoryId: product.categoryId,
-        subCategoryId: product.subCategoryId,
-        originalPrice: product.originalPrice,
-        discount: product.discount ?? 0,
-        brand: product.brand,
-        images: product.images ?? [],
-      });
-    }
-  }, [product, id, form]); */
 
   return (
     <Form {...form}>
@@ -330,7 +206,7 @@ function ProductForm({
                       field.onChange(value);
                     }}
                     value={field.value ? String(field.value) : ''}
-                    disabled={subCategoriesByCategory.length === 0}
+                    disabled={subCategories.length === 0}
                   >
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Selecciona una sub-cat..." />
@@ -338,8 +214,8 @@ function ProductForm({
                     <SelectContent>
                       <SelectGroup>
                         <SelectLabel>Sub-categorías</SelectLabel>
-                        {subCategoriesByCategory.length > 0 &&
-                          subCategoriesByCategory.map(({ id, name }) => (
+                        {subCategories.length > 0 &&
+                          subCategories.map(({ id, name }) => (
                             <SelectItem
                               value={id.toString()}
                               key={id}

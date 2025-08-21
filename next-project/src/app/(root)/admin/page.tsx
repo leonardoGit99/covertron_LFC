@@ -1,35 +1,40 @@
 import { DashboardCard } from '@/components/root/DashboardCard';
 import DashboardHeader from '@/components/root/DashboardHeader';
+import { getAllDashboardData } from '@/services/dashboard';
 import React from 'react';
 
-const dashboardCardsData = [
-  {
-    id: 1,
-    title: 'Categorías',
-    value: 3,
-    description:
-      'Organiza tus productos con categorías claras y precisas. Agrega, edita o elimina categorías para mantener todo bajo control',
-    href: '/admin/categorias',
-  },
-  {
-    id: 2,
-    title: 'Sub Categorías',
-    value: 7,
-    description:
-      'Crea y gestiona subcategorías para facilitar la búsqueda de productos. Haz que tus clientes encuentren lo que buscan en segundos',
-    href: '/admin/subcategorias',
-  },
-  {
-    id: 3,
-    title: 'Productos',
-    value: 8,
-    description:
-      'Explora y administra todos los productos disponibles en tu inventario. Mantén tu catálogo siempre actualizado y listo para tus clientes',
-    href: '/admin/productos',
-  },
-];
+async function Dashboard() {
+  const { success, data } = await getAllDashboardData();
+  if (!success || !data) {
+    return <p>Error cargando el dashboard</p>;
+  }
 
-function Dashboard() {
+  const dashboardCardsData = [
+    {
+      id: 1,
+      title: 'Categorías',
+      value: data.categories,
+      description:
+        'Organiza tus productos con categorías claras y precisas. Agrega, edita o elimina categorías para mantener todo bajo control',
+      href: '/admin/categorias',
+    },
+    {
+      id: 2,
+      title: 'Sub Categorías',
+      value: data.subCategories,
+      description:
+        'Crea y gestiona subcategorías para facilitar la búsqueda de productos. Haz que tus clientes encuentren lo que buscan en segundos',
+      href: '/admin/subcategorias',
+    },
+    {
+      id: 3,
+      title: 'Productos',
+      value: data.products,
+      description:
+        'Explora y administra todos los productos disponibles en tu inventario. Mantén tu catálogo siempre actualizado y listo para tus clientes',
+      href: '/admin/productos',
+    },
+  ];
   return (
     <>
       <DashboardHeader />

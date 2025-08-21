@@ -309,6 +309,7 @@ function ProductsTable({ isRefresh, setRefresh }: Props) {
           }}
           isRefresh={isRefresh}
           setRefresh={setRefresh}
+          sheetTitle=''
         />
       )}
     </>
