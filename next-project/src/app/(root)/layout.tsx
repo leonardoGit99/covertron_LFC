@@ -26,7 +26,7 @@ export default function AdminLayout({
     <html lang="es" className="h-full" suppressHydrationWarning>
       <head />
       <body
-        className={`${getPoppins.variable} antialiased flex flex-col min-h-screen bg-background dark:bg-backgroundDark`}
+        className={`${getPoppins.className} antialiased flex flex-col min-h-screen bg-background dark:bg-backgroundDark`}
       >
         <ThemeProvider
           attribute="class"

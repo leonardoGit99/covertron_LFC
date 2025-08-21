@@ -15,21 +15,21 @@ function Navbar({ type = 'default' }: Props) {
       className={` ${
         type == 'default'
           ? 'fixed inset-0 w-full z-50 h-[5.75rem] bg-background shadow-sm dark:bg-backgroundDark dark:shadow-sm dark:shadow-white/50'
-          : 'bg-transparent absolute top-0 left-0 w-full z-50 h-[5.75rem] backdrop-blur-sm'
+          : 'bg-transparent absolute top-0 left-0 w-full z-50 h-[5.75rem] backdrop-blur-sm text-white'
       }`}
     >
-      <div className="flex items-center justify-between py-4 mx-auto sm:max-w-6xl">
+      <div className="flex items-center justify-between py-4 mx-auto  sm:max-w-6xl px-7 md:px-0">
         <Logo
           type={type}
           href="/"
         />
-        <div className="items-center justify-between hidden sm:flex">
+        <div className="hidden sm:flex items-center justify-between ">
           <NbDesktopItems type={type} />
         </div>
         <div className="flex sm:hidden">
           <NbMobileItems />
         </div>
-        <div className="flex items-center justify-between gap-2 sm:7">
+        <div className="hidden sm:block">
           <ModeToggle type={type} />
         </div>
       </div>

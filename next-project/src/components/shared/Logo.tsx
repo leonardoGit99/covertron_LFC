@@ -3,11 +3,11 @@ import React from 'react';
 import { GiKangaroo } from 'react-icons/gi';
 
 type Props = {
-  type: string;
+  type: 'default' | 'transparent';
   href: string;
 };
 
-function Logo({ type, href }: Props) {
+function Logo({ type = 'default', href }: Props) {
   return (
     <Link href={href}>
       <div

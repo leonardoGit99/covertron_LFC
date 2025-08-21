@@ -1,6 +1,6 @@
 import React from 'react';
 import Products from './page';
-import Navbar from '@/components/e-commerce/Navbar';
+import Navbar from '@/components/user/Navbar';
 
 function ProductsLayout({
   children,
@@ -10,11 +10,9 @@ function ProductsLayout({
   return (
     <section>
       <div className="max-w-6xl mx-auto">
-        <Navbar />
+        <Navbar type="default" />
       </div>
-      <div className="max-w-6xl mx-auto pt-[5.75rem]">
-        {children}
-      </div>
+      <div className="max-w-6xl mx-auto pt-[5.75rem]">{children}</div>
     </section>
   );
 }

@@ -15,6 +15,7 @@ import Spinner from '../shared/Spinnet';
 import Filter from './Filter';
 import { Categories } from '@/types';
 import { getAllCategories } from '@/services/categories';
+import Announcements from './Announcements';
 
 function ProductsList() {
   const [loading, setIsLoading] = useState(true);
@@ -115,7 +116,6 @@ function ProductsList() {
           handleClearFilterClick={handleClearFilterClick}
         />
       </div>
-
       {loading ? (
         <div className="h-5 w-full"></div>
       ) : (
@@ -141,7 +141,7 @@ function ProductsList() {
         </p>
       ) : (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 xxl:grid-cols-4 gap-12 mb-12 justify-items-center w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 xxl:grid-cols-4 gap-12 mb-12 justify-items-center w-full auto-rows-fr">
             {products.map((product) => (
               <Link
                 href={`/productos/${product.id}`}

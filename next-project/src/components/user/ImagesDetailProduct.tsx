@@ -24,16 +24,19 @@ function ImagesDetailProduct({ images }: Props) {
     setCurrentIndex(selectedIndex);
   };
   return (
-    <div className="h-full w-full flex flex-col gap-5">
+    <div className="h-full w-full flex flex-col gap-5 px-5 md:px-0">
       <div className="relative w-full aspect-[4/3] overflow-hidden rounded-2xl hover:cursor-pointer">
+        <div
+          onClick={() => setOpenImage(true)}
+          className="absolute inset-0  hover:bg-black/15 z-10 transition-all  duration-300 ease-in-out "
+        />
         {image && (
           <Image
             src={image}
             alt="Imagen del Producto"
             fill
-            className="transition-transform duration-500 group-hover:scale-125 object-cover"
+            className="object-cover"
             sizes="(max-width: 640px) 90vw, 400px"
-            onClick={() => setOpenImage(true)}
           />
         )}
       </div>

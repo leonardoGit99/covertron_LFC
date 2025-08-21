@@ -9,7 +9,7 @@ function ReasonCard({ reason }: Props) {
   return (
     <div
       className={`
-        group relative flex flex-col gap-6 p-8 rounded-2xl 
+        group relative flex flex-col gap-6 p-8 rounded-2xl h-full
         bg-white/20 border-1 border-gray-100
         hover:shadow-xl hover:-translate-y-1
         transition-all duration-300 ease-out
@@ -45,7 +45,7 @@ function ReasonCard({ reason }: Props) {
           {reason.title}
         </h3>
 
-        <p className="text-base lg:text-lg text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300 max-w-xs dark:text-gray-300 dark:group-hover:text-gray-200">
+        <p className="text-base lg:text-md text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300 max-w-xs dark:text-gray-300 dark:group-hover:text-gray-200">
           {reason.description}
         </p>
       </div>

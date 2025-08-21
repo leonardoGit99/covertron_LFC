@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
-import {  Poppins } from 'next/font/google';
+import { Poppins } from 'next/font/google';
 import '@/app/globals.css';
-import Footer from '@/components/e-commerce/Footer';
+import Footer from '@/components/user/Footer';
 import { ThemeProvider } from '../../components/theme-provider';
-import Announcements from '../../components/Announcements';
+import Navbar from '@/components/user/Navbar';
 
 const getPoppins = Poppins({
   variable: '--font-poppins',
@@ -29,7 +29,7 @@ export default function RootLayout({
     >
       <head />
       <body
-        className={`${getPoppins.variable} antialiased flex flex-col min-h-screen bg-background scroll-smooth`}
+        className={`${getPoppins.className} antialiased flex flex-col min-h-screen bg-background scroll-smooth`}
       >
         <ThemeProvider
           attribute="class"
@@ -38,10 +38,6 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <main className="flex-grow w-full dark:bg-backgroundDark -mb-4">
-            
-            {/* <div className="max-w-8xl mx-auto">
-              <Announcements />
-            </div> */}
             <div>{children}</div>
           </main>
         </ThemeProvider>

@@ -48,7 +48,7 @@ function Reasons() {
         direction="right"
         stagger={0.3}
         delay={0.2}
-        className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6"
+        className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6 auto-rows-fr"
       >
         {reasons.map((reason, index) => (
           <ReasonCard

@@ -48,7 +48,7 @@ function Footer() {
               <li key={data.id}>
                 <Link
                   href={data.link}
-                  className="hover:underline me-4 md:me-4"
+                  className="hover:underline me-2 md:me-4 text-xs md:text-sm"
                 >
                   {data.title}
                 </Link>
@@ -57,7 +57,7 @@ function Footer() {
           </ul>
         </div>
         <Separator className="my-6 border-gray-200 sm:mx-auto dark:border dark:border-white/20 lg:my-8" />
-        <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-300">
+        <span className="block text-xs md:text-sm text-gray-500 sm:text-center dark:text-gray-300">
           &copy; {new Date().getFullYear()}{' '}
           <span>
             <Link href="#">Covertron. </Link>

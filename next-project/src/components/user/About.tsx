@@ -13,7 +13,7 @@ function About() {
   return (
     <section
       id="acerca-de"
-      className="sm:max-w-6xl 2xl:max-w-7xl mx-auto px-4 mt:5 md:mt-10 min-h-[auto] md:min-h-screen "
+      className="sm:max-w-6xl 2xl:max-w-7xl mx-auto px-4 mt-5 md:mt-10 min-h-[auto] md:min-h-screen "
     >
       <HeaderSection
         title="Conoce a"

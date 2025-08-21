@@ -21,13 +21,13 @@ export function CarouselProductDetailImages({ images, handleClick }: Props) {
       opts={{
         align: 'center',
       }}
-      className="w-full max-w-24 md:max-w-xl"
+      className="w-full max-w-48 md:max-w-xl"
     >
-      <CarouselContent>
+      <CarouselContent className='flex items-center justify-center'>
         {images.map((image, index) => (
           <CarouselItem
             key={index}
-            className="md:basis-1/2 lg:basis-1/4"
+            className="basis-1/2 md:basis-1/2 lg:basis-1/4"
           >
             <Card
               onClick={() => handleClick(image, index)}
@@ -49,8 +49,8 @@ export function CarouselProductDetailImages({ images, handleClick }: Props) {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious/>
-      <CarouselNext />
+      <CarouselPrevious className='-left-12'/>
+      <CarouselNext className='-right-12'/>
     </Carousel>
   );
 }

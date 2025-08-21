@@ -30,7 +30,7 @@ function Filter({
   // }
 
   return (
-    <Menubar className="bg-white shadow-md dark:bg-gray-800 dark:border dark:border-gray-700 dark:hover:bg-gray-700 dark:active:bg-gray-600">
+    <Menubar className="bg-white shadow-sm dark:bg-gray-800 dark:border dark:border-gray-700 dark:hover:bg-gray-700 dark:active:bg-gray-600">
       <MenubarMenu>
         <MenubarTrigger
           className="hover:cursor-pointer dark:hover:bg-gray-700 dark:active:bg-gray-600"
