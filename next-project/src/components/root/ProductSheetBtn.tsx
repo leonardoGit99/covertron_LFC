@@ -22,7 +22,12 @@ function ProductSheetButton({
 
   return (
     <>
-      <Button onClick={() => setOpen(true)} className='bg-slate-950 hover:bg-slate-800 active:bg-slate-700 dark:bg-sky-900 dark:hover:bg-sky-800 dark:active:bg-sky-700 dark:text-white dark:border dark:border-gray-500'>{btnLabel}</Button>
+      <Button
+        onClick={() => setOpen(true)}
+        className="bg-slate-950 hover:bg-slate-800 active:bg-slate-700 dark:bg-sky-900 dark:hover:bg-sky-800 dark:active:bg-sky-700 dark:text-white dark:border dark:border-gray-500"
+      >
+        {btnLabel}
+      </Button>
       <CustomSheet
         isRefresh={isRefresh}
         setRefresh={setRefresh}

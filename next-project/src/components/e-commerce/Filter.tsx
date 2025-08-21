@@ -13,14 +13,12 @@ import React from 'react';
 import { BsFilter } from 'react-icons/bs';
 
 type Props = {
-  handleGetFiltersClick: () => void;
   categories: Categories;
   handleFilterClick: (categoryId: number) => void;
   handleClearFilterClick: () => void;
 };
 
 function Filter({
-  handleGetFiltersClick,
   categories,
   handleFilterClick,
   handleClearFilterClick
@@ -36,7 +34,6 @@ function Filter({
       <MenubarMenu>
         <MenubarTrigger
           className="hover:cursor-pointer dark:hover:bg-gray-700 dark:active:bg-gray-600"
-          onClick={handleGetFiltersClick}
         >
           {/* Icon */}
           <BsFilter className="text-lg md:text-xl" />

@@ -12,6 +12,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import Link from "next/link";
+import { ModeToggle } from "../ui/toggle-theme";
 
 // Menu items.
 const items = [
@@ -39,19 +41,24 @@ const items = [
 
 export function AppSidebar() {
   return (
-    <Sidebar>
+    <Sidebar className="z-50">
       <SidebarContent className="bg-[#000319]">
         <SidebarGroup>
-          <SidebarGroupLabel className="text-gray-50">Covertron - Administrador</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-gray-50 flex items-center justify-between mb-3 mt-2 md:mb-0 md:mt-0">
+            Covertron - Administrador 
+           <div className="block md:hidden">
+             <ModeToggle type="default" />
+           </div>
+            </SidebarGroupLabel>
           <SidebarGroupContent className="text-slate-400">
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title} >
                   <SidebarMenuButton asChild className="hover:bg-[#1a1f33] hover:text-slate-400">
-                    <a href={item.url}>
+                    <Link href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}

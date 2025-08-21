@@ -20,11 +20,10 @@ export function ModeToggle({ type = 'default' }: Props) {
   const { setTheme } = useTheme();
 
   return (
-    <div className="hidden sm:block">
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger
           asChild
-          className={`${type === 'default' ? 'text-black bg-transparent dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800 dark:active:bg-slate-700' : 'text-white bg-transparent hover:bg-transparent hover:text-white'} border-none shadow-none`}
+          className={`${type === 'default' ? 'text-white md:text-black bg-[#000319] md:hover:bg-transparent data-[state=open]:bg-[#000319] md:data-[state=open]:bg-accent data-[state=open]:text-white md:data-[state=open]:text-black bg-transparent dark:bg-transparent  dark:text-white dark:hover:bg-slate-800 dark:active:bg-slate-700' : 'text-white bg-transparent hover:bg-transparent hover:text-white'} border-none shadow-none`}
         >
           <Button
             variant="outline"
@@ -51,6 +50,5 @@ export function ModeToggle({ type = 'default' }: Props) {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-    </div>
   );
 }

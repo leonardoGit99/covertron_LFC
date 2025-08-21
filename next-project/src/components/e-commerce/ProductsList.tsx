@@ -1,3 +1,4 @@
+'use client';
 import React, { useCallback, useEffect, useState, ChangeEvent } from 'react';
 import ProductCard from './ProductCard';
 import Link from 'next/link';
@@ -20,7 +21,6 @@ function ProductsList() {
   const [products, setProducts] = useState<ProductSummary[]>([]);
   const [searchTerm, setSearchTerm] = useState(''); // Search bar state
   const [categories, setCategories] = useState<Categories>([]);
-  const [category, setCategory] = useState<number>(0);
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [totalProducts, setTotalProducts] = useState(0);
@@ -40,6 +40,16 @@ function ProductsList() {
   useEffect(() => {
     fetchAvailableProducts();
   }, [currentPage, limit]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const { success, data } = await getAllCategories();
+      if (success && data) {
+        setCategories(data.categories);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   // get all filtered products with debounce
   const debouncedSearch = useCallback(
@@ -72,13 +82,6 @@ function ProductsList() {
     }
   };
 
-  const handleGetFiltersClick = async () => {
-    const { success, data } = await getAllCategories();
-    if (success && data) {
-      setCategories(data.categories);
-    }
-  };
-
   const handleFilterClick = async (categoryId: number) => {
     setSearchTerm('');
     const { success, data } = await getAllProductsByCategory(
@@ -107,7 +110,6 @@ function ProductsList() {
           />
         </div>
         <Filter
-          handleGetFiltersClick={handleGetFiltersClick}
           categories={categories}
           handleFilterClick={handleFilterClick}
           handleClearFilterClick={handleClearFilterClick}
@@ -115,7 +117,7 @@ function ProductsList() {
       </div>
 
       {loading ? (
-        <div className='h-5 w-full'></div>
+        <div className="h-5 w-full"></div>
       ) : (
         <p className="text-sm text-muted-foreground text-start w-full px-4 md:px-0 dark:text-gray-500">
           Tenemos {totalProducts} {totalProducts > 1 ? 'productos' : 'producto'}{' '}

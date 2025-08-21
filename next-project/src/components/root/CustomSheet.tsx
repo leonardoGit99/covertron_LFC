@@ -1,37 +1,46 @@
-"use client"
-import React, { useEffect, useState } from 'react'
-import { Sheet, SheetContent,  SheetHeader, SheetTitle } from '../ui/sheet'
-import ProductForm from './ProductForm'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Separator } from '../ui/separator'
-import { Categories } from '@/types'
-import { getAllCategories } from '@/services/categories'
-import { Switch } from '../ui/switch'
-import { Label } from '../ui/label'
-import {  CreateProductDTO, ProductDetailAdminDTO } from '@/types/product'
-import { productSchema } from '@/schemas/product.schema'
-import { createProduct, getOneProductAdmin, updateProduct } from '@/services/product'
-import { toast } from 'sonner'
-
-
+'use client';
+import React, { useEffect, useState } from 'react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '../ui/sheet';
+import ProductForm from './ProductForm';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Separator } from '../ui/separator';
+import { Categories } from '@/types';
+import { getAllCategories } from '@/services/categories';
+import { Switch } from '../ui/switch';
+import { Label } from '../ui/label';
+import { CreateProductDTO, ProductDetailAdminDTO } from '@/types/product';
+import { productSchema } from '@/schemas/product.schema';
+import {
+  createProduct,
+  getOneProductAdmin,
+  updateProduct,
+} from '@/services/product';
+import { toast } from 'sonner';
 
 type Props = {
-  triggerBtnLabel?: string
-  sheetTitle?: string
-  id?: number | null
-  open: boolean,
-  onOpenChange: (open: boolean) => void
-  isRefresh: boolean
-  setRefresh: (isRefresh: boolean) => void
-}
+  triggerBtnLabel?: string;
+  sheetTitle?: string;
+  id?: number | null;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  isRefresh: boolean;
+  setRefresh: (isRefresh: boolean) => void;
+};
 
-function CustomSheet({ sheetTitle, id, open, onOpenChange, setRefresh }: Props) {
+function CustomSheet({
+  sheetTitle,
+  id,
+  open,
+  onOpenChange,
+  setRefresh,
+}: Props) {
   const [categories, setCategories] = useState<Categories>([]);
   const [images, setImages] = useState<File[]>([]);
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const [deletedImages, setDeletedImages] = useState<string[]>([]);
-  const [productState, setProductState] = useState<string>("available");
+  const [productState, setProductState] = useState<string>('available');
+  const [isLoading, setIsLoading] = useState(true);
   // State to store product data from back
   const [product, setProduct] = useState<ProductDetailAdminDTO>({
     id: 0,
@@ -43,7 +52,7 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange, setRefresh }: Props) 
     brand: '',
     discount: 0,
     state: '',
-    images: []
+    images: [],
   });
 
   // Resolve and default values
@@ -56,38 +65,39 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange, setRefresh }: Props) 
       subCategoryId: undefined,
       originalPrice: undefined,
       brand: '',
-      discount: undefined
-    }
+      discount: undefined,
+    },
   });
 
+  /* useEffect(() => {
+    const fetchProduct = async () => {
+      setIsLoading(true);
 
-  // Getting product from backend only if there is an id
-  useEffect(() => {
-    const getProduct = async () => {
-      if (id) {
-        const { data: product, success } = await getOneProductAdmin(id);
-        if (success && product) {
-          setProduct(product);
-          setImageUrls(product.images);
-          setProductState(product.state);
-          // form.reset(product);
-        }
+      const productPromise = id
+        ? getOneProductAdmin(id)
+        : Promise.resolve({ success: false, data: null });
+      const categoriesPromise = getAllCategories();
+
+      const [productRes, categoriesRes] = await Promise.all([
+        productPromise,
+        categoriesPromise,
+      ]);
+
+      if (productRes.success && productRes.data) {
+        setProduct(productRes.data);
+        setImageUrls(productRes.data.images);
+        setProductState(productRes.data.state);
       }
-    }
-    getProduct();
-  }, [id, form]);
 
-
-  useEffect(() => {
-    const getCategories = async () => {
-      const { data, success } = await getAllCategories();
-      if (success && data) {
-        setCategories(data.categories);
+      if (categoriesRes.success && categoriesRes.data) {
+        setCategories(categoriesRes.data.categories);
       }
-    }
-    getCategories();
-  }, []);
 
+      setIsLoading(false);
+    };
+
+    fetchProduct();
+  }, [id, form]); */
 
   // Function to observe the sheet behavior
   const handleOpenChange = (isOpen: boolean) => {
@@ -109,23 +119,23 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange, setRefresh }: Props) 
 
       Object.entries(newBody).forEach(([key, value]) => {
         if (key === 'originalPrice') {
-          const numberValue = typeof value === 'number' ? value : parseFloat(String(value));
+          const numberValue =
+            typeof value === 'number' ? value : parseFloat(String(value));
           formData.append(key, numberValue.toFixed(2)); // Fuerza "120.00"
-          
         } else {
           formData.append(key, String(value));
         }
       });
 
       deletedImages.forEach((url) => {
-        formData.append("deletedImages", url);
+        formData.append('deletedImages', url);
       });
 
-      formData.append("state", productState);
+      formData.append('state', productState);
 
       // If there's new images, we upload it
       images?.forEach((image) => {
-        formData.append("imgs", image);
+        formData.append('imgs', image);
       });
 
       const { success, message } = await updateProduct(id, formData);
@@ -138,7 +148,8 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange, setRefresh }: Props) 
       form.reset();
     } else {
       const formData = new FormData();
-      Object.entries(newBody).forEach(([key, value]) => { // .entries Convierte un objeto en un array de pares clave-valor, pasamos como parametro una asignacion dinamica: Ej.
+      Object.entries(newBody).forEach(([key, value]) => {
+        // .entries Convierte un objeto en un array de pares clave-valor, pasamos como parametro una asignacion dinamica: Ej.
         // const product = {
         //   name: "Polera",
         //   price: 120,
@@ -153,7 +164,8 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange, setRefresh }: Props) 
         // ]
 
         if (key === 'price') {
-          const numberValue = typeof value === 'number' ? value : parseFloat(String(value));
+          const numberValue =
+            typeof value === 'number' ? value : parseFloat(String(value));
           formData.append(key, numberValue.toFixed(2)); // Fuerza "120.00"
         } else {
           formData.append(key, String(value));
@@ -161,9 +173,8 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange, setRefresh }: Props) 
       });
 
       images?.forEach((image) => {
-        formData.append("imgs", image);
+        formData.append('imgs', image);
       });
-
 
       /* formData.append('name', body.name);
       formData.append('description', body.description);
@@ -183,34 +194,45 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange, setRefresh }: Props) 
         setRefresh(true); // Refresh padre component state
         toast(message);
       }
-      console.log("Creando Producto")
+      console.log('Creando Producto');
     }
     // onOpenChange(false);
     form.reset();
   };
 
   return (
-    <Sheet open={open} onOpenChange={handleOpenChange}>
-      <SheetContent side="right" className='dark:bg-backgroundDark'>
+    <Sheet
+      open={open}
+      onOpenChange={handleOpenChange}
+    >
+      <SheetContent
+        side="right"
+        className="dark:bg-backgroundDark"
+      >
+        {isLoading ? <>Loading..</> : <>Datos cargados</>}
         <SheetHeader>
           <SheetTitle>{sheetTitle}</SheetTitle>
-          {
-            id && (
-              <div className='flex items-center space-x-2 '>
-                <Switch
-                  checked={productState === 'available'}
-                  onCheckedChange={(checked) => {
-                    setProductState(checked ? 'available' : 'sold out');
-                  }}
-                />
-                <Label className={`${productState === 'available' ? 'text-green-600' : 'text-red-600'} font-normal transition-colors duration-200`}>
-                  {productState === 'available' ? 'Disponible' : 'Agotado'}
-                </Label>
-              </div>
-            )
-          }
+          {id && (
+            <div className="flex items-center space-x-2 ">
+              <Switch
+                checked={productState === 'available'}
+                onCheckedChange={(checked) => {
+                  setProductState(checked ? 'available' : 'sold out');
+                }}
+              />
+              <Label
+                className={`${
+                  productState === 'available'
+                    ? 'text-green-600'
+                    : 'text-red-600'
+                } font-normal transition-colors duration-200`}
+              >
+                {productState === 'available' ? 'Disponible' : 'Agotado'}
+              </Label>
+            </div>
+          )}
         </SheetHeader>
-        <Separator className='mt-2 mb-4' />
+        <Separator className="mt-2 mb-4" />
         <ProductForm
           id={id}
           form={form}
@@ -223,10 +245,14 @@ function CustomSheet({ sheetTitle, id, open, onOpenChange, setRefresh }: Props) 
           setDeletedImages={setDeletedImages}
           deletedImages={deletedImages}
           setImageUrls={setImageUrls}
+          setIsLoading={setIsLoading}
+          setProduct={setProduct}
+          setProductState={setProductState}
+          setCategories={setCategories}
         />
       </SheetContent>
     </Sheet>
-  )
+  );
 }
 
-export default CustomSheet
+export default CustomSheet;

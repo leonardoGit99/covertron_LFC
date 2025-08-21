@@ -11,14 +11,14 @@ function Logo({ type, href }: Props) {
   return (
     <Link href={href}>
       <div
-        className={`flex items-center gap-0 sm:gap-2 ${
+        className={`flex items-center gap-0 sm:gap-2${
           type === 'default' ? 'text-black dark:text-white' : 'text-white'
         }`}
       >
-        <GiKangaroo className="text-6xl" />
-        <h1 className="text-3xl">
+        <GiKangaroo className="text-5xl md:text-6xl" />
+        <h1 className="text-2xl md:text-3xl">
           COVER
-          <span className="font-bold text-xl">TRON</span>
+          <span className="font-bold text-lg md:text-xl">TRON</span>
         </h1>
       </div>
     </Link>
