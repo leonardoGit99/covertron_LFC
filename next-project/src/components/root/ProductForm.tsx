@@ -30,9 +30,6 @@ import {
 } from '@/types/product';
 import { SubCategories } from '@/types/subcategory';
 import Upload from './Upload';
-import { getSubCategoriesByCategory } from '@/services/subCategories';
-import { getOneProductAdmin } from '@/services/product';
-import { getAllCategories } from '@/services/categories';
 
 // Types
 type Props = {
@@ -77,7 +74,6 @@ function ProductForm({
   setProductState,
   setCategories,
 }: Props) {
-
   useEffect(() => {
     form.setValue('images', [...images, ...imageUrls]);
   }, [images, imageUrls]);
@@ -281,6 +277,14 @@ function ProductForm({
                     placeholder="Ej. 15"
                     {...field}
                     value={field.value ?? ''}
+                    onBlur={(e) => {
+                      const value = parseInt(e.target.value, 10);
+                      if (!isNaN(value)) {
+                        field.onChange(value); 
+                      } else {
+                        field.onChange(0); 
+                      }
+                    }}
                   />
                 </FormControl>
                 <FormMessage />

@@ -1,8 +1,12 @@
 import { productSchema } from '@/schemas/product.schema';
 import { z } from 'zod';
 
+// Tipo base inferido del esquema
+type ProductSchemaInput = z.input<typeof productSchema>; // Entrada del esquema (antes de transformación)
+type ProductSchemaOutput = z.output<typeof productSchema>; // Salida del esquema (después de transformación)
+
 // ADMIN USER
-export type CreateProductDTO = z.infer<typeof productSchema>;
+export type CreateProductDTO = ProductSchemaOutput;
 
 export interface Product extends CreateProductDTO {
   id: number,

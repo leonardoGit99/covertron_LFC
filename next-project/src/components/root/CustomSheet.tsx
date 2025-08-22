@@ -17,7 +17,6 @@ import {
   updateProduct,
 } from '@/services/product';
 import { toast } from 'sonner';
-import loading from '@/app/(user)/loading';
 import { getSubCategoriesByCategory } from '@/services/subCategories';
 import { SubCategories } from '@/types/subcategory';
 import Spinner from '../shared/Spinnet';
@@ -153,7 +152,7 @@ function CustomSheet({
   // Function to submit body to backend depending whether there's an id or not
   const onSubmit = async (body: CreateProductDTO | ProductDetailAdminDTO) => {
     const { categoryId, ...newBody } = body;
-
+    console.log(newBody)
     const formData = new FormData();
     if (id) {
       /* const isDifferentBody = product.name !== newBody.name || product.description !== newBody.description || product.subCategoryId != newBody.subCategoryId || product.price !== newBody.price || product.discount !== newBody.discount || product.brand !== newBody.brand */
@@ -234,11 +233,16 @@ function CustomSheet({
         setImages([]);
         setRefresh(true); // Refresh padre component state
         toast(message);
+        form.reset();
+      } else {
+        if (message === 'Product name already exists') {
+          form.setError('name', {
+            type: 'manual',
+            message: 'Ya existe un producto con este nombre',
+          });
+        }
       }
-      console.log('Creando Producto');
     }
-    // onOpenChange(false);
-    form.reset();
   };
 
   return (
@@ -252,8 +256,9 @@ function CustomSheet({
       >
         <SheetTitle>{sheetTitle}</SheetTitle>
         {isLoading ? (
-          <Spinner centered 
-          text='Cargando el producto, espere un momento por favor...'
+          <Spinner
+            centered
+            text="Cargando el producto, espere un momento por favor..."
           />
         ) : (
           <>
