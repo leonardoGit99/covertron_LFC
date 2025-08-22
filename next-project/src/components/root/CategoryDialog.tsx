@@ -61,16 +61,36 @@ function CategoryDialog({ id, open, onOpenChange }: Props) {
   // Function to submit body to backend depending whether there's an id or not
   const onSubmit = async (body: CreateCategoryDTO | UpdateCategoryDTO) => {
     if (id) {
-      const { message } = await updateCategory(body as UpdateCategoryDTO, id);
-      toast(message);
-      form.reset();
+      const { success, message } = await updateCategory(body as UpdateCategoryDTO, id);
+      if (success) {
+        toast(message);
+        form.reset();
+        onOpenChange(false);
+        router.refresh();
+      } else {
+        if (message === 'Category name already exists') {
+          form.setError('name', {
+            type: 'manual',
+            message: 'Ya existe una categoría con ese nombre',
+          });
+        }
+      }
     } else {
-      const { message } = await createCategory(body as CreateCategoryDTO);
-      toast(message);
-      form.reset();
+      const { success, message } = await createCategory(body as CreateCategoryDTO);
+      if (success) {
+        toast(message);
+        form.reset();
+        onOpenChange(false);
+        router.refresh();
+      } else {
+        if (message === 'Category name already exists') {
+          form.setError('name', {
+            type: 'manual',
+            message: 'Ya existe una categoría con ese nombre',
+          });
+        }
+      }
     }
-    onOpenChange(false);
-    router.refresh();
   };
 
   // Function to observe the modal behavior

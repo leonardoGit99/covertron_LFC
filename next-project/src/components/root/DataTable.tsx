@@ -69,7 +69,7 @@ function DataTable({
 
   return (
     <div>
-      <div className="rounded-md border overflow-hidden dark:border dark:border-gray-600">
+      <div className="rounded-md border overflow-hidden dark:border dark:border-gray-600 mb-10">
         <Table>
           <TableHeader className="bg-blue-50">
             <TableRow className="dark:hover:bg-sky-800">

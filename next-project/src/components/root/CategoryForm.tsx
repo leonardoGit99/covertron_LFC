@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '../ui/textarea';
 import {
@@ -8,45 +8,48 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
+} from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
-import { IoIosSave } from "react-icons/io";
+import { IoIosSave } from 'react-icons/io';
 import { UseFormReturn } from 'react-hook-form';
 import { CreateCategoryDTO } from '@/types';
 
-
 type Props = {
-  form: UseFormReturn<CreateCategoryDTO>,
-  onSubmit: (body: CreateCategoryDTO) => void,
-  category: CreateCategoryDTO
+  form: UseFormReturn<CreateCategoryDTO>;
+  onSubmit: (body: CreateCategoryDTO) => void;
+  category: CreateCategoryDTO;
 };
 
 function CategoryForm({ form, onSubmit, category }: Props) {
+  const name = form.watch('name');
+  const description = form.watch('description');
   // Constraints for create category form
-  const isFormFilled = form.getValues("name").trim() !== "" && form.getValues("description").trim() !== ""
-
+  const isFormFilled = name.trim() !== '';
 
   // Constraints for edit category form
   const isFormChanged = category
-    ? (
-      form.getValues("name") !== category.name ||
-      form.getValues("description") !== category.description
-    )
+    ? name !== category.name || description !== category.description
     : true;
 
-  // SaveBtn disabled constraints 
+  // SaveBtn disabled constraints
   const isSubmitDisabled = !isFormFilled || (category ? !isFormChanged : false);
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8" autoComplete='off'>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-8"
+        autoComplete="off"
+      >
         {/* Name input */}
         <FormField
           control={form.control}
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Nombre</FormLabel>
+              <FormLabel>
+                Nombre <span className="text-red-500 dark:text-red-400">*</span>
+              </FormLabel>
               <FormControl>
                 <Input
                   placeholder="Ej. Fundas..."
@@ -78,7 +81,6 @@ function CategoryForm({ form, onSubmit, category }: Props) {
           )}
         />
 
-
         {/* Save button */}
         <Button
           type="submit"
@@ -89,7 +91,7 @@ function CategoryForm({ form, onSubmit, category }: Props) {
         </Button>
       </form>
     </Form>
-  )
+  );
 }
 
-export default CategoryForm
+export default CategoryForm;

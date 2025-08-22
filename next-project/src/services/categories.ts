@@ -5,8 +5,12 @@ import api from "./axios";
 
 // Endpoits
 export const createCategory = async (body: CreateCategoryDTO): Promise<ApiResponse<Category>> => {
-  const { data } = await api.post<ApiResponse<Category>>(`/categories`, body);
-  return data;
+  try {
+    const { data } = await api.post<ApiResponse<Category>>(`/categories`, body);
+    return data;
+  } catch (error: any) {
+    return error.response?.data
+  }
 }
 
 export const getAllCategories = async (): Promise<ApiResponse<CategoriesResponse>> => {
@@ -37,12 +41,21 @@ export const getOneCategory = async (id: number): Promise<ApiResponse<Category>>
 }
 
 export const updateCategory = async (body: UpdateCategoryDTO, id: number): Promise<ApiResponse<Category>> => {
-  const { data } = await api.patch<ApiResponse<Category>>(`/categories/${id}`, body);
-  return data;
+  try {
+    const { data } = await api.patch<ApiResponse<Category>>(`/categories/${id}`, body);
+    return data;
+  } catch (error: any) {
+    return error.response?.data
+  }
 }
 
 
 export const deleteCategory = async (id: number): Promise<ApiResponse<Category>> => {
-  const { data } = await api.delete(`/categories/${id}`);
-  return data;
+  try {
+    const { data } = await api.delete(`/categories/${id}`);
+    return data;
+  } catch (error: any) {
+    return error.response?.data
+  }
+
 }

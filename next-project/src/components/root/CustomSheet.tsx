@@ -184,8 +184,15 @@ function CustomSheet({
         setImages([]);
         setRefresh(true); // Refresh padre component state
         toast(message);
+        form.reset();
+      } else {
+        if (message === 'Product name already exists') {
+          form.setError('name', {
+            type: 'manual',
+            message: 'Ya existe un producto con este nombre',
+          });
+        }
       }
-      form.reset();
     } else {
       const formData = new FormData();
       Object.entries(newBody).forEach(([key, value]) => {

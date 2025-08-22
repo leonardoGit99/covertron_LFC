@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '../ui/textarea';
 import {
@@ -8,48 +8,60 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
+} from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
-import { IoIosSave } from "react-icons/io";
+import { IoIosSave } from 'react-icons/io';
 import { UseFormReturn } from 'react-hook-form';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '../ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select';
 import { CreateSubCategory, SubCategory } from '@/types/subcategory';
 import { Categories } from '@/types';
-
 
 // Types
 type Props = {
   form: UseFormReturn<CreateSubCategory>;
   onSubmit: (body: CreateSubCategory) => void;
-  categories: Categories,
+  categories: Categories;
   subCategory: SubCategory;
 };
 
 function SubCategoryForm({ form, onSubmit, categories, subCategory }: Props) {
-  const isFormFilled =
-    form.getValues("name").trim() !== "" &&
-    form.getValues("description").trim() !== "" &&
-    form.getValues("categoryId") !== 0;
+  const name = form.watch('name');
+  const description = form.watch('description');
+  const categoryId = form.watch('categoryId');
+  const isFormFilled = name.trim() !== '' && categoryId !== 0;
 
   const isFormChanged = subCategory
-    ? (
-      form.getValues("name") !== subCategory.name ||
-      form.getValues("description") !== subCategory.description ||
-      form.getValues("categoryId") !== subCategory.categoryId
-    )
+    ? name !== subCategory.name ||
+      description !== subCategory.description ||
+      categoryId !== subCategory.categoryId
     : true;
 
-  const isSubmitDisabled = !isFormFilled || (subCategory ? !isFormChanged : false);
-  
+  const isSubmitDisabled =
+    !isFormFilled || (subCategory ? !isFormChanged : false);
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8" autoComplete='off'>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-8"
+        autoComplete="off"
+      >
         <FormField
           control={form.control}
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Nombre</FormLabel>
+              <FormLabel>
+                Nombre<span className="text-red-500 dark:text-red-400">*</span>
+              </FormLabel>
               <FormControl>
                 <Input
                   placeholder="Ej. Fundas..."
@@ -90,7 +102,7 @@ function SubCategoryForm({ form, onSubmit, categories, subCategory }: Props) {
               <FormControl>
                 <Select
                   onValueChange={(value) => field.onChange(Number(value))}
-                  value={field.value ? String(field.value) : ""}
+                  value={field.value ? String(field.value) : ''}
                   disabled={categories.length === 0}
                 >
                   <SelectTrigger className="w-full">
@@ -99,16 +111,15 @@ function SubCategoryForm({ form, onSubmit, categories, subCategory }: Props) {
                   <SelectContent>
                     <SelectGroup>
                       <SelectLabel>Categorías</SelectLabel>
-                      {
-                        categories.length > 0 && categories.map(({ id, name }) => (
+                      {categories.length > 0 &&
+                        categories.map(({ id, name }) => (
                           <SelectItem
                             value={String(id)}
                             key={id}
                           >
                             {name}
                           </SelectItem>
-                        ))
-                      }
+                        ))}
                     </SelectGroup>
                   </SelectContent>
                 </Select>
@@ -127,7 +138,7 @@ function SubCategoryForm({ form, onSubmit, categories, subCategory }: Props) {
         </Button>
       </form>
     </Form>
-  )
+  );
 }
 
-export default SubCategoryForm
+export default SubCategoryForm;

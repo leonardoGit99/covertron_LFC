@@ -1,12 +1,16 @@
 import { ApiResponse } from "@/types/api";
-import {  CreateSubCategory, SubCategoriesResponse, SubCategory, SubCategoryWithoutID, UpdateSubCategory } from "@/types/subcategory";
+import { CreateSubCategory, SubCategoriesResponse, SubCategory, SubCategoryWithoutID, UpdateSubCategory } from "@/types/subcategory";
 import api from "./axios";
 
 
 // Endpoits
 export const createSubCategory = async (body: CreateSubCategory, categoryId: number): Promise<ApiResponse<SubCategory>> => {
-  const { data } = await api.post<ApiResponse<SubCategory>>(`/categories/${categoryId}/sub-categories`, body);
-  return data;
+  try {
+    const { data } = await api.post<ApiResponse<SubCategory>>(`/categories/${categoryId}/sub-categories`, body);
+    return data;
+  } catch (error: any) {
+    return error.response?.data
+  }
 }
 
 export const getAllSubCategories = async (): Promise<ApiResponse<SubCategoriesResponse>> => {
@@ -28,22 +32,38 @@ export const getAllSubCategories = async (): Promise<ApiResponse<SubCategoriesRe
 };
 
 export const getOneSubCategory = async (subCategoryId: number): Promise<ApiResponse<SubCategory>> => {
-  const { data } = await api.get<ApiResponse<SubCategory>>(`/sub-categories/${subCategoryId}`);
-  return data;
+  try {
+    const { data } = await api.get<ApiResponse<SubCategory>>(`/sub-categories/${subCategoryId}`);
+    return data;
+  } catch (error: any) {
+    return error.response?.data;
+  }
 }
 
 export const getSubCategoriesByCategory = async (id: number): Promise<ApiResponse<SubCategoriesResponse>> => {
-  const { data } = await api.get<ApiResponse<SubCategoriesResponse>>(`/sub-categories?categoryId=${id}`)
-  return data;
+  try {
+    const { data } = await api.get<ApiResponse<SubCategoriesResponse>>(`/sub-categories?categoryId=${id}`)
+    return data;
+  } catch (error: any) {
+    return error.response?.data
+  }
 }
 
 export const updateSubCategory = async (body: UpdateSubCategory, subCategoryId: number, categoryId: number): Promise<ApiResponse<SubCategory>> => {
-  const { data } = await api.put<ApiResponse<SubCategory>>(`/categories/${categoryId}/sub-categories/${subCategoryId}`, body);
-  return data;
+  try {
+    const { data } = await api.put<ApiResponse<SubCategory>>(`/categories/${categoryId}/sub-categories/${subCategoryId}`, body);
+    return data;
+  } catch (error: any) {
+    return error.response?.data
+  }
 }
 
 
 export const deleteSubCategory = async (id: number): Promise<ApiResponse<SubCategoryWithoutID>> => {
-  const { data } = await api.delete<ApiResponse<SubCategoryWithoutID>>(`/sub-categories/${id}`);
-  return data;
+  try {
+    const { data } = await api.delete<ApiResponse<SubCategoryWithoutID>>(`/sub-categories/${id}`);
+    return data;
+  } catch (error: any) {
+    return error.response?.data
+  }
 }

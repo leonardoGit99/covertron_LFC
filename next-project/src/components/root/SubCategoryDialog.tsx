@@ -102,24 +102,44 @@ function SubCategoryDialog({ subCategoryId, open, onOpenChange }: DialogProps) {
   const onSubmit = async (body: CreateSubCategory | UpdateSubCategory) => {
     if (subCategoryId) {
       const { categoryId } = body as UpdateSubCategory;
-      const { message } = await updateSubCategory(
+      const { success, message } = await updateSubCategory(
         body,
         subCategoryId,
         categoryId as number
       );
-      toast(message);
-      form.reset();
+      if (success) {
+        toast(message);
+        form.reset();
+        onOpenChange(false);
+        router.refresh();
+      } else {
+        if (message === 'Sub Category name already exists') {
+          form.setError('name', {
+            type: 'manual',
+            message: 'Ya existe una sub-categoría con ese nombre',
+          });
+        }
+      }
     } else {
       const { categoryId } = body as CreateSubCategory;
-      const { message } = await createSubCategory(
+      const { success, message } = await createSubCategory(
         body as CreateSubCategory,
         categoryId
       );
-      toast(message);
-      form.reset();
+      if (success) {
+        toast(message);
+        form.reset();
+        onOpenChange(false);
+        router.refresh();
+      } else {
+        if (message === 'Sub Category name already exists') {
+          form.setError('name', {
+            type: 'manual',
+            message: 'Ya existe una sub-categoría con ese nombre',
+          });
+        }
+      }
     }
-    onOpenChange(false);
-    router.refresh();
   };
 
   return (
@@ -132,7 +152,7 @@ function SubCategoryDialog({ subCategoryId, open, onOpenChange }: DialogProps) {
           <DialogTitle className="text-center mb-3">
             {subCategoryId ? 'Actualizar Sub-Categoría' : 'Nueva Sub-Categoría'}
           </DialogTitle>
-          <Separator/>
+          <Separator />
         </DialogHeader>
         {/* Create or Update Form*/}
         <SubCategoryForm

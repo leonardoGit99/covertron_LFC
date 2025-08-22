@@ -78,22 +78,35 @@ function ProductForm({
     form.setValue('images', [...images, ...imageUrls]);
   }, [images, imageUrls]);
 
-  const isFormFilled =
-    form.getValues('name').trim() !== '' &&
-    form.getValues('categoryId') !== 0 &&
-    form.getValues('subCategoryId') !== 0 &&
-    form.getValues('originalPrice') !== 0 &&
-    form.getValues('brand').trim() !== '' &&
-    form.getValues('images').length !== 0;
+  const name = form.watch('name');
+  const description = form.watch('description');
+  const categoryId = form.watch('categoryId');
+  const subCategoryId = form.watch('subCategoryId');
+  const originalPrice = form.watch('originalPrice');
+  const brand = form.watch('brand');
+  const discount = form.watch('discount');
 
+  // Constraints for create product form
+  const isFormFilled =
+    name.trim() !== '' &&
+    categoryId !== 0 &&
+    subCategoryId !== 0 &&
+    originalPrice !== 0 &&
+    brand.trim() !== '' &&
+    form.watch('images').length !== 0;
+
+  // Constraints for edit product form
+  // Check if the form values have changed compared to the initial product data
   const isFormChanged = product
-    ? form.getValues('name') !== product.name ||
-      form.getValues('description') !== product.description ||
-      form.getValues('categoryId') !== product.categoryId ||
-      form.getValues('subCategoryId') !== product.subCategoryId ||
-      form.getValues('originalPrice') !== product.originalPrice ||
-      form.getValues('brand') !== product.brand ||
-      deletedImages.length !== 0
+    ? name.trim() !== product.name ||
+      description?.trim() !== product.description ||
+      Number(categoryId) !== Number(product.categoryId) ||
+      Number(subCategoryId) !== Number(product.subCategoryId) ||
+      originalPrice !== product.originalPrice ||
+      String(discount) !== (String(product.discount) ) ||
+      brand.trim() !== product.brand ||
+      deletedImages.length !== 0 || 
+      images.length !== 0
     : true;
 
   const isSubmitDisabled = !isFormFilled || (product ? !isFormChanged : false);
