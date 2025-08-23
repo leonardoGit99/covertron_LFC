@@ -11,11 +11,11 @@ import { ProductSummary } from '@/types/product';
 import CustomPagination from '../shared/CustomPagination';
 import { debounce } from 'lodash';
 import SearchInput from '../shared/SearchInput';
-import Spinner from '../shared/Spinnet';
 import Filter from './Filter';
 import { Categories } from '@/types';
 import { getAllCategories } from '@/services/categories';
-import Announcements from './Announcements';
+import SkeletonProductCard from './SkeletonProductCard';
+import SkeletonPagination from './SkeletonPagination';
 
 function ProductsList() {
   const [loading, setIsLoading] = useState(true);
@@ -127,45 +127,45 @@ function ProductsList() {
 
       <div className="border-b border-gray-200 mt-6 mb-12 dark:border-gray-600 mx-2" />
 
-      {loading ? (
-        <Spinner
-          size={50}
-          text="Cargando productos, espere un momento por favor..."
-          centered
-        />
-      ) : products.length === 0 ? (
-        <p className="text-muted-foreground mt-10 text-center">
-          {searchTerm
-            ? '🔍 No se encontraron productos que coincidan con la búsqueda.'
-            : '📭 No hay productos disponibles aún. ¡Pronto tendremos las últimas novedades para ti!'}
-        </p>
-      ) : (
-        <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 xxl:grid-cols-4 gap-12 mb-12 justify-items-center w-full auto-rows-fr">
-            {products.map((product) => (
-              <Link
-                href={`/productos/${product.id}`}
-                key={product.id}
-              >
-                <ProductCard
-                  img={product.image}
-                  name={product.name}
-                  originalPrice={product.originalPrice}
-                  discountedPrice={product.discountedPrice}
-                  discount={product.discount}
-                  categoryName={product.categoryName}
-                />
-              </Link>
-            ))}
-          </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 xxl:grid-cols-4 gap-12 mb-12 justify-items-center w-full auto-rows-fr">
+        {loading ? (
+          Array.from({ length: 12 }).map((_, idx) => (
+            <SkeletonProductCard key={idx} />
+          ))
+        ) : products.length === 0 ? (
+          <p className="text-muted-foreground mt-10 text-center col-span-full">
+            {searchTerm
+              ? '🔍 No se encontraron productos que coincidan con la búsqueda.'
+              : '📭 No hay productos disponibles aún. ¡Pronto tendremos las últimas novedades para ti!'}
+          </p>
+        ) : (
+          products.map((product) => (
+            <Link
+              href={`/productos/${product.id}`}
+              key={product.id}
+            >
+              <ProductCard
+                img={product.image}
+                name={product.name}
+                originalPrice={product.originalPrice}
+                discountedPrice={product.discountedPrice}
+                discount={product.discount}
+                categoryName={product.categoryName}
+              />
+            </Link>
+          ))
+        )}
+      </div>
 
-          <CustomPagination
-            currentPage={currentPage}
-            onPageChange={setCurrentPage}
-            totalPages={totalPages}
-            limit={limit}
-          />
-        </>
+      {!loading && products.length > 0 ? (
+        <CustomPagination
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+          totalPages={totalPages}
+          limit={limit}
+        />
+      ) : (
+        <SkeletonPagination />
       )}
     </>
   );
