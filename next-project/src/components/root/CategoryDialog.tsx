@@ -19,8 +19,7 @@ import { Separator } from '../ui/separator';
 import { toast } from 'sonner';
 import { CreateCategoryDTO, UpdateCategoryDTO } from '@/types';
 import { createCategorySchema } from '@/schemas/category.schema';
-import { type } from 'node:os';
-import { useFetch } from '@/hooks/useFetch';
+import Spinner from '../shared/Spinnet';
 
 type Props = {
   id?: number;
@@ -29,6 +28,8 @@ type Props = {
 };
 
 function CategoryDialog({ id, open, onOpenChange }: Props) {
+  const [isSending, setIsSending] = useState(false); // State to manage the sending state of the form
+  const [isLoading, setIsLoading] = useState(false); // State to manage the loading state of the category data
   const router = useRouter();
   const [category, setCategory] = useState<CreateCategoryDTO>({
     name: '',
@@ -48,20 +49,26 @@ function CategoryDialog({ id, open, onOpenChange }: Props) {
   useEffect(() => {
     const getCategory = async () => {
       if (id) {
+        setIsLoading(true);
         const { success, data } = await getOneCategory(id);
         if (success && data) {
           setCategory(data);
+          form.reset(data);
         }
-        form.reset(data);
       }
+      setIsLoading(false);
     };
     getCategory();
-  }, [id, form]);
+  }, [id]);
 
   // Function to submit body to backend depending whether there's an id or not
   const onSubmit = async (body: CreateCategoryDTO | UpdateCategoryDTO) => {
+    setIsSending(true);
     if (id) {
-      const { success, message } = await updateCategory(body as UpdateCategoryDTO, id);
+      const { success, message } = await updateCategory(
+        body as UpdateCategoryDTO,
+        id
+      );
       if (success) {
         toast(message);
         form.reset();
@@ -75,8 +82,11 @@ function CategoryDialog({ id, open, onOpenChange }: Props) {
           });
         }
       }
+      setIsSending(false);
     } else {
-      const { success, message } = await createCategory(body as CreateCategoryDTO);
+      const { success, message } = await createCategory(
+        body as CreateCategoryDTO
+      );
       if (success) {
         toast(message);
         form.reset();
@@ -90,6 +100,7 @@ function CategoryDialog({ id, open, onOpenChange }: Props) {
           });
         }
       }
+      setIsSending(false);
     }
   };
 
@@ -113,12 +124,16 @@ function CategoryDialog({ id, open, onOpenChange }: Props) {
           </DialogTitle>
           <Separator />
         </DialogHeader>
-        {/* Create or Update Form*/}
-        <CategoryForm
-          form={form}
-          onSubmit={onSubmit}
-          category={category}
-        />
+        {isLoading ? (
+          <Spinner text="Cargando categoría, espere un momento por favor..." />
+        ) : (
+          <CategoryForm
+            form={form}
+            onSubmit={onSubmit}
+            category={category}
+            isSending={isSending}
+          />
+        )}
       </DialogContent>
     </Dialog>
   );

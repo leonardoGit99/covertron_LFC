@@ -47,7 +47,7 @@ export function AppSidebar() {
           <SidebarGroupLabel className="text-gray-50 flex items-center justify-between mb-3 mt-2 md:mb-0 md:mt-0">
             Covertron - Administrador 
            <div className="block md:hidden">
-             <ModeToggle type="default" />
+             <ModeToggle type="transparent" />
            </div>
             </SidebarGroupLabel>
           <SidebarGroupContent className="text-slate-400">

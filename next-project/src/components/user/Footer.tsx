@@ -2,6 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import { Separator } from '@/components/ui/separator';
 import { GiKangaroo } from 'react-icons/gi';
+import Logo from '../shared/Logo';
 
 function Footer() {
   const dataFooter = [
@@ -37,11 +38,13 @@ function Footer() {
       <div className="h-full  max-h-screen-xl mx-auto p-4 md:py-8 sm:max-w-6xl">
         <div className="sm:flex sm:items-center sm:justify-between">
           <div className="flex items-center gap-1">
-            <GiKangaroo className="text-2xl" />
-            <p className="text-xl">
-              COVER
-              <span className="font-bold text-sm">TRON</span>
-            </p>
+            <Logo
+              href="/"
+              type="default"
+              iconSize='text-2xl md:text-3xl'
+              textSize='text-lg md:text-xl'
+              spanSize='text-sm md:text-base'
+            />
           </div>
           <ul className="flex flex-wrrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-300">
             {dataFooter.map((data) => (
@@ -56,7 +59,7 @@ function Footer() {
             ))}
           </ul>
         </div>
-        <Separator className="my-6 border-gray-200 sm:mx-auto dark:border dark:border-white/20 lg:my-8" />
+        <Separator className="my-6 border-gray-200 sm:mx-auto dark:border dark:border-slate-600 lg:my-8" />
         <span className="block text-xs md:text-sm text-gray-500 sm:text-center dark:text-gray-300">
           &copy; {new Date().getFullYear()}{' '}
           <span>

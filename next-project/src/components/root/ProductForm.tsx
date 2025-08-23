@@ -55,6 +55,7 @@ type Props = {
   setProduct: React.Dispatch<React.SetStateAction<ProductDetailAdminDTO>>;
   setProductState: React.Dispatch<React.SetStateAction<string>>;
   setCategories: React.Dispatch<React.SetStateAction<Categories>>;
+  isSending: boolean;
 };
 
 function ProductForm({
@@ -70,9 +71,7 @@ function ProductForm({
   setImageUrls,
   deletedImages,
   setDeletedImages,
-  setProduct,
-  setProductState,
-  setCategories,
+  isSending
 }: Props) {
   useEffect(() => {
     form.setValue('images', [...images, ...imageUrls]);
@@ -109,7 +108,7 @@ function ProductForm({
       images.length !== 0
     : true;
 
-  const isSubmitDisabled = !isFormFilled || (product ? !isFormChanged : false);
+  const isSubmitDisabled = !isFormFilled || (product ? !isFormChanged : false) || isSending;
 
   return (
     <Form {...form}>
@@ -131,6 +130,7 @@ function ProductForm({
                 <Input
                   placeholder="Ej. Polo, Polera overize..."
                   {...field}
+                  disabled={isSending}
                 />
               </FormControl>
               <FormMessage />
@@ -151,6 +151,7 @@ function ProductForm({
                   className="resize-none"
                   placeholder="Ej. Polera oversize de algodón..."
                   {...field}
+                  disabled={isSending}
                 />
               </FormControl>
               <FormMessage />
@@ -174,7 +175,7 @@ function ProductForm({
                       field.onChange(value);
                     }}
                     value={field.value ? String(field.value) : ''}
-                    disabled={categories.length === 0}
+                    disabled={categories.length === 0 || isSending}
                   >
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Selecciona una categoría" />
@@ -215,7 +216,7 @@ function ProductForm({
                       field.onChange(value);
                     }}
                     value={field.value ? String(field.value) : ''}
-                    disabled={subCategories.length === 0}
+                    disabled={subCategories.length === 0 || isSending}
                   >
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Selecciona una sub-cat..." />
@@ -267,6 +268,7 @@ function ProductForm({
                         field.onChange(''); // opcional: limpiar si no es válido
                       }
                     }}
+                    disabled={isSending}
                   />
                 </FormControl>
                 <FormMessage />
@@ -298,6 +300,7 @@ function ProductForm({
                         field.onChange(0); 
                       }
                     }}
+                    disabled={isSending}
                   />
                 </FormControl>
                 <FormMessage />
@@ -319,6 +322,7 @@ function ProductForm({
                 <Input
                   placeholder="Ej. Covertron"
                   {...field}
+                  disabled={isSending}
                 />
               </FormControl>
               <FormMessage />
@@ -341,6 +345,7 @@ function ProductForm({
                 setImageUrls={setImageUrls}
                 setDeletedImages={setDeletedImages}
                 form={form}
+                isSending={isSending}
               />
               <FormMessage />
             </FormItem>
@@ -352,7 +357,7 @@ function ProductForm({
           className="w-full bg-slate-900 hover:bg-slate-800 active:bg-slate-700 dark:bg-sky-900 dark:hover:bg-sky-800 dark:active:bg-sky-700 dark:text-white dark:border dark:border-gray-500"
           disabled={isSubmitDisabled}
         >
-          <IoIosSave /> Guardar
+          <IoIosSave /> {isSending ? 'Guardando...' : 'Guardar'}
         </Button>
       </form>
     </Form>

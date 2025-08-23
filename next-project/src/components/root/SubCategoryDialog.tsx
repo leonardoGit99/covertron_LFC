@@ -25,6 +25,7 @@ import { Categories } from '@/types';
 import { getAllCategories } from '@/services/categories';
 import { toast } from 'sonner';
 import { createSubCategorySchema } from '@/schemas/subCategory.schema';
+import Spinner from '../shared/Spinnet';
 
 type DialogProps = {
   subCategoryId?: number | null;
@@ -33,6 +34,8 @@ type DialogProps = {
 };
 
 function SubCategoryDialog({ subCategoryId, open, onOpenChange }: DialogProps) {
+  const [isSending, setIsSending] = useState(false); // State to manage the sending state of the form
+  const [isLoading, setIsLoading] = useState(false); // State to manage the loading state of the form
   const router = useRouter();
   const [subCategory, setSubCategory] = useState<SubCategory>({
     id: 0,
@@ -53,35 +56,35 @@ function SubCategoryDialog({ subCategoryId, open, onOpenChange }: DialogProps) {
     },
   });
 
-  // Getting category from backend only if there is an id
+  // Getting subcategory and categories from backend 
   useEffect(() => {
-    const fetchSubCategory = async () => {
+    const fetchData = async () => {
+      setIsLoading(true);
+
+      let subCat = subCategory;
+
       if (subCategoryId) {
         const { data, success } = await getOneSubCategory(subCategoryId);
-        if (success && data) {
-          setSubCategory(data);
-        }
+        if (success && data) subCat = data;
       }
-    };
-    fetchSubCategory();
-  }, [subCategoryId]);
 
-  // Getting categories from backend only if theres a subcategory info
-  useEffect(() => {
-    if (subCategory) {
-      const fetchCategories = async () => {
-        const { data, success } = await getAllCategories();
-        const categories = success && data ? data.categories : [];
-        setCategories(categories);
-        form.reset({
-          name: subCategory.name,
-          description: subCategory.description,
-          categoryId: subCategory.categoryId,
-        });
-      };
-      fetchCategories();
-    }
-  }, [subCategory]);
+      const { data: catData, success: catSuccess } = await getAllCategories();
+      const categories = catSuccess && catData ? catData.categories : [];
+
+      setSubCategory(subCat);
+      setCategories(categories);
+
+      form.reset({
+        name: subCat.name,
+        description: subCat.description,
+        categoryId: subCat.categoryId,
+      });
+
+      setIsLoading(false);
+    };
+
+    fetchData();
+  }, [subCategoryId]);
 
   // Function to observe the modal behavior
   const handleOpenChange = (isOpen: boolean) => {
@@ -100,6 +103,7 @@ function SubCategoryDialog({ subCategoryId, open, onOpenChange }: DialogProps) {
 
   // Function to submit body to backend depending whether there's an id or not
   const onSubmit = async (body: CreateSubCategory | UpdateSubCategory) => {
+    setIsSending(true);
     if (subCategoryId) {
       const { categoryId } = body as UpdateSubCategory;
       const { success, message } = await updateSubCategory(
@@ -120,6 +124,7 @@ function SubCategoryDialog({ subCategoryId, open, onOpenChange }: DialogProps) {
           });
         }
       }
+      setIsSending(false);
     } else {
       const { categoryId } = body as CreateSubCategory;
       const { success, message } = await createSubCategory(
@@ -139,6 +144,7 @@ function SubCategoryDialog({ subCategoryId, open, onOpenChange }: DialogProps) {
           });
         }
       }
+      setIsSending(false);
     }
   };
 
@@ -154,13 +160,17 @@ function SubCategoryDialog({ subCategoryId, open, onOpenChange }: DialogProps) {
           </DialogTitle>
           <Separator />
         </DialogHeader>
-        {/* Create or Update Form*/}
-        <SubCategoryForm
-          form={form}
-          onSubmit={onSubmit}
-          categories={categories}
-          subCategory={subCategory}
-        />
+        {isLoading ? (
+          <Spinner text="Cargando sub categoría, espere un momento por favor..." />
+        ) : (
+          <SubCategoryForm
+            form={form}
+            onSubmit={onSubmit}
+            categories={categories}
+            subCategory={subCategory}
+            isSending={isSending}
+          />
+        )}
       </DialogContent>
     </Dialog>
   );

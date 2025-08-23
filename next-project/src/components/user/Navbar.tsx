@@ -1,13 +1,16 @@
 import Link from 'next/link';
 import { GiKangaroo } from 'react-icons/gi';
 import NbDesktopItems from './NbDesktopItems';
-import NbMobileItems from './NbMobileItems';
+import NbMobileItems from './MobileNavBar';
 import { ModeToggle } from '../ui/toggle-theme';
 import Logo from '../shared/Logo';
+import MobileNavBar from './MobileNavBar';
+import BurguerBtn from './BurguerBtn';
 
 type Props = {
   type?: 'default' | 'transparent';
 };
+
 
 function Navbar({ type = 'default' }: Props) {
   return (
@@ -27,7 +30,7 @@ function Navbar({ type = 'default' }: Props) {
           <NbDesktopItems type={type} />
         </div>
         <div className="flex sm:hidden">
-          <NbMobileItems />
+          <BurguerBtn type={type}/>
         </div>
         <div className="hidden sm:block">
           <ModeToggle type={type} />

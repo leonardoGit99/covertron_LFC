@@ -30,9 +30,10 @@ type Props = {
   onSubmit: (body: CreateSubCategory) => void;
   categories: Categories;
   subCategory: SubCategory;
+  isSending?: boolean;
 };
 
-function SubCategoryForm({ form, onSubmit, categories, subCategory }: Props) {
+function SubCategoryForm({ form, onSubmit, categories, subCategory, isSending }: Props) {
   const name = form.watch('name');
   const description = form.watch('description');
   const categoryId = form.watch('categoryId');
@@ -45,7 +46,7 @@ function SubCategoryForm({ form, onSubmit, categories, subCategory }: Props) {
     : true;
 
   const isSubmitDisabled =
-    !isFormFilled || (subCategory ? !isFormChanged : false);
+    !isFormFilled || (subCategory ? !isFormChanged : false) || isSending;
 
   return (
     <Form {...form}>
@@ -66,6 +67,7 @@ function SubCategoryForm({ form, onSubmit, categories, subCategory }: Props) {
                 <Input
                   placeholder="Ej. Fundas..."
                   {...field}
+                  disabled={isSending}
                 />
               </FormControl>
               <FormMessage />
@@ -85,6 +87,7 @@ function SubCategoryForm({ form, onSubmit, categories, subCategory }: Props) {
                   className="resize-none"
                   placeholder="Ej. Vive la experiencia..."
                   {...field}
+                  disabled={isSending}
                 />
               </FormControl>
               <FormMessage />
@@ -103,7 +106,7 @@ function SubCategoryForm({ form, onSubmit, categories, subCategory }: Props) {
                 <Select
                   onValueChange={(value) => field.onChange(Number(value))}
                   value={field.value ? String(field.value) : ''}
-                  disabled={categories.length === 0}
+                  disabled={categories.length === 0 || isSending}
                 >
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Selecciona una categoría" />

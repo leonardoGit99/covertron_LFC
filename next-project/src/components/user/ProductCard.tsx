@@ -28,7 +28,7 @@ function ProductCard({
             src={img}
             alt="Funda"
             fill
-            className="transition-transform duration-500 group-hover:scale-110 object-cover "
+            className="transition-transform duration-500 group-hover:scale-105 object-cover"
             sizes="(max-width: 640px) 90vw, 400px"
           />
           <div className="absolute top-3 right-3 rounded-lg px-2 py-1 bg-white  text-xs shadow-md text-gray-800 dark:bg-sky-950 dark:text-gray-200">

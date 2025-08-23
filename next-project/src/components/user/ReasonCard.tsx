@@ -19,7 +19,7 @@ function ReasonCard({ reason }: Props) {
       aria-labelledby={`reason-title-${reason.number}`}
     >
       {/* Decorative background element */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-orange-200 to-transparent rounded-full -translate-y-16 translate-x-16 opacity-50 group-hover:opacity-75 transition-opacity duration-300 dark:from-orange-300 dark:to-gray-950" />
+      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-orange-200 to-transparent rounded-full -translate-y-16 translate-x-16 opacity-50 group-hover:opacity-75 transition-opacity duration-300 dark:from-sky-500 dark:to-gray-950" />
 
       {/* Number badge */}
       <div
@@ -27,7 +27,7 @@ function ReasonCard({ reason }: Props) {
         relative flex justify-center items-center 
         h-20 w-20 rounded-2xl text-white font-bold text-2xl
         shadow-lg group-hover:shadow-xl group-hover:scale-110
-        transition-all duration-300 ease-out bg-gray-800 dark:bg-gray-700 dark:border dark:border-white/80 dark:group-hover:bg-gray-600 
+        transition-all duration-300 ease-out bg-gray-800 dark:bg-slate-800 dark:border dark:border-slate-500 dark:group-hover:bg-slate-700 
       `}
       >
         <span className="relative z-10 text-3xl">{reason.number}</span>
@@ -51,7 +51,7 @@ function ReasonCard({ reason }: Props) {
       </div>
 
       {/* Hover indicator */}
-      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-gray-200 via-current to-gray-400 opacity-0 group-hover:w-1/2 group-hover:opacity-60 rounded-full transition-all duration-300 ease-out" />
+      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-slate-200 via-current to-slate-700 opacity-0 group-hover:w-1/2 group-hover:opacity-60 rounded-full transition-all duration-300 ease-out" />
     </div>
   );
 }

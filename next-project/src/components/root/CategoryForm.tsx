@@ -18,9 +18,10 @@ type Props = {
   form: UseFormReturn<CreateCategoryDTO>;
   onSubmit: (body: CreateCategoryDTO) => void;
   category: CreateCategoryDTO;
+  isSending: boolean;
 };
 
-function CategoryForm({ form, onSubmit, category }: Props) {
+function CategoryForm({ form, onSubmit, category, isSending }: Props) {
   const name = form.watch('name');
   const description = form.watch('description');
   // Constraints for create category form
@@ -32,7 +33,7 @@ function CategoryForm({ form, onSubmit, category }: Props) {
     : true;
 
   // SaveBtn disabled constraints
-  const isSubmitDisabled = !isFormFilled || (category ? !isFormChanged : false);
+  const isSubmitDisabled = !isFormFilled || (category ? !isFormChanged : false) || isSending;
 
   return (
     <Form {...form}>
@@ -54,6 +55,7 @@ function CategoryForm({ form, onSubmit, category }: Props) {
                 <Input
                   placeholder="Ej. Fundas..."
                   {...field}
+                  disabled={isSending}
                 />
               </FormControl>
               <FormMessage />
@@ -74,6 +76,7 @@ function CategoryForm({ form, onSubmit, category }: Props) {
                   className="resize-none"
                   placeholder="Ej. Vive la experiencia..."
                   {...field}
+                  disabled={isSending}
                 />
               </FormControl>
               <FormMessage />
@@ -87,7 +90,7 @@ function CategoryForm({ form, onSubmit, category }: Props) {
           className="w-full bg-slate-900 hover:bg-slate-800 active:bg-slate-700 dark:bg-sky-900 dark:hover:bg-sky-800 dark:active:bg-sky-700 dark:text-white dark:border dark:border-gray-500"
           disabled={isSubmitDisabled}
         >
-          <IoIosSave /> Guardar
+          <IoIosSave /> {isSending ? 'Guardando...' : 'Guardar'}
         </Button>
       </form>
     </Form>

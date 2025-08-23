@@ -50,7 +50,7 @@ function About() {
               <div
                 key={index}
                 className="text-center md:text-left shadow-md rounded-xl p-4 flex border-l-4 border-orange-200 rounded-l-xl bg-white/95 dark:bg-gray-900 dark:border-orange-700
-                hover:-inset-1 dark:hover:shadow-white/80 dark:shadow-white/50 transition-all duration-500 ease-in-out"
+                hover:shadow-lg dark:hover:shadow-white/80 dark:shadow-white/50 transition-all duration-500 ease-in-out"
               >
                 <div className="flex-1">
                   <h2 className="text-3xl font-bold text-gray-800 dark:text-white/95">{stat.value}</h2>
@@ -69,7 +69,7 @@ function About() {
             delay={0.1}
             className="space-y-6"
           >
-            <div className="relative overflow-hidden p-6 rounded-xl shadow-md bg-gradient-to-b from-white to-orange-50 dark:bg-none hover:shadow-lg transform transition-all duration-500 ease-in-out dark:bg-gray-900 dark:shadow-white/50 dark:hover:shadow-white/80 dark:border dark:border-white/30">
+            <div className="relative overflow-hidden p-6 rounded-xl shadow-md bg-gradient-to-br from-white via-slate-50 to-orange-50 hover:shadow-lg transform transition-all duration-500 ease-in-out dark:from-slate-900 dark:via-slate-950 dark:to-sky-950 dark:shadow-white/50 dark:hover:shadow-white/80 dark:border dark:border-white/30">
               <h2 className="text-lg font-bold mb-2 text-gray-800 dark:text-white">
                 Misión
               </h2>
@@ -82,7 +82,7 @@ function About() {
                 responsable.
               </p>
             </div>
-            <div className="relative overflow-hidden p-6 rounded-xl shadow-md bg-gradient-to-b from-white/90 to-orange-50  dark:bg-none hover:shadow-lg transform transition-all duration-500 ease-in-out dark:bg-gray-900 dark:shadow-white/50 dark:hover:shadow-white/80 dark:border dark:border-white/30">
+            <div className="relative overflow-hidden p-6 rounded-xl shadow-md bg-gradient-to-br from-white via-slate-50 to-orange-50   hover:shadow-lg transform transition-all duration-500 ease-in-out dark:from-slate-900 dark:via-slate-950 dark:to-sky-950 dark:shadow-white/50 dark:hover:shadow-white/80 dark:border dark:border-white/30">
               <h2 className="text-lg font-bold mb-2 text-gray-800 dark:text-white">
                 Visión
               </h2>

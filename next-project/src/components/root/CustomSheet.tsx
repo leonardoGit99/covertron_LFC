@@ -20,6 +20,7 @@ import { toast } from 'sonner';
 import { getSubCategoriesByCategory } from '@/services/subCategories';
 import { SubCategories } from '@/types/subcategory';
 import Spinner from '../shared/Spinnet';
+import { set } from 'lodash';
 
 type Props = {
   triggerBtnLabel?: string;
@@ -46,6 +47,8 @@ function CustomSheet({
   const [isLoading, setIsLoading] = useState(true);
   const [subCategoriesByCategory, setSubCategoriesByCategory] =
     useState<SubCategories>([]);
+  const [isSending, setIsSending] = useState(false);
+
   // State to store product data from back
   const [product, setProduct] = useState<ProductDetailAdminDTO>({
     id: 0,
@@ -151,6 +154,7 @@ function CustomSheet({
 
   // Function to submit body to backend depending whether there's an id or not
   const onSubmit = async (body: CreateProductDTO | ProductDetailAdminDTO) => {
+    setIsSending(true);
     const { categoryId, ...newBody } = body;
     console.log(newBody)
     const formData = new FormData();
@@ -193,6 +197,7 @@ function CustomSheet({
           });
         }
       }
+      setIsSending(false);
     } else {
       const formData = new FormData();
       Object.entries(newBody).forEach(([key, value]) => {
@@ -249,6 +254,7 @@ function CustomSheet({
           });
         }
       }
+      setIsSending(false);
     }
   };
 
@@ -307,6 +313,7 @@ function CustomSheet({
               setProduct={setProduct}
               setProductState={setProductState}
               setCategories={setCategories}
+              isSending={isSending}
             />
           </>
         )}

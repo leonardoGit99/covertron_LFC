@@ -14,7 +14,7 @@ function Header() {
             href="/admin"
           />
         </div>
-        <div className="hidden sm:block">
+        <div className="hidden md:block">
           <ModeToggle type="default" />
         </div>
       </div>

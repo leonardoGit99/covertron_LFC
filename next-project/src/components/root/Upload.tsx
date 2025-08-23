@@ -14,6 +14,7 @@ type Props = {
   setImageUrls: React.Dispatch<React.SetStateAction<string[]>>;
   setDeletedImages: React.Dispatch<React.SetStateAction<string[]>>;
   form: UseFormReturn<CreateProductDTO>;
+  isSending?: boolean;
 };
 
 export default function Upload({
@@ -24,6 +25,7 @@ export default function Upload({
   setImageUrls,
   setDeletedImages,
   form,
+  isSending,
 }: Props) {
   const visibleImages = [...imageUrls, ...images]; // Concat both arrays to show
 
@@ -61,13 +63,20 @@ export default function Upload({
     <div>
       <div
         {...getRootProps()}
-        className={`p-6 border-2 border-dashed rounded-md cursor-pointer mb-4 ${
+        className={`p-6 border-2 border-dashed rounded-md mb-4 ${
           isDragActive
             ? 'border-blue-600 bg-blue-50 dark:bg-slate-700 dark:border-blue-500'
             : 'border-gray-300 dark:border-gray-400'
+        } ${
+          isSending
+            ? 'opacity-50 pointer-events-none cursor-not-allowed'
+            : 'cursor-pointer'
         }`}
       >
-        <input {...getInputProps()} />
+        <input
+          {...getInputProps()}
+          disabled={isSending}
+        />
         {isDragActive ? (
           <p>Arrastra tus imagenes aquí...</p>
         ) : (
