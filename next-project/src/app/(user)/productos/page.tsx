@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
-import ProductsList from '@/components/user/ProductsList';
-import Announcements from '@/components/user/Announcements';
+import ProductsList from '@/components/user/products/ProductsList';
+import Announcements from '@/components/user/products/Announcements';
 
 function Products() {
   return (

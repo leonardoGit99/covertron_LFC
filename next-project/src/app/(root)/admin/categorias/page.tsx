@@ -1,9 +1,9 @@
 import { getAllCategories } from '@/services/categories';
 import { FolderPlus } from 'lucide-react';
-import CategoryDialogButton from '@/components/root/CategoryDialogButton';
+import CategoryDialogButton from '@/components/root/categories/CategoryDialogButton';
 import { Card, CardContent } from '@/components/ui/card';
-import SectionHeader from '@/components/root/SectionHeader';
-import DataTable from '@/components/root/DataTable';
+import SectionHeader from '@/components/root/common/SectionHeader';
+import DataTable from '@/components/root/common/DataTable';
 
 export default async function Categories() {
   const { data, success } = await getAllCategories();

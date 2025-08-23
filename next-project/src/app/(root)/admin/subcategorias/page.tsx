@@ -1,7 +1,7 @@
 
-import DataTable from '@/components/root/DataTable';
-import SectionHeader from '@/components/root/SectionHeader'
-import SubCategoryDialogButton from '@/components/root/SubCategoryDialogBtn';
+import DataTable from '@/components/root/common/DataTable';
+import SectionHeader from '@/components/root/common/SectionHeader'
+import SubCategoryDialogButton from '@/components/root/subcategories/SubCategoryDialogBtn';
 import { Card, CardContent } from '@/components/ui/card';
 import { getAllSubCategories } from '@/services/subCategories';
 import React from 'react'

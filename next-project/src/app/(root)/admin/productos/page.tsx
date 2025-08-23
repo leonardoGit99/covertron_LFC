@@ -1,10 +1,10 @@
 'use client';
 import React, { useState } from 'react';
-import SectionHeader from '@/components/root/SectionHeader';
+import SectionHeader from '@/components/root/common/SectionHeader';
 import { Card, CardContent } from '@/components/ui/card';
 import { Boxes } from 'lucide-react';
-import ProductsTable from '@/components/root/ProductsTable';
-import ProductSheetButton from '@/components/root/ProductSheetBtn';
+import ProductsTable from '@/components/root/products/ProductsTable';
+import ProductSheetButton from '@/components/root/products/ProductSheetBtn';
 
 function Products() {
   const [isRefresh, setIsRefresh] = useState<boolean>(true);

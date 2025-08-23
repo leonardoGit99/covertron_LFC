@@ -7,8 +7,8 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import { getOneProduct } from '@/services/product';
-import ImagesDetailProduct from '@/components/user/ImagesDetailProduct';
-import DetailProduct from '@/components/user/DetailProduct';
+import ImagesDetailProduct from '@/components/user/products/ImagesDetailProduct';
+import DetailProduct from '@/components/user/products/DetailProduct';
 import Link from 'next/link';
 
 async function Product({ params }: { params: Promise<{ id: string }> }) {

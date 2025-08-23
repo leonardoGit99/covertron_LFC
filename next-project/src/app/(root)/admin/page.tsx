@@ -1,5 +1,5 @@
-import { DashboardCard } from '@/components/root/DashboardCard';
-import DashboardHeader from '@/components/root/DashboardHeader';
+import { DashboardCard } from '@/components/root/dashboard/DashboardCard';
+import DashboardHeader from '@/components/root/dashboard/DashboardHeader';
 import { getAllDashboardData } from '@/services/dashboard';
 import React from 'react';
 

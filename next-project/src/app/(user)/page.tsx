@@ -1,9 +1,8 @@
-import About from '@/components/user/About';
-import FrequentlyQuestions from '@/components/user/FrequentlyQuestions';
-import Hero from '@/components/user/Hero';
-import Navbar from '@/components/user/Navbar';
-import Reasons from '@/components/user/Reasons';
-import Services from '@/components/user/Services';
+import About from '@/components/user/landing/About';
+import FrequentlyQuestions from '@/components/user/landing/FrequentlyQuestions';
+import Hero from '@/components/user/landing/Hero';
+import Reasons from '@/components/user/landing/Reasons';
+import Services from '@/components/user/landing/Services';
 
 export default function Home() {
   return (
