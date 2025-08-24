@@ -4,7 +4,7 @@ import { baseLocalURL, jsonHeaders } from './api.config'
 
 const api = axios.create({
   baseURL: baseLocalURL,
-  // withCredentials: true
+  withCredentials: true
 })
 
 
