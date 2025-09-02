@@ -51,7 +51,7 @@ export const useAuthStore = create<AuthState>()(
     {
       name: "auth", // name in the localStorage
       partialize: (state) => ({
-        user: state.user?.exp, // Only persist the user.exp
+        user: state.user, // Only persist the user.exp
       }),
     }
   )

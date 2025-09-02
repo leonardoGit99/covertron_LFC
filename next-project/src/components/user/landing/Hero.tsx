@@ -5,6 +5,11 @@ import { RiArrowDownDoubleFill } from 'react-icons/ri';
 import Link from 'next/link';
 import { FaWhatsapp } from 'react-icons/fa';
 import Reveal from '@/components/user/landing/Reveal';
+import Image from 'next/image';
+import { FaFacebook } from 'react-icons/fa';
+import { FaInstagram } from 'react-icons/fa';
+import { FaTiktok } from 'react-icons/fa';
+
 function Hero() {
   const wppNumber = '+591XXXXXXXX';
   const handleWhatsappClick = () => {
@@ -13,18 +18,40 @@ function Hero() {
       `https://wa.me/${wppNumber}?text=${encodeURIComponent(defaultMessage)}`
     );
   };
+
+  const handleSocialMediaClick = (
+    socialMedia: 'tiktok' | 'instagram' | 'facebook'
+  ) => {
+    if (socialMedia === 'tiktok') {
+      window.open(`https://covertron.com`);
+    } else if (socialMedia === 'instagram') {
+      window.open(`open instagram`);
+    } else {
+      window.open(`open facebook`);
+    }
+  };
+
   return (
     <>
       <div className="max-w-6xl">
         <Navbar type="transparent" />
       </div>
-      <section
-        className="relative h-screen w-full bg-cover bg-center"
-        style={{ backgroundImage: `url('/assets/hero.jpg')` }}
-      >
-        <div className="absolute inset-0 bg-black/55" />{' '}
-        {/* Overlay for darkening the background */}
-        <div className="relative z-40 flex flex-col items-center justify-center h-full text-center text-white  max-w-7xl mx-auto px-6 md:px-0">
+
+      <section className="relative h-screen w-full">
+        {/* Imagen de fondo optimizada */}
+        <Image
+          src="/assets/hero.jpg"
+          alt="Hero"
+          fill
+          priority // carga inmediata
+          className="object-cover object-center"
+        />
+
+        {/* Overlay para oscurecer la imagen */}
+        <div className="absolute inset-0 bg-black/55" />
+
+        {/* Contenido */}
+        <div className="relative z-40 flex flex-col items-center justify-center h-full text-center text-white max-w-7xl mx-auto px-6 md:px-0">
           <Reveal
             direction="down"
             distance={100}
@@ -34,19 +61,42 @@ function Hero() {
               historias
             </h1>
           </Reveal>
+
           <Reveal
             direction="right"
             delay={0.3}
             distance={100}
           >
-            <p className="text-lg sm:text-xl mb-12 max-w-3xl font-light">
+            <p className="text-lg sm:text-xl mb-6 max-w-3xl font-light">
               Explora, descubre y elige entre una amplia gama de fundas y ropas
               de segunda mano que reflejan tu personalidad
             </p>
           </Reveal>
+
+          <Reveal
+            direction="left"
+            delay={0}
+            distance={50}
+            stagger={0.2}
+            className="flex items-center gap-4 px-10 mb-12"
+          >
+            <FaTiktok
+              className="text-white md:text-2xl cursor-pointer hover:-translate-y-1 hover:scale-110 transition-all duration-300 ease-in-out"
+              onClick={() => handleSocialMediaClick('tiktok')}
+            />
+            <FaFacebook
+              className="text-white md:text-2xl cursor-pointer hover:-translate-y-1 hover:scale-110 transition-all duration-300 ease-in-out"
+              onClick={() => handleSocialMediaClick('facebook')}
+            />
+            <FaInstagram
+              className="text-white md:text-2xl cursor-pointer hover:-translate-y-1 hover:scale-110 transition-all duration-300 ease-in-out"
+              onClick={() => handleSocialMediaClick('instagram')}
+            />
+          </Reveal>
+
           <div
             className="cursor-pointer"
-            onClick={() => handleWhatsappClick()}
+            onClick={handleWhatsappClick}
           >
             <Reveal
               direction="up"
@@ -62,12 +112,16 @@ function Hero() {
               </div>
             </Reveal>
           </div>
+
           <Link
             href={'#servicios'}
             className="absolute bottom-5"
           >
-            <Reveal direction='down' delay={0.5}>
-              <RiArrowDownDoubleFill className="text-6xl animate-upDown " />
+            <Reveal
+              direction="down"
+              delay={0.5}
+            >
+              <RiArrowDownDoubleFill className="text-6xl animate-upDown" />
             </Reveal>
           </Link>
         </div>

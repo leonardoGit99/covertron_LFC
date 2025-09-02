@@ -7,29 +7,36 @@ import {
   getAllProductsByCategory,
   getFilteredAvailableProducts,
 } from '@/services/product';
-import { ProductSummary } from '@/types/product';
+import { ProductsResponse, ProductSummary } from '@/types/product';
 import CustomPagination from '../../shared/CustomPagination';
 import { debounce } from 'lodash';
 import SearchInput from '../../shared/SearchInput';
 import Filter from './Filter';
-import { Categories } from '@/types';
-import { getAllCategories } from '@/services/categories';
+import { Categories, CategoriesResponse } from '@/types';
 import SkeletonProductCard from '@/components/user/products/SkeletonProductCard';
 import SkeletonPagination from './SkeletonPagination';
 
-function ProductsList() {
+type Props = {
+  initialData: ProductsResponse | null;
+  initialCategoriesData: CategoriesResponse | null
+};
+
+function ProductsList({ initialData, initialCategoriesData }: Props) {
+  const [hasLoadedServerData, setHasLoadedServerData] = useState(false); 
+
   const [loading, setIsLoading] = useState(true);
-  const [products, setProducts] = useState<ProductSummary[]>([]);
+  const [products, setProducts] = useState<ProductSummary[]>(initialData?.products || []);
   const [searchTerm, setSearchTerm] = useState(''); // Search bar state
-  const [categories, setCategories] = useState<Categories>([]);
+  const [categories, setCategories] = useState<Categories>(initialCategoriesData?.categories || []);
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalProducts, setTotalProducts] = useState(0);
+  const [totalProducts, setTotalProducts] = useState(initialData?.total || 0);
   const limit = 12;
   const totalPages = Math.ceil(totalProducts / limit);
 
   // Get all products
   const fetchAvailableProducts = async () => {
+    console.log("fetch from client")
     const { success, data } = await getAllAvailableProducts(currentPage, limit);
     if (success && data) {
       setProducts(data.products);
@@ -39,18 +46,16 @@ function ProductsList() {
   };
 
   useEffect(() => {
+    // Solo hacer fetch si currentPage cambia DESPUÉS del montaje
+  if (hasLoadedServerData) {
     fetchAvailableProducts();
+  } else {
+    setHasLoadedServerData(true);
+    setIsLoading(false); // ya tienes initialData del server
+  }
   }, [currentPage, limit]);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const { success, data } = await getAllCategories();
-      if (success && data) {
-        setCategories(data.categories);
-      }
-    };
-    fetchCategories();
-  }, []);
+
 
   // get all filtered products with debounce
   const debouncedSearch = useCallback(
@@ -162,7 +167,6 @@ function ProductsList() {
           currentPage={currentPage}
           onPageChange={setCurrentPage}
           totalPages={totalPages}
-          limit={limit}
         />
       ) : (
         <SkeletonPagination />

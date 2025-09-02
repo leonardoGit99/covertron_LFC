@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { GiKangaroo } from 'react-icons/gi';
+
 import { cn } from '@/lib/utils';
 import {
   NavigationMenu,

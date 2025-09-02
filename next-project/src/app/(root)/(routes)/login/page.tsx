@@ -14,6 +14,7 @@ function Login() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const loginUser = useAuthStore((store) => store.login);
+  const authStatus = useAuthStore((store) => store.status);
 
   const form = useForm<LoginDTO>({
     resolver: zodResolver(loginSchema),
@@ -29,6 +30,8 @@ function Login() {
       const isAuthenticated = await loginUser(body);
       if (isAuthenticated) {
         router.push('/admin');
+      } else {
+        setIsLoading(false);
       }
     } catch (error) {
       setIsLoading(false);
@@ -41,6 +44,7 @@ function Login() {
         form={form}
         isLoading={isLoading}
         onSubmit={onSubmit}
+        authStatus={authStatus}
       />
     </>
   )

@@ -5,6 +5,7 @@ import { CarouselProductDetailImages } from './CarouselProductDetailImages';
 import Lightbox from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
 import Zoom from 'yet-another-react-lightbox/plugins/zoom';
+import { FiZoomIn } from 'react-icons/fi';
 
 type Props = {
   images: string[];
@@ -28,8 +29,11 @@ function ImagesDetailProduct({ images }: Props) {
       <div className="relative w-full aspect-[4/3] overflow-hidden rounded-2xl hover:cursor-pointer">
         <div
           onClick={() => setOpenImage(true)}
-          className="absolute inset-0  hover:bg-black/15 z-10 transition-all  duration-300 ease-in-out "
-        />
+          className="group absolute inset-0 z-10 flex items-center justify-center hover:bg-black/25 transition-all duration-300 ease-in-out cursor-pointer "
+        >
+          <FiZoomIn className="text-white text-3xl opacity-0 group-hover:opacity-95 transition-opacity duration-300" />
+        </div>
+
         {image && (
           <Image
             src={image}

@@ -1,7 +1,6 @@
 'use client';
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import CategoryDialog from '../categories/CategoryDialog';
 import CustomSheet from './CustomSheet';
 
 // Types

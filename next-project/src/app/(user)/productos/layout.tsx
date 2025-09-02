@@ -1,6 +1,11 @@
 import React from 'react';
-import Products from './page';
 import Navbar from '@/components/user/common/Navbar';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Covertron - Catálogo',
+  description: 'Ver todos los productos disponibles en covertron',
+};
 
 function ProductsLayout({
   children,

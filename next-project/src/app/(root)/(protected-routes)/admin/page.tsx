@@ -1,19 +1,35 @@
+'use client';
 import { DashboardCard } from '@/components/root/dashboard/DashboardCard';
 import DashboardHeader from '@/components/root/dashboard/DashboardHeader';
+import Spinner from '@/components/shared/Spinner';
 import { getAllDashboardData } from '@/services/dashboard';
-import React from 'react';
+import type { Dashboard } from '@/types';
+import React, { useEffect, useState } from 'react';
 
-async function Dashboard() {
-  const { success, data } = await getAllDashboardData();
-  if (!success || !data) {
-    return <p>Error cargando el dashboard</p>;
-  }
+
+
+function Dashboard() {
+  const [dashboardData, setSashboardData] = useState<Dashboard | null>(null);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      const { data, success } = await getAllDashboardData();
+      if (success && data) setSashboardData(data);
+      setLoading(false);
+    };
+    fetchDashboardData();
+  }, []);
+
+  if (loading)
+    return (
+      <Spinner text="Cargando Dashboard, espere un momento por favor..." />
+    );
 
   const dashboardCardsData = [
     {
       id: 1,
       title: 'Categorías',
-      value: data.categories,
+      value: dashboardData?.categories ?? 0,
       description:
         'Organiza tus productos con categorías claras y precisas. Agrega, edita o elimina categorías para mantener todo bajo control',
       href: '/admin/categorias',
@@ -21,7 +37,7 @@ async function Dashboard() {
     {
       id: 2,
       title: 'Sub Categorías',
-      value: data.subCategories,
+      value: dashboardData?.subCategories ?? 0,
       description:
         'Crea y gestiona subcategorías para facilitar la búsqueda de productos. Haz que tus clientes encuentren lo que buscan en segundos',
       href: '/admin/subcategorias',
@@ -29,7 +45,7 @@ async function Dashboard() {
     {
       id: 3,
       title: 'Productos',
-      value: data.products,
+      value: dashboardData?.products ?? 0,
       description:
         'Explora y administra todos los productos disponibles en tu inventario. Mantén tu catálogo siempre actualizado y listo para tus clientes',
       href: '/admin/productos',

@@ -12,14 +12,12 @@ import {
 type Props = {
   currentPage: number;
   totalPages: number;
-  limit: number;
   onPageChange: (page: number) => void;
 };
 
 function CustomPagination({
   currentPage,
   totalPages,
-  limit,
   onPageChange,
 }: Props) {
   const handleClick = (e: React.MouseEvent, page: number) => {

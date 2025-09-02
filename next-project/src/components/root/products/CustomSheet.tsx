@@ -20,7 +20,6 @@ import { toast } from 'sonner';
 import { getSubCategoriesByCategory } from '@/services/subCategories';
 import { SubCategories } from '@/types/subcategory';
 import Spinner from '@/components/shared/Spinner';
-import { set } from 'lodash';
 
 type Props = {
   triggerBtnLabel?: string;
@@ -122,11 +121,10 @@ function CustomSheet({
     };
 
     fetchData();
-  }, [id]);
+  }, [id, form]);
 
   // Fetch subcategories cuando cambia categoryId
   useEffect(() => {
-    const categoryId = form.getValues('categoryId');
     if (!categoryId) return;
 
     const fetchSubCategories = async () => {
@@ -139,7 +137,7 @@ function CustomSheet({
     };
 
     fetchSubCategories();
-  }, [categoryId]);
+  }, [categoryId, form]);
 
   // Function to observe the sheet behavior
   const handleOpenChange = (isOpen: boolean) => {
@@ -155,8 +153,8 @@ function CustomSheet({
   // Function to submit body to backend depending whether there's an id or not
   const onSubmit = async (body: CreateProductDTO | ProductDetailAdminDTO) => {
     setIsSending(true);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { categoryId, ...newBody } = body;
-    console.log(newBody)
     const formData = new FormData();
     if (id) {
       /* const isDifferentBody = product.name !== newBody.name || product.description !== newBody.description || product.subCategoryId != newBody.subCategoryId || product.price !== newBody.price || product.discount !== newBody.discount || product.brand !== newBody.brand */

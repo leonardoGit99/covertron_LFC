@@ -1,7 +1,8 @@
 'use client';
 
 import { CreateProductDTO } from '@/types/product';
-import React, { useCallback, useEffect, useState } from 'react';
+import Image from 'next/image';
+import React, { useCallback, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { UseFormReturn } from 'react-hook-form';
 import { IoIosClose } from 'react-icons/io';
@@ -10,7 +11,6 @@ type Props = {
   images: File[];
   setImages: React.Dispatch<React.SetStateAction<File[]>>;
   imageUrls: string[];
-  id?: number | null;
   setImageUrls: React.Dispatch<React.SetStateAction<string[]>>;
   setDeletedImages: React.Dispatch<React.SetStateAction<string[]>>;
   form: UseFormReturn<CreateProductDTO>;
@@ -21,7 +21,6 @@ export default function Upload({
   images,
   setImages,
   imageUrls,
-  id,
   setImageUrls,
   setDeletedImages,
   form,
@@ -39,7 +38,7 @@ export default function Upload({
     form.setValue('images', images /* { shouldValidate: false } */);
   }, [images, form]);
 
-  const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
+  const { getRootProps, getInputProps, isDragActive /* acceptedFiles */ } =
     useDropzone({
       onDrop,
       // accept: { "image/*": [] },
@@ -95,14 +94,17 @@ export default function Upload({
               key={isFile ? img.name + idx : img + idx}
               className="relative w-24 h-24 rounded overflow-hidden border"
             >
-              <img
-                src={preview}
-                alt={`Image ${idx}`}
-                className="w-full h-full object-cover"
-                onLoad={() => {
-                  if (isFile) URL.revokeObjectURL(preview);
-                }}
-              />
+              <div className="relative w-full h-full">
+                <Image
+                  src={preview}
+                  alt={`Image ${idx}`}
+                  fill
+                  className="object-cover"
+                  onLoad={() => {
+                    if (isFile) URL.revokeObjectURL(preview);
+                  }}
+                />
+              </div>
               <button
                 type="button"
                 onClick={() => removeFile(img)}

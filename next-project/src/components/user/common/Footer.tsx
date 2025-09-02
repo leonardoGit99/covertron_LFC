@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
 import { Separator } from '@/components/ui/separator';
-import { GiKangaroo } from 'react-icons/gi';
 import Logo from '../../shared/Logo';
 
 function Footer() {

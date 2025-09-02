@@ -1,15 +1,18 @@
-'use client';
 import React from 'react';
-import ProductsList from '@/components/user/products/ProductsList';
-import Announcements from '@/components/user/products/Announcements';
+import Products from '@/components/user/products/Products';
+import { getAllAvailableProducts } from '@/services/product';
+import { getAllCategories } from '@/services/categories';
 
-function Products() {
+async function ProductsPage() {
+  const { data, success } = await getAllAvailableProducts(1, 12);
+  const { data: categories, success: categoriesSuccess } =
+    await getAllCategories();
   return (
-    <div className="flex flex-col">
-      <Announcements />
-      <ProductsList />
-    </div>
+    <Products
+      initialData={success && data ? data : null}
+      initialCategoriesData={categories && categoriesSuccess ? categories: null}
+    />
   );
 }
 
-export default Products;
+export default ProductsPage;

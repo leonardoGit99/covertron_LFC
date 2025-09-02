@@ -4,11 +4,8 @@ import { Button } from '@/components/ui/button';
 import MobileNavBar from '@/components/user/common/MobileNavBar';
 import { CiMenuFries } from 'react-icons/ci';
 
-type Props = {
-  type?: 'default' | 'transparent';
-};
 
-function BurguerBtn({type = 'default'}: Props) {
+function BurguerBtn() {
   const [open, setOpen] = useState(false); // State for sheet
   return (
     <>

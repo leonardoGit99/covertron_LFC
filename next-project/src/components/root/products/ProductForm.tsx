@@ -75,7 +75,7 @@ function ProductForm({
 }: Props) {
   useEffect(() => {
     form.setValue('images', [...images, ...imageUrls]);
-  }, [images, imageUrls]);
+  }, [images, imageUrls, form]);
 
   const name = form.watch('name');
   const description = form.watch('description');
@@ -341,7 +341,6 @@ function ProductForm({
                 images={images}
                 setImages={setImages}
                 imageUrls={imageUrls}
-                id={id}
                 setImageUrls={setImageUrls}
                 setDeletedImages={setDeletedImages}
                 form={form}

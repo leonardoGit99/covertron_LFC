@@ -1,7 +1,8 @@
+"use client"
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { FaWhatsapp } from 'react-icons/fa';
-import { Product, ProductDetailDTO } from '@/types/product';
+import { ProductDetailDTO } from '@/types/product';
 
 // Types
 type Props = {
@@ -9,6 +10,14 @@ type Props = {
 };
 
 function DetailProduct({ product }: Props) {
+  const wppNumber = '+591XXXXXXX';
+  const handleReserveClick = () => {
+    const defaultMessage = `Hola! Visité su página web y me interesa adquirir el siguiente producto:\n- Nombre: ${product.name}\n- Marca: ${product.brand}\n- Precio: ${product.discountedPrice} Bs.`;
+    window.open(
+      `https://wa.me/${wppNumber}?text=${encodeURIComponent(defaultMessage)}`
+    );
+  };
+
   return (
     <div className="h-full w-full flex flex-col justify-between px-6">
       <div className="flex flex-col gap-4">
@@ -65,6 +74,7 @@ function DetailProduct({ product }: Props) {
         <Button
           variant="default"
           className="w-full max-w-xs bg-gray-900 text-white/95 hover:text-white/100 hover:bg-gray-800 active:bg-gray-700 rounded-lg dark:bg-slate-800 dark:hover:bg-slate-700 dark:active:bg-slate-600 dark:border dark:border-gray-700"
+          onClick={handleReserveClick}
         >
           <FaWhatsapp className="text-lg" />
           Reservar por WhatsApp

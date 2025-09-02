@@ -19,22 +19,27 @@ import {
 import { Input } from '@/components/ui/input';
 import { LoginDTO } from '@/types/auth';
 import Logo from '@/components/shared/Logo';
-import { FiLogIn } from "react-icons/fi";
-
+import { FiLogIn } from 'react-icons/fi';
 
 // Types
 type Props = {
   form: UseFormReturn<LoginDTO>;
   isLoading: boolean;
   onSubmit: (body: LoginDTO) => void;
+  authStatus:
+    | 'idle'
+    | 'loading'
+    | 'authenticated'
+    | 'unauthenticated'
+    | 'error';
 };
 
-function LoginForm({ form, isLoading, onSubmit }: Props) {
+function LoginForm({ form, isLoading, onSubmit, authStatus }: Props) {
   return (
     <Card className="w-full max-w-sm shadow-2xl shadow-blue-300 p-7">
-      <CardHeader className='p-0 mb-6'>
+      <CardHeader className="p-0 mb-6">
         <h1 className="font-extrabold flex flex-col gap-2">
-          Bienvenido a {' '}
+          Bienvenido a{' '}
           <Logo
             href="#"
             iconSize="text-4xl"
@@ -60,7 +65,10 @@ function LoginForm({ form, isLoading, onSubmit }: Props) {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>
+                    Email
+                    <span className="text-red-500 dark:text-red-400">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Input
                       placeholder="Ej. leonardofuentesclaros@gmail.com"
@@ -79,7 +87,10 @@ function LoginForm({ form, isLoading, onSubmit }: Props) {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Contraseña</FormLabel>
+                  <FormLabel>
+                    Contraseña{' '}
+                    <span className="text-red-500 dark:text-red-400">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Input
                       placeholder="***********"
@@ -99,8 +110,19 @@ function LoginForm({ form, isLoading, onSubmit }: Props) {
               className="w-full hover:cursor-pointer bg-slate-950 hover:bg-slate-900 active:bg-slate-800"
               disabled={isLoading}
             >
-              {isLoading ? <>Espere un momento por favor...</> : <>Iniciar Sesión <FiLogIn /></>}
+              {isLoading ? (
+                <>Espere un momento por favor...</>
+              ) : (
+                <>
+                  Iniciar Sesión <FiLogIn />
+                </>
+              )}
             </Button>
+            {authStatus === 'error' && (
+              <span className="text-sm text-red-600">
+                Credenciales inválidas. Intenta nuevamente.
+              </span>
+            )}
           </CardFooter>
         </form>
       </Form>

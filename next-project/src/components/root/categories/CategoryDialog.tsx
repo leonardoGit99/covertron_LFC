@@ -48,6 +48,7 @@ function CategoryDialog({ id, open, onOpenChange }: Props) {
   // Getting category from backend only if there is an id
   useEffect(() => {
     const getCategory = async () => {
+      console.log("flag")
       if (id) {
         setIsLoading(true);
         const { success, data } = await getOneCategory(id);
@@ -59,7 +60,7 @@ function CategoryDialog({ id, open, onOpenChange }: Props) {
       setIsLoading(false);
     };
     getCategory();
-  }, [id]);
+  }, [id, form]);
 
   // Function to submit body to backend depending whether there's an id or not
   const onSubmit = async (body: CreateCategoryDTO | UpdateCategoryDTO) => {

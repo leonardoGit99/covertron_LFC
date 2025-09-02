@@ -2,10 +2,6 @@ import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import '@/app/globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
-import { SidebarProvider } from '@/components/ui/sidebar';
-import { AppSidebar } from '@/components/root/common/AppSiderbar';
-import Header from '@/components/root/common/Header';
-import { Toaster } from '@/components/ui/sonner';
 const getPoppins = Poppins({
   variable: '--font-poppins',
   subsets: ['latin'],
