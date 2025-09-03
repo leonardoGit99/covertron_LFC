@@ -296,7 +296,6 @@ function CustomSheet({
             </SheetHeader>
             <Separator className="mt-2 mb-4" />
             <ProductForm
-              id={id}
               form={form}
               product={product}
               categories={categories}

@@ -1,6 +1,6 @@
 // import { useAuthStore } from '@/store/useAuthStore'
 import axios from 'axios'
-import { baseLocalURL, jsonHeaders } from './api.config'
+import { baseLocalURL, /* jsonHeaders */ } from './api.config'
 
 const api = axios.create({
   baseURL: baseLocalURL,

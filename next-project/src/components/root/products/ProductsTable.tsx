@@ -293,7 +293,6 @@ function ProductsTable({ isRefresh, setRefresh }: Props) {
           {/* Pagination */}
           <CustomPagination
             totalPages={totalPages}
-            limit={limit}
             currentPage={currentPage}
             onPageChange={setCurrentPage}
           />

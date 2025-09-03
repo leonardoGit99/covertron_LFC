@@ -33,7 +33,6 @@ import Upload from '@/components/root/products/Upload';
 
 // Types
 type Props = {
-  id?: number | null;
   product: Omit<
     Product,
     | 'categoryName'
@@ -61,7 +60,6 @@ type Props = {
 function ProductForm({
   form,
   onSubmit,
-  id,
   product,
   categories,
   subCategories,

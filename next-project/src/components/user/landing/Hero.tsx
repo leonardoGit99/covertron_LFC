@@ -40,7 +40,7 @@ function Hero() {
       <section className="relative h-screen w-full">
         {/* Imagen de fondo optimizada */}
         <Image
-          src="/assets/hero.jpg"
+          src="/assets/hero.webp"
           alt="Hero"
           fill
           priority // carga inmediata

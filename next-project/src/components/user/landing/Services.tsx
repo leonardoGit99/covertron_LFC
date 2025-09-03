@@ -1,9 +1,9 @@
 import React from 'react';
 import { StaticImageData } from 'next/image';
 import ServiceCard from './ServiceCard';
-import servicesOne from '../../../../public/assets/services-1.jpg';
-import servicesTwo from '../../../../public/assets/services-2.jpg';
-import servicesThree from '../../../../public/assets/services-3.jpg';
+import servicesOne from '../../../../public/assets/services-1.webp';
+import servicesTwo from '../../../../public/assets/services-2.webp';
+import servicesThree from '../../../../public/assets/services-3.webp';
 import HeaderSection from './HeaderSection';
 import Reveal from './Reveal';
 

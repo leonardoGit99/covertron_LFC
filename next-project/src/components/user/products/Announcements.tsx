@@ -19,9 +19,9 @@ type Announcement = {
 
 function Announcements() {
   const announcements: Announcement[] = [
-    { id: 1, image: '/assets/ad-1.jpg', alt: 'Anuncio 1' },
-    { id: 2, image: '/assets/ad-2.jpg', alt: 'Anuncio 2' },
-    { id: 3, image: '/assets/ad-3.jpg', alt: 'Anuncio 3' },
+    { id: 1, image: '/assets/ad-1.webp', alt: 'Anuncio 1' },
+    { id: 2, image: '/assets/ad-2.webp', alt: 'Anuncio 2' },
+    { id: 3, image: '/assets/ad-3.webp', alt: 'Anuncio 3' },
   ];
 
   return (

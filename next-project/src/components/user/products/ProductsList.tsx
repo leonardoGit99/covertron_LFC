@@ -27,6 +27,7 @@ function ProductsList({ initialData, initialCategoriesData }: Props) {
   const [loading, setIsLoading] = useState(true);
   const [products, setProducts] = useState<ProductSummary[]>(initialData?.products || []);
   const [searchTerm, setSearchTerm] = useState(''); // Search bar state
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [categories, setCategories] = useState<Categories>(initialCategoriesData?.categories || []);
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);

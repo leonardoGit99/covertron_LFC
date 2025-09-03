@@ -26,7 +26,7 @@ function Navbar({ type = 'default' }: Props) {
           <NbDesktopItems type={type} />
         </div>
         <div className="flex sm:hidden">
-          <BurguerBtn type={type}/>
+          <BurguerBtn />
         </div>
         <div className="hidden sm:block">
           <ModeToggle type={type} />

@@ -1,6 +1,5 @@
 import { ApiResponse } from "@/types/api";
-import { CategoriesResponse, Category, CreateCategoryDTO, UpdateCategoryDTO } from "@/types";
-import { SubCategory } from "@/types/subcategory";
+import { CategoriesResponse, Category, CreateCategoryDTO, UpdateCategoryDTO } from "@/types"; 
 import api from "./axios";
 
 // Endpoits
