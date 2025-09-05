@@ -25,7 +25,15 @@ export const getAllAvailableProducts = async (currentPage: number, limit: number
     const { data } = await api.get<ApiResponse<ProductsResponse>>(`/products?page=${currentPage}&limit=${limit}`);
     return data;
   } catch (error: any) {
-    return error.response?.data;
+    console.error(error);
+    return {
+      data: {
+        total: 0,
+        products: [],
+      },
+      success: false,
+      message: "Network error or server is unreachable"
+    };
   }
 }
 
@@ -51,7 +59,7 @@ export const getFilteredAvailableProducts = async (search: string, limit: number
 export const getAllProductsByCategory = async (categoryId: number, limit: number, currentPage: number): Promise<ApiResponse<ProductsResponse>> => {
   try {
     const { data } = await api.get<ApiResponse<ProductsResponse>>(`/products?category=${categoryId}&page=${currentPage}&limit=${limit}`);
-    
+
     return data;
   } catch (error: any) {
     return error.response?.data;

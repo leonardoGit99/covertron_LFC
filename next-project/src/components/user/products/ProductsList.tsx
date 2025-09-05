@@ -18,17 +18,21 @@ import SkeletonPagination from './SkeletonPagination';
 
 type Props = {
   initialData: ProductsResponse | null;
-  initialCategoriesData: CategoriesResponse | null
+  initialCategoriesData: CategoriesResponse | null;
 };
 
 function ProductsList({ initialData, initialCategoriesData }: Props) {
-  const [hasLoadedServerData, setHasLoadedServerData] = useState(false); 
+  const [hasLoadedServerData, setHasLoadedServerData] = useState(false);
 
   const [loading, setIsLoading] = useState(true);
-  const [products, setProducts] = useState<ProductSummary[]>(initialData?.products || []);
+  const [products, setProducts] = useState<ProductSummary[]>(
+    initialData?.products || []
+  );
   const [searchTerm, setSearchTerm] = useState(''); // Search bar state
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [categories, setCategories] = useState<Categories>(initialCategoriesData?.categories || []);
+  const [categories, setCategories] = useState<Categories>(
+    initialCategoriesData?.categories || []
+  );
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [totalProducts, setTotalProducts] = useState(initialData?.total || 0);
@@ -37,7 +41,7 @@ function ProductsList({ initialData, initialCategoriesData }: Props) {
 
   // Get all products
   const fetchAvailableProducts = async () => {
-    console.log("fetch from client")
+    console.log('fetch from client');
     const { success, data } = await getAllAvailableProducts(currentPage, limit);
     if (success && data) {
       setProducts(data.products);
@@ -48,15 +52,13 @@ function ProductsList({ initialData, initialCategoriesData }: Props) {
 
   useEffect(() => {
     // Solo hacer fetch si currentPage cambia DESPUÉS del montaje
-  if (hasLoadedServerData) {
-    fetchAvailableProducts();
-  } else {
-    setHasLoadedServerData(true);
-    setIsLoading(false); // ya tienes initialData del server
-  }
+    if (hasLoadedServerData) {
+      fetchAvailableProducts();
+    } else {
+      setHasLoadedServerData(true);
+      setIsLoading(false); // ya tienes initialData del server
+    }
   }, [currentPage, limit]);
-
-
 
   // get all filtered products with debounce
   const debouncedSearch = useCallback(
@@ -109,6 +111,7 @@ function ProductsList({ initialData, initialCategoriesData }: Props) {
   };
   return (
     <>
+      {/* Barra de búsqueda y filtros */}
       <div className="flex justify-center md:justify-start items-center w-full gap-3 px-4 md:px-0 mb-2">
         <div className="flex-1">
           <SearchInput
@@ -122,9 +125,9 @@ function ProductsList({ initialData, initialCategoriesData }: Props) {
           handleClearFilterClick={handleClearFilterClick}
         />
       </div>
-      {loading ? (
-        <div className="h-5 w-full"></div>
-      ) : (
+
+      {/* Mensaje de total de productos */}
+      {!loading && (
         <p className="text-sm text-muted-foreground text-start w-full px-4 md:px-0 dark:text-gray-500">
           Tenemos {totalProducts} {totalProducts > 1 ? 'productos' : 'producto'}{' '}
           {totalProducts > 1 ? 'seleccionados' : 'seleccionado'} para ti
@@ -133,6 +136,7 @@ function ProductsList({ initialData, initialCategoriesData }: Props) {
 
       <div className="border-b border-gray-200 mt-6 mb-12 dark:border-gray-600 mx-2" />
 
+      {/* Grid de productos */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 xxl:grid-cols-4 gap-12 mb-12 justify-items-center w-full auto-rows-fr">
         {loading ? (
           Array.from({ length: 12 }).map((_, idx) => (
@@ -163,15 +167,16 @@ function ProductsList({ initialData, initialCategoriesData }: Props) {
         )}
       </div>
 
-      {!loading && products.length > 0 ? (
+      {/* Paginación */}
+      {loading ? (
+        <SkeletonPagination />
+      ) : products.length > 0 ? (
         <CustomPagination
           currentPage={currentPage}
           onPageChange={setCurrentPage}
           totalPages={totalPages}
         />
-      ) : (
-        <SkeletonPagination />
-      )}
+      ) : null}
     </>
   );
 }
