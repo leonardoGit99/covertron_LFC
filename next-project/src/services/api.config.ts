@@ -4,7 +4,8 @@
     : process.env.NEXT_PUBLIC_API_URL // client-side: "http://localhost:4000"
   ) + "/api"; */
 
-  export const baseLocalURL ='http://localhost:4000/api'
+  // export const baseLocalURL ='http://localhost:4000/api'
+  export const baseLocalURL ='https://covertron-server.onrender.com'
 
 
 
