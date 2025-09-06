@@ -5,9 +5,15 @@
   ) + "/api"; */
 
 const isProd = process.env.NODE_ENV === "production";
-  
-export const baseLocalURL = isProd
+
+
+export const baseLocalURLProxyClient = isProd
   ? "/api" // producción
+  : "http://localhost:4000/api"; // desarrollo
+
+
+export const baseLocalURLDirectClient = isProd
+  ? "https://covertron-server.onrender.com/api" // producción
   : "http://localhost:4000/api"; // desarrollo
 
 

@@ -1,10 +1,11 @@
 import { ApiResponse } from "@/types/api";
 import { ProductDetailAdminDTO, ProductDetailDTO, ProductsResponse, ProductsResponseAdmin } from "@/types/product";
-import api from "./axios";
+import api from "./axiosProxyClient";
+import proxyApi from "./axiosProxyClient";
 
 export const createProduct = async (body: FormData): Promise<ApiResponse<ProductDetailAdminDTO>> => {
   try {
-    const { data } = await api.post<ApiResponse<ProductDetailAdminDTO>>(`/products`, body);
+    const { data } = await proxyApi.post<ApiResponse<ProductDetailAdminDTO>>(`/products`, body);
     return data;
   } catch (error: any) {
     return error.response?.data;
@@ -13,7 +14,7 @@ export const createProduct = async (body: FormData): Promise<ApiResponse<Product
 
 export const getAllProductsAdmin = async (currentPage: number, limit: number): Promise<ApiResponse<ProductsResponseAdmin>> => {
   try {
-    const { data } = await api.get<ApiResponse<ProductsResponseAdmin>>(`/admin/products?page=${currentPage}&limit=${limit}`);
+    const { data } = await proxyApi.get<ApiResponse<ProductsResponseAdmin>>(`/admin/products?page=${currentPage}&limit=${limit}`);
     return data;
   } catch (error: any) {
     return error.response?.data;
@@ -40,7 +41,7 @@ export const getAllAvailableProducts = async (currentPage: number, limit: number
 
 export const getFilteredProducts = async (search: string, limit: number, currentPage: number): Promise<ApiResponse<ProductsResponseAdmin>> => {
   try {
-    const { data } = await api.get<ApiResponse<ProductsResponseAdmin>>(`/admin/products?search=${search}&page=${currentPage}&limit=${limit}`);
+    const { data } = await proxyApi.get<ApiResponse<ProductsResponseAdmin>>(`/admin/products?search=${search}&page=${currentPage}&limit=${limit}`);
     return data;
   } catch (error: any) {
     return error.response?.data;
@@ -69,7 +70,7 @@ export const getAllProductsByCategory = async (categoryId: number, limit: number
 
 export const getOneProductAdmin = async (productId: number): Promise<ApiResponse<ProductDetailAdminDTO>> => {
   try {
-    const { data } = await api.get<ApiResponse<ProductDetailAdminDTO>>(`/admin/products/${productId}`);
+    const { data } = await proxyApi.get<ApiResponse<ProductDetailAdminDTO>>(`/admin/products/${productId}`);
     return data;
   } catch (error: any) {
     return error.response?.data;
@@ -87,7 +88,7 @@ export const getOneProduct = async (productId: number): Promise<ApiResponse<Prod
 
 export const updateProduct = async (productId: number, formData: FormData): Promise<ApiResponse<ProductDetailAdminDTO>> => {
   try {
-    const { data } = await api.patch<ApiResponse<ProductDetailAdminDTO>>(`/products/${productId}`, formData);
+    const { data } = await proxyApi.patch<ApiResponse<ProductDetailAdminDTO>>(`/products/${productId}`, formData);
     console.log(data.message)
     return data;
   } catch (error: any) {
@@ -97,7 +98,7 @@ export const updateProduct = async (productId: number, formData: FormData): Prom
 
 export const deleteProduct = async (productId: number): Promise<ApiResponse> => {
   try {
-    const { data } = await api.delete<ApiResponse>(`/products/${productId}`);
+    const { data } = await proxyApi.delete<ApiResponse>(`/products/${productId}`);
     return data;
   } catch (error: any) {
     return error.response?.data

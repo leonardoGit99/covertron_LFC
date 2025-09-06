@@ -1,16 +1,16 @@
 // import { useAuthStore } from '@/store/useAuthStore'
 import axios from 'axios'
-import { baseLocalURL, /* jsonHeaders */ } from './api.config'
+import { baseLocalURLProxyClient, /* jsonHeaders */ } from './api.config'
 
 
 
-const api = axios.create({
-  baseURL: baseLocalURL,
+const proxyApi = axios.create({
+  baseURL: baseLocalURLProxyClient,
   withCredentials: true
 })
 
 
-api.interceptors.request.use(config => {
+proxyApi.interceptors.request.use(config => {
   return config;
 });
 
@@ -34,4 +34,4 @@ api.interceptors.request.use(config => {
   return config
 }) */
 
-export default api
+export default proxyApi

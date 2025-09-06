@@ -1,12 +1,13 @@
 import { ApiResponse } from "@/types/api";
 import { CreateSubCategory, SubCategoriesResponse, SubCategory, SubCategoryWithoutID, UpdateSubCategory } from "@/types/subcategory";
-import api from "./axios";
+import api from "./axiosProxyClient";
+import proxyApi from "./axiosProxyClient";
 
 
 // Endpoits
 export const createSubCategory = async (body: CreateSubCategory, categoryId: number): Promise<ApiResponse<SubCategory>> => {
   try {
-    const { data } = await api.post<ApiResponse<SubCategory>>(`/categories/${categoryId}/sub-categories`, body);
+    const { data } = await proxyApi.post<ApiResponse<SubCategory>>(`/categories/${categoryId}/sub-categories`, body);
     return data;
   } catch (error: any) {
     return error.response?.data
@@ -15,7 +16,7 @@ export const createSubCategory = async (body: CreateSubCategory, categoryId: num
 
 export const getAllSubCategories = async (): Promise<ApiResponse<SubCategoriesResponse>> => {
   try {
-    const { data } = await api.get<ApiResponse<SubCategoriesResponse>>(`/sub-categories`);
+    const { data } = await proxyApi.get<ApiResponse<SubCategoriesResponse>>(`/sub-categories`);
     return data;
   } catch (error: any) {
     if (error.response?.data) return error.response.data;
@@ -33,7 +34,7 @@ export const getAllSubCategories = async (): Promise<ApiResponse<SubCategoriesRe
 
 export const getOneSubCategory = async (subCategoryId: number): Promise<ApiResponse<SubCategory>> => {
   try {
-    const { data } = await api.get<ApiResponse<SubCategory>>(`/sub-categories/${subCategoryId}`);
+    const { data } = await proxyApi.get<ApiResponse<SubCategory>>(`/sub-categories/${subCategoryId}`);
     return data;
   } catch (error: any) {
     return error.response?.data;
@@ -42,7 +43,7 @@ export const getOneSubCategory = async (subCategoryId: number): Promise<ApiRespo
 
 export const getSubCategoriesByCategory = async (id: number): Promise<ApiResponse<SubCategoriesResponse>> => {
   try {
-    const { data } = await api.get<ApiResponse<SubCategoriesResponse>>(`/sub-categories?categoryId=${id}`)
+    const { data } = await proxyApi.get<ApiResponse<SubCategoriesResponse>>(`/sub-categories?categoryId=${id}`)
     return data;
   } catch (error: any) {
     return error.response?.data
@@ -51,7 +52,7 @@ export const getSubCategoriesByCategory = async (id: number): Promise<ApiRespons
 
 export const updateSubCategory = async (body: UpdateSubCategory, subCategoryId: number, categoryId: number): Promise<ApiResponse<SubCategory>> => {
   try {
-    const { data } = await api.put<ApiResponse<SubCategory>>(`/categories/${categoryId}/sub-categories/${subCategoryId}`, body);
+    const { data } = await proxyApi.put<ApiResponse<SubCategory>>(`/categories/${categoryId}/sub-categories/${subCategoryId}`, body);
     return data;
   } catch (error: any) {
     return error.response?.data
@@ -61,7 +62,7 @@ export const updateSubCategory = async (body: UpdateSubCategory, subCategoryId: 
 
 export const deleteSubCategory = async (id: number): Promise<ApiResponse<SubCategoryWithoutID>> => {
   try {
-    const { data } = await api.delete<ApiResponse<SubCategoryWithoutID>>(`/sub-categories/${id}`);
+    const { data } = await proxyApi.delete<ApiResponse<SubCategoryWithoutID>>(`/sub-categories/${id}`);
     return data;
   } catch (error: any) {
     return error.response?.data
