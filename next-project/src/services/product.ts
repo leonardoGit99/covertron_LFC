@@ -1,7 +1,7 @@
 import { ApiResponse } from "@/types/api";
 import { ProductDetailAdminDTO, ProductDetailDTO, ProductsResponse, ProductsResponseAdmin } from "@/types/product";
-import api from "./axiosProxyClient";
 import proxyApi from "./axiosProxyClient";
+import api from "./axiosDirectClient";
 
 export const createProduct = async (body: FormData): Promise<ApiResponse<ProductDetailAdminDTO>> => {
   try {

@@ -1,5 +1,4 @@
 import { LoginDTO } from "@/types/auth";
-import api from "./axiosProxyClient";
 import { TokenPayload } from "@/types/token";
 import { ApiResponse } from "@/types/api";
 import proxyApi from "./axiosProxyClient";

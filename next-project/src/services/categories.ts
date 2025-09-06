@@ -1,7 +1,7 @@
 import { ApiResponse } from "@/types/api";
 import { CategoriesResponse, Category, CreateCategoryDTO, UpdateCategoryDTO } from "@/types"; 
-import api from "./axiosProxyClient";
 import proxyApi from "./axiosProxyClient";
+import api from "./axiosDirectClient";
 
 // Endpoits
 export const createCategory = async (body: CreateCategoryDTO): Promise<ApiResponse<Category>> => {

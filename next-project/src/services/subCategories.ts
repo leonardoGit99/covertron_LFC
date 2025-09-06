@@ -1,6 +1,5 @@
 import { ApiResponse } from "@/types/api";
 import { CreateSubCategory, SubCategoriesResponse, SubCategory, SubCategoryWithoutID, UpdateSubCategory } from "@/types/subcategory";
-import api from "./axiosProxyClient";
 import proxyApi from "./axiosProxyClient";
 
 
