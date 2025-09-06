@@ -12,14 +12,16 @@ import { RiFolderOpenLine } from 'react-icons/ri';
 function SubCategories() {
   const [subCategories, setSubCategories] = useState<SubCategories>([]);
   const [loading, setLoading] = useState(true);
+  const [isRefresh, setRefresh] = useState(true);
   useEffect(() => {
     const fetchSubCategories = async () => {
       const { data, success } = await getAllSubCategories();
       if (success && data) setSubCategories(data.subCategories);
       setLoading(false);
+      setRefresh(false);
     };
     fetchSubCategories();
-  }, []);
+  }, [isRefresh]);
 
   if (loading)
     return (
@@ -52,6 +54,7 @@ function SubCategories() {
             <DataTable
               data={subCategories}
               type="subcategories"
+              setRefresh={setRefresh}
             />
           </CardContent>
         </Card>

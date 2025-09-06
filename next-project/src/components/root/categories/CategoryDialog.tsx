@@ -13,7 +13,6 @@ import {
   getOneCategory,
   updateCategory,
 } from '@/services/categories';
-import { useRouter } from 'next/navigation';
 import CategoryForm from '@/components/root/categories/CategoryForm';
 import { Separator } from '../../ui/separator';
 import { toast } from 'sonner';
@@ -25,12 +24,12 @@ type Props = {
   id?: number;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  setRefresh: (isRefresh: boolean) => void;
 };
 
-function CategoryDialog({ id, open, onOpenChange }: Props) {
+function CategoryDialog({ id, open, onOpenChange, setRefresh }: Props) {
   const [isSending, setIsSending] = useState(false); // State to manage the sending state of the form
   const [isLoading, setIsLoading] = useState(false); // State to manage the loading state of the category data
-  const router = useRouter();
   const [category, setCategory] = useState<CreateCategoryDTO>({
     name: '',
     description: '',
@@ -74,7 +73,7 @@ function CategoryDialog({ id, open, onOpenChange }: Props) {
         toast(message);
         form.reset();
         onOpenChange(false);
-        router.refresh();
+        setRefresh(true);
       } else {
         if (message === 'Category name already exists') {
           form.setError('name', {
@@ -92,7 +91,7 @@ function CategoryDialog({ id, open, onOpenChange }: Props) {
         toast(message);
         form.reset();
         onOpenChange(false);
-        router.refresh();
+        setRefresh(true);
       } else {
         if (message === 'Category name already exists') {
           form.setError('name', {

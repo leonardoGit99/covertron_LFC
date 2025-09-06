@@ -12,14 +12,16 @@ import type { Categories } from '@/types';
 export default function Categories() {
   const [categories, setCategories] = useState<Categories>([]);
   const [loading, setLoading] = useState(true);
+  const [isRefresh, setRefresh] = useState(true);
   useEffect(() => {
     const fetchCategories = async () => {
       const { data, success } = await getAllCategories();
       if (success && data) setCategories(data.categories);
       setLoading(false);
+      setRefresh(false);
     };
     fetchCategories();
-  }, []);
+  }, [isRefresh]);
 
   if (loading)
     return (
@@ -51,6 +53,7 @@ export default function Categories() {
             <DataTable
               data={categories}
               type="categories"
+              setRefresh= {setRefresh}
             />
           </CardContent>
         </Card>

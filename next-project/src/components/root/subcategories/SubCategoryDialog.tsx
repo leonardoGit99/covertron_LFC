@@ -8,7 +8,6 @@ import {
 } from '@/components/ui/dialog';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
 import { Separator } from '@/components/ui/separator';
 import {
   CreateSubCategory,
@@ -31,12 +30,12 @@ type DialogProps = {
   subCategoryId?: number | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  setRefresh: (isRefresh: boolean) => void;
 };
 
-function SubCategoryDialog({ subCategoryId, open, onOpenChange }: DialogProps) {
+function SubCategoryDialog({ subCategoryId, open, onOpenChange, setRefresh }: DialogProps) {
   const [isSending, setIsSending] = useState(false); // State to manage the sending state of the form
   const [isLoading, setIsLoading] = useState(false); // State to manage the loading state of the form
-  const router = useRouter();
   const [subCategory, setSubCategory] = useState<SubCategory>({
     id: 0,
     name: '',
@@ -56,7 +55,7 @@ function SubCategoryDialog({ subCategoryId, open, onOpenChange }: DialogProps) {
     },
   });
 
-  // Getting subcategory and categories from backend 
+  // Getting subcategory and categories from backend
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -115,7 +114,7 @@ function SubCategoryDialog({ subCategoryId, open, onOpenChange }: DialogProps) {
         toast(message);
         form.reset();
         onOpenChange(false);
-        router.refresh();
+        setRefresh(true);
       } else {
         if (message === 'Sub Category name already exists') {
           form.setError('name', {
@@ -135,7 +134,7 @@ function SubCategoryDialog({ subCategoryId, open, onOpenChange }: DialogProps) {
         toast(message);
         form.reset();
         onOpenChange(false);
-        router.refresh();
+        setRefresh(true);
       } else {
         if (message === 'Sub Category name already exists') {
           form.setError('name', {

@@ -12,7 +12,6 @@ import {
 import { HiOutlinePencilAlt } from 'react-icons/hi';
 import { HiOutlineTrash } from 'react-icons/hi2';
 import { deleteCategory } from '@/services/categories';
-import { useRouter } from 'next/navigation';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,14 +27,13 @@ import { Categories } from '@/types';
 import SubCategoryDialog from '@/components/root/subcategories/SubCategoryDialog';
 import { toast } from 'sonner';
 
-function DataTable({
-  data,
-  type,
-}: {
+type Props = {
   data: Categories | SubCategories;
   type: 'categories' | 'subcategories';
-}) {
-  const router = useRouter();
+  setRefresh: (isRefresh: boolean) => void;
+};
+
+function DataTable({ data, type, setRefresh }: Props) {
   const [editingId, setEditingId] = useState<number | null>(null);
   const handleDelete = async (id: number, name: string) => {
     if (type === 'categories') {
@@ -44,7 +42,7 @@ function DataTable({
           label: 'OK',
           onClick: async () => {
             const { message } = await deleteCategory(id);
-            router.refresh();
+            setRefresh(true);
             toast(message, {
               description: `Se ha eliminado la categoría ${name}`,
             });
@@ -57,7 +55,7 @@ function DataTable({
           label: 'OK',
           onClick: async () => {
             const { message } = await deleteSubCategory(id);
-            router.refresh();
+            setRefresh(true);
             toast(message, {
               description: `Se ha eliminado la sub-categoría ${name}`,
             });
@@ -177,6 +175,7 @@ function DataTable({
           onOpenChange={(isOpen) => {
             if (!isOpen) setEditingId(null);
           }}
+          setRefresh={setRefresh}
         />
       ) : (
         <SubCategoryDialog
@@ -185,6 +184,7 @@ function DataTable({
           onOpenChange={(isOpen) => {
             if (!isOpen) setEditingId(null);
           }}
+          setRefresh={setRefresh}
         />
       )}
     </div>
