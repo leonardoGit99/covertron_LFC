@@ -52,6 +52,8 @@ type Props = {
   deletedImages: string[];
   setDeletedImages: React.Dispatch<React.SetStateAction<string[]>>;
   setProduct: React.Dispatch<React.SetStateAction<ProductDetailAdminDTO>>;
+  initialProductState: string;
+  productState: string;
   setProductState: React.Dispatch<React.SetStateAction<string>>;
   setCategories: React.Dispatch<React.SetStateAction<Categories>>;
   isSending: boolean;
@@ -69,7 +71,9 @@ function ProductForm({
   setImageUrls,
   deletedImages,
   setDeletedImages,
-  isSending
+  isSending,
+  initialProductState,
+  productState
 }: Props) {
   useEffect(() => {
     form.setValue('images', [...images, ...imageUrls]);
@@ -92,6 +96,7 @@ function ProductForm({
     brand.trim() !== '' &&
     form.watch('images').length !== 0;
 
+
   // Constraints for edit product form
   // Check if the form values have changed compared to the initial product data
   const isFormChanged = product
@@ -100,13 +105,15 @@ function ProductForm({
       Number(categoryId) !== Number(product.categoryId) ||
       Number(subCategoryId) !== Number(product.subCategoryId) ||
       originalPrice !== product.originalPrice ||
-      String(discount) !== (String(product.discount) ) ||
+      String(discount) !== String(product.discount) ||
       brand.trim() !== product.brand ||
-      deletedImages.length !== 0 || 
-      images.length !== 0
+      deletedImages.length !== 0 ||
+      images.length !== 0 ||
+      productState !== initialProductState
     : true;
 
-  const isSubmitDisabled = !isFormFilled || (product ? !isFormChanged : false) || isSending;
+  const isSubmitDisabled =
+    !isFormFilled || (product ? !isFormChanged : false) || isSending;
 
   return (
     <Form {...form}>
@@ -293,9 +300,9 @@ function ProductForm({
                     onBlur={(e) => {
                       const value = parseInt(e.target.value, 10);
                       if (!isNaN(value)) {
-                        field.onChange(value); 
+                        field.onChange(value);
                       } else {
-                        field.onChange(0); 
+                        field.onChange(0);
                       }
                     }}
                     disabled={isSending}

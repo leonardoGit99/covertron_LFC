@@ -42,6 +42,7 @@ function CustomSheet({
   const [images, setImages] = useState<File[]>([]);
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const [deletedImages, setDeletedImages] = useState<string[]>([]);
+  const [initialProductState, setInitialProductState] = useState<string>('available');
   const [productState, setProductState] = useState<string>('available');
   const [isLoading, setIsLoading] = useState(true);
   const [subCategoriesByCategory, setSubCategoriesByCategory] =
@@ -94,6 +95,7 @@ function CustomSheet({
         if (productRes.success && productRes.data) {
           setProduct(productRes.data);
           setImageUrls(productRes.data.images);
+          setInitialProductState(productRes.data.state);
           setProductState(productRes.data.state);
 
           // Fetch subcategories del producto
@@ -308,6 +310,8 @@ function CustomSheet({
               deletedImages={deletedImages}
               setImageUrls={setImageUrls}
               setProduct={setProduct}
+              productState={productState}
+              initialProductState={initialProductState}
               setProductState={setProductState}
               setCategories={setCategories}
               isSending={isSending}
