@@ -38,7 +38,10 @@ export default function Categories() {
           />
 
           {/* Create || Update Category */}
-          <CategoryDialogButton btnLabel="Crear Categoría" />
+          <CategoryDialogButton 
+          setRefresh={setRefresh}
+          btnLabel="Crear Categoría" 
+          />
         </CardContent>
       </Card>
 

@@ -39,7 +39,10 @@ function SubCategories() {
           />
 
           {/* Create || Update Category */}
-          <SubCategoryDialogButton btnLabel="Crear Sub-categoría" />
+          <SubCategoryDialogButton 
+          setRefresh = {setRefresh}
+          btnLabel="Crear Sub-categoría" 
+          />
         </CardContent>
       </Card>
 

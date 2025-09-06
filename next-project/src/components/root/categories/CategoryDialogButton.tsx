@@ -6,9 +6,10 @@ import CategoryDialog from '@/components/root/categories/CategoryDialog';
 // Types
 type Props = {
   btnLabel: string;
+  setRefresh: (isRefresh: boolean) => void;
 };
 
-function CategoryDialogButton({ btnLabel }: Props) {
+function CategoryDialogButton({ btnLabel, setRefresh }: Props) {
   const [open, setOpen] = useState(false); // State for modal
 
   return (
@@ -20,6 +21,7 @@ function CategoryDialogButton({ btnLabel }: Props) {
         {btnLabel}
       </Button>
       <CategoryDialog
+        setRefresh={setRefresh}
         open={open}
         onOpenChange={setOpen}
       />

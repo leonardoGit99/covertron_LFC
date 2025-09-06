@@ -6,9 +6,10 @@ import SubCategoryDialog from './SubCategoryDialog';
 // Types
 type Props = {
   btnLabel: string;
+  setRefresh: (isRefresh: boolean) => void;
 };
 
-function SubCategoryDialogButton({ btnLabel /* id */ }: Props) {
+function SubCategoryDialogButton({ btnLabel /* id */, setRefresh }: Props) {
   const [open, setOpen] = useState(false); // State for modal
 
   return (
@@ -20,6 +21,7 @@ function SubCategoryDialogButton({ btnLabel /* id */ }: Props) {
         {btnLabel}
       </Button>
       <SubCategoryDialog
+        setRefresh={setRefresh}
         open={open}
         onOpenChange={setOpen}
       />
