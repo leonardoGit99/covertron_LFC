@@ -73,7 +73,7 @@ function CustomSheet({
       subCategoryId: undefined,
       originalPrice: undefined,
       brand: '',
-      discount: undefined,
+      discount: 0,
     },
   });
   const categoryId = form.watch('categoryId');
