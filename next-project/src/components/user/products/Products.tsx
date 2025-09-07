@@ -1,5 +1,4 @@
 import React from 'react';
-import Announcements from './Announcements';
 import ProductsList from './ProductsList';
 import { CategoriesResponse, ProductsResponse } from '@/types';
 
@@ -8,15 +7,12 @@ type Props = {
   initialCategoriesData: CategoriesResponse | null;
 };
 
-function Products({ initialData, initialCategoriesData }: Props) {
+function Products({ initialData, initialCategoriesData}: Props) {
   return (
-    <div className="flex flex-col">
-      <Announcements />
-      <ProductsList
-        initialData={initialData}
-        initialCategoriesData={initialCategoriesData}
-      />
-    </div>
+    <ProductsList
+      initialData={initialData}
+      initialCategoriesData={initialCategoriesData}
+    />
   );
 }
 

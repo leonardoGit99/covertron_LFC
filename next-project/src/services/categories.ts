@@ -1,7 +1,8 @@
 import { ApiResponse } from "@/types/api";
 import { CategoriesResponse, Category, CreateCategoryDTO, UpdateCategoryDTO } from "@/types"; 
 import proxyApi from "./axiosProxyClient";
-import api from "./axiosDirectClient";
+import { baseLocalURLDirectClient } from "./api.config";
+import {jsonHeaders} from "./api.config"
 
 // Endpoits
 export const createCategory = async (body: CreateCategoryDTO): Promise<ApiResponse<Category>> => {
@@ -15,18 +16,31 @@ export const createCategory = async (body: CreateCategoryDTO): Promise<ApiRespon
 
 export const getAllCategories = async (): Promise<ApiResponse<CategoriesResponse>> => {
   try {
-    const { data } = await api.get<ApiResponse<CategoriesResponse>>(`/categories`);
+    const res = await fetch(`${baseLocalURLDirectClient}/categories`,{
+      method: "GET",
+      headers: jsonHeaders,
+      cache: "no-store"
+    })
+
+    if(!res.ok){
+      return {
+        success: false,
+        message: `Error ${res.status}: ${res.statusText}`,
+        data: {
+          total: 0,
+          categories:[]
+        }
+      };
+    }
+
+    const data: ApiResponse<CategoriesResponse> = await res.json();
     return data;
   } catch (error: any) {
-    if (error.response?.data) return error.response.data;
-
+    console.error("Fetch error:", error);
     return {
       success: false,
-      message: 'Network error or server is unreachable',
-      data: {
-        total: 0,
-        categories: [],
-      },
+      message: "Network error or server is unreachable",
+      data: { total: 0, categories: [] },
     };
   }
 }

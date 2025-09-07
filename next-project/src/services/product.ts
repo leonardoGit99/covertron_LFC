@@ -2,6 +2,9 @@ import { ApiResponse } from "@/types/api";
 import { ProductDetailAdminDTO, ProductDetailDTO, ProductsResponse, ProductsResponseAdmin } from "@/types/product";
 import proxyApi from "./axiosProxyClient";
 import api from "./axiosDirectClient";
+import { method } from "lodash";
+import { headers } from "next/headers";
+import { baseLocalURLDirectClient, jsonHeaders } from "./api.config";
 
 export const createProduct = async (body: FormData): Promise<ApiResponse<ProductDetailAdminDTO>> => {
   try {
@@ -23,17 +26,33 @@ export const getAllProductsAdmin = async (currentPage: number, limit: number): P
 
 export const getAllAvailableProducts = async (currentPage: number, limit: number): Promise<ApiResponse<ProductsResponse>> => {
   try {
-    const { data } = await api.get<ApiResponse<ProductsResponse>>(`/products?page=${currentPage}&limit=${limit}`);
+    const res = await fetch(`${baseLocalURLDirectClient}/products?page=${currentPage}&limit=${limit}`,
+      {
+        method: "GET",
+        headers: jsonHeaders,
+        cache: "no-store"
+      }
+    )
+
+    if (!res.ok) {
+      return {
+        success: false,
+        message: `Error ${res.status}: ${res.statusText}`,
+        data: {
+          total: 0,
+          products: []
+        }
+      };
+    }
+
+    const data: ApiResponse<ProductsResponse> = await res.json();
     return data;
   } catch (error: any) {
-    console.error(error);
+     console.error("Fetch error:", error);
     return {
-      data: {
-        total: 0,
-        products: [],
-      },
       success: false,
-      message: "Network error or server is unreachable"
+      message: "Network error or server is unreachable",
+      data: { total: 0, products: [] },
     };
   }
 }
