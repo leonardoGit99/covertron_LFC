@@ -40,7 +40,7 @@ function Reasons() {
         title="Porqué"
         description="En COVERTRON&reg; combinamos innovación, diseño y sostenibilidad. Nuestros estuches personalizados protegen tus dispositivos con estilo, mientras que nuestra ropa de segunda mano cuidadosamente seleccionada te ofrece opciones sostenibles y únicas."
         highlightWord="Elegirnos?"
-        highlightColor="text-orange-500"
+        highlightColor="text-[#1abc9c]"
       />
 
       {/* Principal Content */}

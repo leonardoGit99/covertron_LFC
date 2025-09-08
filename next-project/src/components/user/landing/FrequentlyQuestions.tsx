@@ -48,7 +48,7 @@ function FrequentlyQuestions() {
         description="Todo lo que necesitas saber sobre COVERTRON&reg; y nuestros productos,
         explicado de manera clara y sencilla."
         highlightWord="Frecuentes"
-        highlightColor="text-orange-500"
+        highlightColor="text-[#1abc9c]"
       />
 
       {/* Frequently questions Acordion */}

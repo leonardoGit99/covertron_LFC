@@ -19,7 +19,7 @@ function ReasonCard({ reason }: Props) {
       aria-labelledby={`reason-title-${reason.number}`}
     >
       {/* Decorative background element */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-orange-200 to-transparent rounded-full -translate-y-16 translate-x-16 opacity-50 group-hover:opacity-75 transition-opacity duration-300 dark:from-sky-500 dark:to-gray-950" />
+      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#76e2d1] to-transparent rounded-full -translate-y-16 translate-x-16 opacity-50 group-hover:opacity-75 transition-opacity duration-300 dark:from-sky-500 dark:to-gray-950" />
 
       {/* Number badge */}
       <div

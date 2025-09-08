@@ -40,7 +40,7 @@ function Hero() {
       <section className="relative h-screen w-full">
         {/* Imagen de fondo optimizada */}
         <Image
-          src="/assets/hero.webp"
+          src="/assets/hero.jpg"
           alt="Hero"
           fill
           priority // carga inmediata
@@ -57,8 +57,8 @@ function Hero() {
             distance={100}
           >
             <h1 className="text-3xl sm:text-4xl lg:text-5xl mb-6 font-bold">
-              Protege tu tecnología con estilo único y viste con moda que cuenta
-              historias
+              Protege <span className='text-[#1abc9c]'>tu tecnología </span> con estilo único y viste con moda que cuenta
+              <span className='text-[#1abc9c]'> historias</span>
             </h1>
           </Reveal>
 

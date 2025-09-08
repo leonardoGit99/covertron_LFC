@@ -21,7 +21,7 @@ function About() {
           un consumo responsable ofreciendo ropa de segunda mano cuidadosamente
           seleccionada."
         highlightWord="Covertron"
-        highlightColor="text-orange-500"
+        highlightColor="text-[#1abc9c]"
       />
 
       {/* Contenido principal */}
@@ -30,7 +30,7 @@ function About() {
 
         <div className="relative w-full md:w-1/3 min-h-[24rem] rounded-xl  overflow-hidden">
           <Image
-            src="/assets/about.webp"
+            src="/assets/about-us.webp"
             alt="about image"
             fill
             className="object-cover hover:scale-105 transition-transform duration-500 ease-in-out shadow-lg rounded-xl"
@@ -49,7 +49,7 @@ function About() {
             {statistics.map((stat, index) => (
               <div
                 key={index}
-                className="text-center md:text-left shadow-md rounded-xl p-4 flex border-l-4 border-orange-200 rounded-l-xl bg-white/95 dark:bg-gray-900 dark:border-orange-700
+                className="text-center md:text-left shadow-md rounded-xl p-4 flex border-l-4 border-[#76e2d1] rounded-l-xl bg-white/95 dark:bg-gray-900 dark:border-[#76e2d1]
                 hover:shadow-lg dark:hover:shadow-white/80 dark:shadow-white/50 transition-all duration-500 ease-in-out"
               >
                 <div className="flex-1">
@@ -69,7 +69,7 @@ function About() {
             delay={0.1}
             className="space-y-6"
           >
-            <div className="relative overflow-hidden p-6 rounded-xl shadow-md bg-gradient-to-br from-white via-slate-50 to-orange-50 hover:shadow-lg transform transition-all duration-500 ease-in-out dark:from-slate-900 dark:via-slate-950 dark:to-sky-950 dark:shadow-white/50 dark:hover:shadow-white/80 dark:border dark:border-white/30">
+            <div className="relative overflow-hidden p-6 rounded-xl shadow-md bg-gradient-to-br from-white via-slate-50 to-[#76e2d1]/20 hover:shadow-lg transform transition-all duration-500 ease-in-out dark:from-slate-900 dark:via-slate-950 dark:to-sky-950 dark:shadow-white/50 dark:hover:shadow-white/80 dark:border dark:border-white/30">
               <h2 className="text-lg font-bold mb-2 text-gray-800 dark:text-white">
                 Misión
               </h2>
@@ -82,7 +82,7 @@ function About() {
                 responsable.
               </p>
             </div>
-            <div className="relative overflow-hidden p-6 rounded-xl shadow-md bg-gradient-to-br from-white via-slate-50 to-orange-50   hover:shadow-lg transform transition-all duration-500 ease-in-out dark:from-slate-900 dark:via-slate-950 dark:to-sky-950 dark:shadow-white/50 dark:hover:shadow-white/80 dark:border dark:border-white/30">
+            <div className="relative overflow-hidden p-6 rounded-xl shadow-md bg-gradient-to-br from-white via-slate-50 to-[#76e2d1]/20   hover:shadow-lg transform transition-all duration-500 ease-in-out dark:from-slate-900 dark:via-slate-950 dark:to-sky-950 dark:shadow-white/50 dark:hover:shadow-white/80 dark:border dark:border-white/30">
               <h2 className="text-lg font-bold mb-2 text-gray-800 dark:text-white">
                 Visión
               </h2>

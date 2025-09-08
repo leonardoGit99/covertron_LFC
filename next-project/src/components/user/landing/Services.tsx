@@ -44,7 +44,7 @@ function Services() {
         title="Explora nuestros"
         description="COVERTRON&reg; combina funcionalidad y sostenibilidad: estuches premium para laptops y ropa de segunda mano lista para tu estilo. Desde Quillacollo, Cochabamba, llevamos nuestros productos a clientes de todo el país."
         highlightWord="Servicios"
-        highlightColor="text-orange-500"
+        highlightColor="text-[#1abc9c]"
       />
 
       {/* Grid de servicios */}

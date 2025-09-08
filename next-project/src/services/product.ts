@@ -2,8 +2,6 @@ import { ApiResponse } from "@/types/api";
 import { ProductDetailAdminDTO, ProductDetailDTO, ProductsResponse, ProductsResponseAdmin } from "@/types/product";
 import proxyApi from "./axiosProxyClient";
 import api from "./axiosDirectClient";
-import { method } from "lodash";
-import { headers } from "next/headers";
 import { baseLocalURLDirectClient, jsonHeaders } from "./api.config";
 
 export const createProduct = async (body: FormData): Promise<ApiResponse<ProductDetailAdminDTO>> => {
